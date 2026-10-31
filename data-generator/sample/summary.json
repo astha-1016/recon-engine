@@ -1,0 +1,5092 @@
+{
+  "synthetic": true,
+  "seed": 42,
+  "currency": "INR",
+  "invoice_count": 1000,
+  "transaction_count": 1226,
+  "feedback_count": 121,
+  "allocation_count": 1240,
+  "requested_rates": {
+    "partial": 0.15,
+    "split": 0.1,
+    "refund": 0.05,
+    "alias": 0.2,
+    "messy": 0.65
+  },
+  "invoice_scenarios": {
+    "multi_invoice_payment": 99,
+    "full_payment": 501,
+    "split_payment": 100,
+    "partial_payment": 150,
+    "unpaid": 100,
+    "refund": 50
+  },
+  "transaction_channels": {
+    "NEFT": 223,
+    "CHEQUE": 258,
+    "QR": 226,
+    "IMPS": 267,
+    "UPI_ID": 202,
+    "BANK": 50
+  },
+  "alias_transaction_count": 217,
+  "missing_reference_transaction_count": 705,
+  "expected_final_invoices": {
+    "INV-2026-00783": {
+      "status": "PAID",
+      "net_paid": "75030.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00041": {
+      "status": "PAID",
+      "net_paid": "25069.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00289": {
+      "status": "PAID",
+      "net_paid": "50093.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00653": {
+      "status": "PARTIAL",
+      "net_paid": "5017.15",
+      "remaining": "7525.73"
+    },
+    "INV-2026-00560": {
+      "status": "PAID",
+      "net_paid": "12559.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00792": {
+      "status": "PAID",
+      "net_paid": "50048.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00550": {
+      "status": "PAID",
+      "net_paid": "12591.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00473": {
+      "status": "PAID",
+      "net_paid": "12594.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00491": {
+      "status": "PAID",
+      "net_paid": "25008.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00375": {
+      "status": "PAID",
+      "net_paid": "12599.85",
+      "remaining": "0.00"
+    },
+    "INV-2026-00168": {
+      "status": "PAID",
+      "net_paid": "100099.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00302": {
+      "status": "PAID",
+      "net_paid": "25043.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00492": {
+      "status": "PARTIAL",
+      "net_paid": "5017.83",
+      "remaining": "7526.75"
+    },
+    "INV-2026-00220": {
+      "status": "PAID",
+      "net_paid": "50036.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00604": {
+      "status": "PAID",
+      "net_paid": "12557.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00819": {
+      "status": "PAID",
+      "net_paid": "25095.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00212": {
+      "status": "PAID",
+      "net_paid": "12513.75",
+      "remaining": "0.00"
+    },
+    "INV-2026-00042": {
+      "status": "PARTIAL",
+      "net_paid": "5025.21",
+      "remaining": "7537.83"
+    },
+    "INV-2026-00078": {
+      "status": "PAID",
+      "net_paid": "12516.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00690": {
+      "status": "PAID",
+      "net_paid": "100004.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00445": {
+      "status": "PAID",
+      "net_paid": "50084.08",
+      "remaining": "0.00"
+    },
+    "INV-2026-00400": {
+      "status": "PARTIAL",
+      "net_paid": "20034.78",
+      "remaining": "30052.19"
+    },
+    "INV-2026-00910": {
+      "status": "PAID",
+      "net_paid": "12585.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00850": {
+      "status": "PAID",
+      "net_paid": "25082.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00800": {
+      "status": "PAID",
+      "net_paid": "50049.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00017": {
+      "status": "PAID",
+      "net_paid": "75012.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00470": {
+      "status": "PAID",
+      "net_paid": "12567.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00999": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50064.08"
+    },
+    "INV-2026-00611": {
+      "status": "PAID",
+      "net_paid": "50002.66",
+      "remaining": "0.00"
+    },
+    "INV-2026-00687": {
+      "status": "PAID",
+      "net_paid": "12507.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00125": {
+      "status": "PAID",
+      "net_paid": "12500.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00665": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100093.76"
+    },
+    "INV-2026-00117": {
+      "status": "PAID",
+      "net_paid": "100049.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00256": {
+      "status": "PAID",
+      "net_paid": "75080.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00367": {
+      "status": "PAID",
+      "net_paid": "75016.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00786": {
+      "status": "PAID",
+      "net_paid": "50046.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00766": {
+      "status": "PAID",
+      "net_paid": "12556.74",
+      "remaining": "0.00"
+    },
+    "INV-2026-00979": {
+      "status": "PARTIAL",
+      "net_paid": "40035.75",
+      "remaining": "60053.64"
+    },
+    "INV-2026-00639": {
+      "status": "PAID",
+      "net_paid": "12512.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00889": {
+      "status": "PAID",
+      "net_paid": "50024.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00432": {
+      "status": "PARTIAL",
+      "net_paid": "10037.00",
+      "remaining": "15055.50"
+    },
+    "INV-2026-00214": {
+      "status": "PAID",
+      "net_paid": "25008.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00982": {
+      "status": "PAID",
+      "net_paid": "12567.03",
+      "remaining": "0.00"
+    },
+    "INV-2026-00961": {
+      "status": "PAID",
+      "net_paid": "75023.90",
+      "remaining": "0.00"
+    },
+    "INV-2026-00981": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25071.83"
+    },
+    "INV-2026-00898": {
+      "status": "PAID",
+      "net_paid": "12507.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00320": {
+      "status": "PAID",
+      "net_paid": "50067.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00466": {
+      "status": "PAID",
+      "net_paid": "12515.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00842": {
+      "status": "PAID",
+      "net_paid": "49415.51",
+      "remaining": "0.00",
+      "adjustment": "615.37"
+    },
+    "INV-2026-00901": {
+      "status": "PAID",
+      "net_paid": "12535.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00832": {
+      "status": "PAID",
+      "net_paid": "73699.64",
+      "remaining": "0.00",
+      "adjustment": "1373.84"
+    },
+    "INV-2026-00085": {
+      "status": "PAID",
+      "net_paid": "12588.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00267": {
+      "status": "PAID",
+      "net_paid": "24788.58",
+      "remaining": "0.00",
+      "adjustment": "242.80"
+    },
+    "INV-2026-00655": {
+      "status": "PAID",
+      "net_paid": "50080.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00809": {
+      "status": "PAID",
+      "net_paid": "75099.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00744": {
+      "status": "PAID",
+      "net_paid": "100062.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00009": {
+      "status": "PAID",
+      "net_paid": "75096.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00237": {
+      "status": "PAID",
+      "net_paid": "49366.15",
+      "remaining": "0.00",
+      "adjustment": "645.14"
+    },
+    "INV-2026-00579": {
+      "status": "PAID",
+      "net_paid": "75060.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00804": {
+      "status": "PAID",
+      "net_paid": "25066.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00177": {
+      "status": "PAID",
+      "net_paid": "100011.93",
+      "remaining": "0.00"
+    },
+    "INV-2026-00429": {
+      "status": "PAID",
+      "net_paid": "75015.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00764": {
+      "status": "PAID",
+      "net_paid": "75056.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00278": {
+      "status": "PAID",
+      "net_paid": "50030.20",
+      "remaining": "0.00"
+    },
+    "INV-2026-00829": {
+      "status": "PAID",
+      "net_paid": "12577.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00055": {
+      "status": "PAID",
+      "net_paid": "50050.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00305": {
+      "status": "PAID",
+      "net_paid": "50071.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00414": {
+      "status": "PAID",
+      "net_paid": "12576.06",
+      "remaining": "0.00"
+    },
+    "INV-2026-00048": {
+      "status": "PAID",
+      "net_paid": "12543.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00312": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25094.24"
+    },
+    "INV-2026-00968": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12564.83"
+    },
+    "INV-2026-00565": {
+      "status": "PARTIAL",
+      "net_paid": "40034.50",
+      "remaining": "60051.76"
+    },
+    "INV-2026-00213": {
+      "status": "PARTIAL",
+      "net_paid": "30008.89",
+      "remaining": "45013.34"
+    },
+    "INV-2026-00133": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50006.53"
+    },
+    "INV-2026-00663": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25022.75"
+    },
+    "INV-2026-00666": {
+      "status": "PAID",
+      "net_paid": "75090.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00931": {
+      "status": "PAID",
+      "net_paid": "25092.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00477": {
+      "status": "PAID",
+      "net_paid": "12352.44",
+      "remaining": "0.00",
+      "adjustment": "193.20"
+    },
+    "INV-2026-00265": {
+      "status": "PAID",
+      "net_paid": "12531.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00524": {
+      "status": "PAID",
+      "net_paid": "25028.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00068": {
+      "status": "PAID",
+      "net_paid": "25001.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00696": {
+      "status": "PAID",
+      "net_paid": "75033.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00977": {
+      "status": "PAID",
+      "net_paid": "50064.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00102": {
+      "status": "PAID",
+      "net_paid": "100097.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00984": {
+      "status": "PARTIAL",
+      "net_paid": "20015.86",
+      "remaining": "30023.79"
+    },
+    "INV-2026-00589": {
+      "status": "PAID",
+      "net_paid": "50016.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00606": {
+      "status": "PAID",
+      "net_paid": "12585.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00416": {
+      "status": "PAID",
+      "net_paid": "25007.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00052": {
+      "status": "PAID",
+      "net_paid": "25088.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00974": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25065.24"
+    },
+    "INV-2026-00784": {
+      "status": "PAID",
+      "net_paid": "12501.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00596": {
+      "status": "PAID",
+      "net_paid": "100069.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00269": {
+      "status": "PAID",
+      "net_paid": "100097.77",
+      "remaining": "0.00"
+    },
+    "INV-2026-00530": {
+      "status": "PARTIAL",
+      "net_paid": "5030.72",
+      "remaining": "7546.10"
+    },
+    "INV-2026-00192": {
+      "status": "PAID",
+      "net_paid": "25044.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00919": {
+      "status": "PAID",
+      "net_paid": "100077.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00185": {
+      "status": "PAID",
+      "net_paid": "75021.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00519": {
+      "status": "PAID",
+      "net_paid": "50027.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00949": {
+      "status": "PAID",
+      "net_paid": "12521.70",
+      "remaining": "0.00"
+    },
+    "INV-2026-00271": {
+      "status": "PAID",
+      "net_paid": "25059.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00814": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12592.43"
+    },
+    "INV-2026-00556": {
+      "status": "PAID",
+      "net_paid": "12550.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00080": {
+      "status": "PAID",
+      "net_paid": "25031.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00420": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50088.50"
+    },
+    "INV-2026-00482": {
+      "status": "PAID",
+      "net_paid": "50055.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00816": {
+      "status": "PAID",
+      "net_paid": "25093.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00899": {
+      "status": "PAID",
+      "net_paid": "75022.52",
+      "remaining": "0.00",
+      "credit": "720.21"
+    },
+    "INV-2026-00945": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "75025.27"
+    },
+    "INV-2026-00286": {
+      "status": "PAID",
+      "net_paid": "100036.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00536": {
+      "status": "PAID",
+      "net_paid": "12597.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00263": {
+      "status": "PAID",
+      "net_paid": "49363.29",
+      "remaining": "0.00",
+      "adjustment": "711.05"
+    },
+    "INV-2026-00245": {
+      "status": "PAID",
+      "net_paid": "12545.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00179": {
+      "status": "PAID",
+      "net_paid": "75080.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00848": {
+      "status": "PAID",
+      "net_paid": "75071.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00598": {
+      "status": "PARTIAL",
+      "net_paid": "5003.12",
+      "remaining": "7504.70"
+    },
+    "INV-2026-00505": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75087.25"
+    },
+    "INV-2026-00326": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100075.69"
+    },
+    "INV-2026-00121": {
+      "status": "PAID",
+      "net_paid": "100034.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00363": {
+      "status": "PAID",
+      "net_paid": "100062.26",
+      "remaining": "0.00",
+      "credit": "1901.18"
+    },
+    "INV-2026-00443": {
+      "status": "PAID",
+      "net_paid": "75086.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00038": {
+      "status": "PAID",
+      "net_paid": "50035.93",
+      "remaining": "0.00"
+    },
+    "INV-2026-00016": {
+      "status": "PAID",
+      "net_paid": "75087.85",
+      "remaining": "0.00",
+      "credit": "1246.45"
+    },
+    "INV-2026-00879": {
+      "status": "PAID",
+      "net_paid": "50046.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00516": {
+      "status": "PARTIAL",
+      "net_paid": "30038.59",
+      "remaining": "45057.89"
+    },
+    "INV-2026-00144": {
+      "status": "PAID",
+      "net_paid": "12531.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00464": {
+      "status": "PAID",
+      "net_paid": "50061.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00480": {
+      "status": "PAID",
+      "net_paid": "100043.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00877": {
+      "status": "PAID",
+      "net_paid": "25099.02",
+      "remaining": "0.00"
+    },
+    "INV-2026-00673": {
+      "status": "PAID",
+      "net_paid": "25090.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00559": {
+      "status": "PAID",
+      "net_paid": "75083.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00096": {
+      "status": "PAID",
+      "net_paid": "12595.71",
+      "remaining": "0.00"
+    },
+    "INV-2026-00958": {
+      "status": "PAID",
+      "net_paid": "100085.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00098": {
+      "status": "PAID",
+      "net_paid": "12583.20",
+      "remaining": "0.00"
+    },
+    "INV-2026-00511": {
+      "status": "PAID",
+      "net_paid": "75068.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00758": {
+      "status": "PAID",
+      "net_paid": "50091.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00232": {
+      "status": "PAID",
+      "net_paid": "12597.00",
+      "remaining": "0.00"
+    },
+    "INV-2026-00236": {
+      "status": "PAID",
+      "net_paid": "100070.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00876": {
+      "status": "PARTIAL",
+      "net_paid": "10007.68",
+      "remaining": "15011.54"
+    },
+    "INV-2026-00718": {
+      "status": "PARTIAL",
+      "net_paid": "5026.25",
+      "remaining": "7539.38"
+    },
+    "INV-2026-00955": {
+      "status": "PARTIAL",
+      "net_paid": "20025.24",
+      "remaining": "30037.87"
+    },
+    "INV-2026-00615": {
+      "status": "PARTIAL",
+      "net_paid": "40022.18",
+      "remaining": "60033.28"
+    },
+    "INV-2026-00354": {
+      "status": "PAID",
+      "net_paid": "75063.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00058": {
+      "status": "PARTIAL",
+      "net_paid": "5034.90",
+      "remaining": "7552.37"
+    },
+    "INV-2026-00985": {
+      "status": "PAID",
+      "net_paid": "25069.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00469": {
+      "status": "PAID",
+      "net_paid": "100092.02",
+      "remaining": "0.00"
+    },
+    "INV-2026-00583": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25071.67"
+    },
+    "INV-2026-00697": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100023.53"
+    },
+    "INV-2026-00669": {
+      "status": "PAID",
+      "net_paid": "100067.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00361": {
+      "status": "PAID",
+      "net_paid": "50055.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00233": {
+      "status": "PARTIAL",
+      "net_paid": "10006.67",
+      "remaining": "15010.02"
+    },
+    "INV-2026-00158": {
+      "status": "PAID",
+      "net_paid": "12554.09",
+      "remaining": "0.00",
+      "credit": "79.09"
+    },
+    "INV-2026-00484": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "100065.66"
+    },
+    "INV-2026-00574": {
+      "status": "PAID",
+      "net_paid": "100072.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00514": {
+      "status": "PAID",
+      "net_paid": "75059.28",
+      "remaining": "0.00"
+    },
+    "INV-2026-00859": {
+      "status": "PAID",
+      "net_paid": "75085.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00224": {
+      "status": "PAID",
+      "net_paid": "25077.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00032": {
+      "status": "PAID",
+      "net_paid": "100051.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00566": {
+      "status": "PAID",
+      "net_paid": "50021.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00368": {
+      "status": "PAID",
+      "net_paid": "12572.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00989": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75089.07"
+    },
+    "INV-2026-00313": {
+      "status": "PAID",
+      "net_paid": "12544.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00035": {
+      "status": "PARTIAL",
+      "net_paid": "10016.16",
+      "remaining": "15024.24"
+    },
+    "INV-2026-00297": {
+      "status": "PAID",
+      "net_paid": "50046.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00613": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "12595.33"
+    },
+    "INV-2026-00471": {
+      "status": "PAID",
+      "net_paid": "75008.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00280": {
+      "status": "PAID",
+      "net_paid": "12565.65",
+      "remaining": "0.00"
+    },
+    "INV-2026-00495": {
+      "status": "PAID",
+      "net_paid": "25083.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00564": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "50016.57"
+    },
+    "INV-2026-00022": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "50074.28"
+    },
+    "INV-2026-00015": {
+      "status": "PAID",
+      "net_paid": "100043.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00148": {
+      "status": "PAID",
+      "net_paid": "100054.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00508": {
+      "status": "PAID",
+      "net_paid": "12571.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00954": {
+      "status": "PARTIAL",
+      "net_paid": "5039.12",
+      "remaining": "7558.68"
+    },
+    "INV-2026-00421": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100025.31"
+    },
+    "INV-2026-00020": {
+      "status": "PARTIAL",
+      "net_paid": "10018.96",
+      "remaining": "15028.45"
+    },
+    "INV-2026-00791": {
+      "status": "PARTIAL",
+      "net_paid": "20012.20",
+      "remaining": "30018.30"
+    },
+    "INV-2026-00971": {
+      "status": "PAID",
+      "net_paid": "100022.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00826": {
+      "status": "PAID",
+      "net_paid": "25094.75",
+      "remaining": "0.00"
+    },
+    "INV-2026-00946": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "50059.09"
+    },
+    "INV-2026-00638": {
+      "status": "PARTIAL",
+      "net_paid": "40028.50",
+      "remaining": "60042.76"
+    },
+    "INV-2026-00735": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "100080.25"
+    },
+    "INV-2026-00454": {
+      "status": "PAID",
+      "net_paid": "25045.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00163": {
+      "status": "PAID",
+      "net_paid": "25068.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00861": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50061.67"
+    },
+    "INV-2026-00678": {
+      "status": "PARTIAL",
+      "net_paid": "20014.77",
+      "remaining": "30022.17"
+    },
+    "INV-2026-00788": {
+      "status": "PAID",
+      "net_paid": "25082.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00327": {
+      "status": "PAID",
+      "net_paid": "12530.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00914": {
+      "status": "PAID",
+      "net_paid": "50066.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00496": {
+      "status": "PARTIAL",
+      "net_paid": "20028.17",
+      "remaining": "30042.26"
+    },
+    "INV-2026-00358": {
+      "status": "PARTIAL",
+      "net_paid": "5034.46",
+      "remaining": "7551.71"
+    },
+    "INV-2026-00956": {
+      "status": "PAID",
+      "net_paid": "50067.79",
+      "remaining": "0.00"
+    },
+    "INV-2026-00805": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "100050.95"
+    },
+    "INV-2026-00091": {
+      "status": "PAID",
+      "net_paid": "50069.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00844": {
+      "status": "PAID",
+      "net_paid": "12539.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00539": {
+      "status": "PARTIAL",
+      "net_paid": "40012.33",
+      "remaining": "60018.51"
+    },
+    "INV-2026-00118": {
+      "status": "PAID",
+      "net_paid": "12522.00",
+      "remaining": "0.00"
+    },
+    "INV-2026-00547": {
+      "status": "PAID",
+      "net_paid": "50063.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00866": {
+      "status": "PAID",
+      "net_paid": "100021.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00948": {
+      "status": "PAID",
+      "net_paid": "75058.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00648": {
+      "status": "PAID",
+      "net_paid": "100022.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00258": {
+      "status": "PAID",
+      "net_paid": "25066.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00545": {
+      "status": "PAID",
+      "net_paid": "100085.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00182": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25028.81"
+    },
+    "INV-2026-00680": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50032.16"
+    },
+    "INV-2026-00527": {
+      "status": "PAID",
+      "net_paid": "100073.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00270": {
+      "status": "PAID",
+      "net_paid": "12531.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00543": {
+      "status": "PAID",
+      "net_paid": "98497.84",
+      "remaining": "0.00",
+      "adjustment": "1530.43"
+    },
+    "INV-2026-00315": {
+      "status": "PAID",
+      "net_paid": "100072.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00423": {
+      "status": "PAID",
+      "net_paid": "75045.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00146": {
+      "status": "PAID",
+      "net_paid": "50057.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00573": {
+      "status": "PAID",
+      "net_paid": "73966.33",
+      "remaining": "0.00",
+      "adjustment": "1065.45"
+    },
+    "INV-2026-00292": {
+      "status": "PAID",
+      "net_paid": "12525.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00541": {
+      "status": "PAID",
+      "net_paid": "25010.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00381": {
+      "status": "PAID",
+      "net_paid": "12572.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00688": {
+      "status": "PAID",
+      "net_paid": "100043.36",
+      "remaining": "0.00"
+    },
+    "INV-2026-00888": {
+      "status": "PAID",
+      "net_paid": "100094.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00594": {
+      "status": "PARTIAL",
+      "net_paid": "5016.77",
+      "remaining": "7525.16"
+    },
+    "INV-2026-00176": {
+      "status": "PARTIAL",
+      "net_paid": "5016.04",
+      "remaining": "7524.07"
+    },
+    "INV-2026-00677": {
+      "status": "PARTIAL",
+      "net_paid": "20010.78",
+      "remaining": "30016.19"
+    },
+    "INV-2026-00595": {
+      "status": "PAID",
+      "net_paid": "25089.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00379": {
+      "status": "PAID",
+      "net_paid": "50001.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00818": {
+      "status": "PAID",
+      "net_paid": "100072.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00123": {
+      "status": "PAID",
+      "net_paid": "75041.14",
+      "remaining": "0.00"
+    },
+    "INV-2026-00789": {
+      "status": "PAID",
+      "net_paid": "50031.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00332": {
+      "status": "PAID",
+      "net_paid": "75019.89",
+      "remaining": "0.00"
+    },
+    "INV-2026-00347": {
+      "status": "PARTIAL",
+      "net_paid": "30009.73",
+      "remaining": "45014.61"
+    },
+    "INV-2026-00244": {
+      "status": "PAID",
+      "net_paid": "50052.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00137": {
+      "status": "PAID",
+      "net_paid": "25029.00",
+      "remaining": "0.00"
+    },
+    "INV-2026-00486": {
+      "status": "PAID",
+      "net_paid": "100035.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00458": {
+      "status": "PAID",
+      "net_paid": "100070.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00190": {
+      "status": "PAID",
+      "net_paid": "75042.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00830": {
+      "status": "PAID",
+      "net_paid": "50066.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00905": {
+      "status": "PAID",
+      "net_paid": "100090.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00839": {
+      "status": "PAID",
+      "net_paid": "100069.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00787": {
+      "status": "PAID",
+      "net_paid": "100085.90",
+      "remaining": "0.00"
+    },
+    "INV-2026-00503": {
+      "status": "PARTIAL",
+      "net_paid": "5000.50",
+      "remaining": "7500.76"
+    },
+    "INV-2026-00723": {
+      "status": "PAID",
+      "net_paid": "100019.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00350": {
+      "status": "PARTIAL",
+      "net_paid": "30029.84",
+      "remaining": "45044.76"
+    },
+    "INV-2026-00806": {
+      "status": "PAID",
+      "net_paid": "12548.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00703": {
+      "status": "PAID",
+      "net_paid": "25015.86",
+      "remaining": "0.00"
+    },
+    "INV-2026-00026": {
+      "status": "PAID",
+      "net_paid": "25087.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00909": {
+      "status": "PAID",
+      "net_paid": "75029.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00070": {
+      "status": "PAID",
+      "net_paid": "12554.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00142": {
+      "status": "PAID",
+      "net_paid": "25075.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00318": {
+      "status": "PAID",
+      "net_paid": "50066.90",
+      "remaining": "0.00"
+    },
+    "INV-2026-00222": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25032.66"
+    },
+    "INV-2026-00662": {
+      "status": "PAID",
+      "net_paid": "100036.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00893": {
+      "status": "PAID",
+      "net_paid": "75080.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00257": {
+      "status": "PAID",
+      "net_paid": "12515.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00136": {
+      "status": "PAID",
+      "net_paid": "75025.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00993": {
+      "status": "PAID",
+      "net_paid": "100007.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00451": {
+      "status": "PAID",
+      "net_paid": "12580.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00925": {
+      "status": "PAID",
+      "net_paid": "50007.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00986": {
+      "status": "PAID",
+      "net_paid": "12573.57",
+      "remaining": "0.00"
+    },
+    "INV-2026-00870": {
+      "status": "PAID",
+      "net_paid": "25008.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00699": {
+      "status": "PAID",
+      "net_paid": "25060.70",
+      "remaining": "0.00"
+    },
+    "INV-2026-00584": {
+      "status": "PAID",
+      "net_paid": "25073.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00277": {
+      "status": "PAID",
+      "net_paid": "75078.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00532": {
+      "status": "PAID",
+      "net_paid": "12557.66",
+      "remaining": "0.00"
+    },
+    "INV-2026-00540": {
+      "status": "PAID",
+      "net_paid": "100077.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00114": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50046.69"
+    },
+    "INV-2026-00794": {
+      "status": "PAID",
+      "net_paid": "75070.07",
+      "remaining": "0.00"
+    },
+    "INV-2026-00685": {
+      "status": "PAID",
+      "net_paid": "98307.37",
+      "remaining": "0.00",
+      "adjustment": "1791.77"
+    },
+    "INV-2026-00780": {
+      "status": "PAID",
+      "net_paid": "100038.04",
+      "remaining": "0.00"
+    },
+    "INV-2026-00407": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "50087.91"
+    },
+    "INV-2026-00506": {
+      "status": "PAID",
+      "net_paid": "100091.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00542": {
+      "status": "PAID",
+      "net_paid": "12556.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00602": {
+      "status": "PAID",
+      "net_paid": "100094.21",
+      "remaining": "0.00"
+    },
+    "INV-2026-00798": {
+      "status": "PAID",
+      "net_paid": "12542.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00878": {
+      "status": "PAID",
+      "net_paid": "75039.21",
+      "remaining": "0.00"
+    },
+    "INV-2026-00523": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "12523.99"
+    },
+    "INV-2026-00941": {
+      "status": "PAID",
+      "net_paid": "25095.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00034": {
+      "status": "PAID",
+      "net_paid": "75023.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00209": {
+      "status": "PAID",
+      "net_paid": "75027.04",
+      "remaining": "0.00"
+    },
+    "INV-2026-00057": {
+      "status": "PAID",
+      "net_paid": "12514.03",
+      "remaining": "0.00"
+    },
+    "INV-2026-00694": {
+      "status": "PAID",
+      "net_paid": "12509.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00738": {
+      "status": "PAID",
+      "net_paid": "12568.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00139": {
+      "status": "PAID",
+      "net_paid": "75040.65",
+      "remaining": "0.00"
+    },
+    "INV-2026-00855": {
+      "status": "PAID",
+      "net_paid": "75049.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00834": {
+      "status": "PAID",
+      "net_paid": "100021.78",
+      "remaining": "0.00"
+    },
+    "INV-2026-00873": {
+      "status": "PAID",
+      "net_paid": "100091.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00570": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25072.77"
+    },
+    "INV-2026-00397": {
+      "status": "PAID",
+      "net_paid": "25014.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00162": {
+      "status": "PAID",
+      "net_paid": "50090.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00079": {
+      "status": "PARTIAL",
+      "net_paid": "30022.23",
+      "remaining": "45033.36"
+    },
+    "INV-2026-00994": {
+      "status": "PAID",
+      "net_paid": "75054.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00411": {
+      "status": "PARTIAL",
+      "net_paid": "10030.89",
+      "remaining": "15046.35"
+    },
+    "INV-2026-00325": {
+      "status": "PAID",
+      "net_paid": "75084.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00736": {
+      "status": "PAID",
+      "net_paid": "50077.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00099": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25011.22"
+    },
+    "INV-2026-00973": {
+      "status": "PAID",
+      "net_paid": "25078.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00037": {
+      "status": "PAID",
+      "net_paid": "75095.60",
+      "remaining": "0.00"
+    },
+    "INV-2026-00105": {
+      "status": "PAID",
+      "net_paid": "50042.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00561": {
+      "status": "PAID",
+      "net_paid": "25035.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00915": {
+      "status": "PAID",
+      "net_paid": "100039.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00976": {
+      "status": "PAID",
+      "net_paid": "25053.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00890": {
+      "status": "PARTIAL",
+      "net_paid": "20015.07",
+      "remaining": "30022.61"
+    },
+    "INV-2026-00430": {
+      "status": "PAID",
+      "net_paid": "25097.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00234": {
+      "status": "PAID",
+      "net_paid": "50098.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00205": {
+      "status": "PAID",
+      "net_paid": "100089.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00823": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100009.45"
+    },
+    "INV-2026-00757": {
+      "status": "PAID",
+      "net_paid": "75031.50",
+      "remaining": "0.00",
+      "credit": "382.66"
+    },
+    "INV-2026-00134": {
+      "status": "PAID",
+      "net_paid": "25040.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00577": {
+      "status": "PAID",
+      "net_paid": "25099.06",
+      "remaining": "0.00"
+    },
+    "INV-2026-00282": {
+      "status": "PAID",
+      "net_paid": "12524.85",
+      "remaining": "0.00"
+    },
+    "INV-2026-00039": {
+      "status": "PAID",
+      "net_paid": "99390.30",
+      "remaining": "0.00",
+      "adjustment": "690.55"
+    },
+    "INV-2026-00867": {
+      "status": "PAID",
+      "net_paid": "25041.77",
+      "remaining": "0.00"
+    },
+    "INV-2026-00644": {
+      "status": "PAID",
+      "net_paid": "50059.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00831": {
+      "status": "PAID",
+      "net_paid": "25068.87",
+      "remaining": "0.00"
+    },
+    "INV-2026-00795": {
+      "status": "PARTIAL",
+      "net_paid": "20005.68",
+      "remaining": "30008.53"
+    },
+    "INV-2026-00303": {
+      "status": "PAID",
+      "net_paid": "12509.77",
+      "remaining": "0.00"
+    },
+    "INV-2026-00765": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50006.89"
+    },
+    "INV-2026-00283": {
+      "status": "PARTIAL",
+      "net_paid": "40019.91",
+      "remaining": "60029.87"
+    },
+    "INV-2026-00808": {
+      "status": "PAID",
+      "net_paid": "25078.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00069": {
+      "status": "PAID",
+      "net_paid": "12537.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00111": {
+      "status": "PAID",
+      "net_paid": "12395.49",
+      "remaining": "0.00",
+      "adjustment": "192.59"
+    },
+    "INV-2026-00676": {
+      "status": "PARTIAL",
+      "net_paid": "5033.95",
+      "remaining": "7550.93"
+    },
+    "INV-2026-00857": {
+      "status": "PAID",
+      "net_paid": "25069.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00097": {
+      "status": "PARTIAL",
+      "net_paid": "40034.80",
+      "remaining": "60052.21"
+    },
+    "INV-2026-00019": {
+      "status": "PAID",
+      "net_paid": "25011.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00122": {
+      "status": "PAID",
+      "net_paid": "24665.10",
+      "remaining": "0.00",
+      "adjustment": "378.15"
+    },
+    "INV-2026-00526": {
+      "status": "PAID",
+      "net_paid": "75076.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00608": {
+      "status": "PAID",
+      "net_paid": "100083.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00489": {
+      "status": "PAID",
+      "net_paid": "50092.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00847": {
+      "status": "PAID",
+      "net_paid": "12540.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00376": {
+      "status": "PAID",
+      "net_paid": "100039.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00933": {
+      "status": "PAID",
+      "net_paid": "25012.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00749": {
+      "status": "PARTIAL",
+      "net_paid": "10026.89",
+      "remaining": "15040.34"
+    },
+    "INV-2026-00817": {
+      "status": "PAID",
+      "net_paid": "25026.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00362": {
+      "status": "PARTIAL",
+      "net_paid": "30005.26",
+      "remaining": "45007.89"
+    },
+    "INV-2026-00252": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50091.06"
+    },
+    "INV-2026-00646": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25073.71"
+    },
+    "INV-2026-00759": {
+      "status": "PAID",
+      "net_paid": "25048.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00659": {
+      "status": "PAID",
+      "net_paid": "50010.63",
+      "remaining": "0.00"
+    },
+    "INV-2026-00274": {
+      "status": "PAID",
+      "net_paid": "12590.66",
+      "remaining": "0.00"
+    },
+    "INV-2026-00897": {
+      "status": "PAID",
+      "net_paid": "12585.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00997": {
+      "status": "PAID",
+      "net_paid": "100091.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00024": {
+      "status": "PAID",
+      "net_paid": "50034.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00154": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75094.46"
+    },
+    "INV-2026-00719": {
+      "status": "PAID",
+      "net_paid": "100092.04",
+      "remaining": "0.00"
+    },
+    "INV-2026-00001": {
+      "status": "PAID",
+      "net_paid": "12504.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00337": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12525.22"
+    },
+    "INV-2026-00616": {
+      "status": "PAID",
+      "net_paid": "25076.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00900": {
+      "status": "PAID",
+      "net_paid": "25011.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00927": {
+      "status": "PAID",
+      "net_paid": "12529.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00742": {
+      "status": "PAID",
+      "net_paid": "12595.60",
+      "remaining": "0.00"
+    },
+    "INV-2026-00396": {
+      "status": "PAID",
+      "net_paid": "12594.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00260": {
+      "status": "PAID",
+      "net_paid": "100060.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00373": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75092.72"
+    },
+    "INV-2026-00044": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50090.64"
+    },
+    "INV-2026-00450": {
+      "status": "PAID",
+      "net_paid": "75069.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00132": {
+      "status": "PARTIAL",
+      "net_paid": "10002.74",
+      "remaining": "15004.11"
+    },
+    "INV-2026-00953": {
+      "status": "PAID",
+      "net_paid": "12557.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00045": {
+      "status": "PAID",
+      "net_paid": "12587.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00796": {
+      "status": "PAID",
+      "net_paid": "12530.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00998": {
+      "status": "PAID",
+      "net_paid": "100036.21",
+      "remaining": "0.00",
+      "credit": "1910.69"
+    },
+    "INV-2026-00106": {
+      "status": "PAID",
+      "net_paid": "50039.10",
+      "remaining": "0.00"
+    },
+    "INV-2026-00478": {
+      "status": "PARTIAL",
+      "net_paid": "10028.12",
+      "remaining": "15042.18"
+    },
+    "INV-2026-00717": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50066.06"
+    },
+    "INV-2026-00906": {
+      "status": "PAID",
+      "net_paid": "12502.74",
+      "remaining": "0.00"
+    },
+    "INV-2026-00418": {
+      "status": "PAID",
+      "net_paid": "12538.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00161": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75053.44"
+    },
+    "INV-2026-00588": {
+      "status": "PAID",
+      "net_paid": "50036.78",
+      "remaining": "0.00"
+    },
+    "INV-2026-00863": {
+      "status": "PAID",
+      "net_paid": "25049.27",
+      "remaining": "0.00",
+      "credit": "433.35"
+    },
+    "INV-2026-00003": {
+      "status": "PAID",
+      "net_paid": "12589.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00725": {
+      "status": "PARTIAL",
+      "net_paid": "20036.55",
+      "remaining": "30054.84"
+    },
+    "INV-2026-00509": {
+      "status": "PAID",
+      "net_paid": "75012.75",
+      "remaining": "0.00"
+    },
+    "INV-2026-00802": {
+      "status": "PAID",
+      "net_paid": "50038.71",
+      "remaining": "0.00",
+      "credit": "895.69"
+    },
+    "INV-2026-00525": {
+      "status": "PAID",
+      "net_paid": "25012.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00449": {
+      "status": "PAID",
+      "net_paid": "12509.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00568": {
+      "status": "PARTIAL",
+      "net_paid": "10010.84",
+      "remaining": "15016.28"
+    },
+    "INV-2026-00107": {
+      "status": "PAID",
+      "net_paid": "75021.44",
+      "remaining": "0.00",
+      "credit": "1237.85"
+    },
+    "INV-2026-00572": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100039.18"
+    },
+    "INV-2026-00918": {
+      "status": "PARTIAL",
+      "net_paid": "30024.85",
+      "remaining": "45037.28"
+    },
+    "INV-2026-00575": {
+      "status": "PAID",
+      "net_paid": "50062.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00389": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75044.97"
+    },
+    "INV-2026-00300": {
+      "status": "PAID",
+      "net_paid": "100032.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00774": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75054.11"
+    },
+    "INV-2026-00592": {
+      "status": "PAID",
+      "net_paid": "25076.85",
+      "remaining": "0.00"
+    },
+    "INV-2026-00417": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50080.71"
+    },
+    "INV-2026-00272": {
+      "status": "PAID",
+      "net_paid": "50002.31",
+      "remaining": "0.00",
+      "credit": "610.02"
+    },
+    "INV-2026-00275": {
+      "status": "PAID",
+      "net_paid": "25080.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00285": {
+      "status": "PAID",
+      "net_paid": "75099.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00202": {
+      "status": "PAID",
+      "net_paid": "12594.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00011": {
+      "status": "PARTIAL",
+      "net_paid": "30022.29",
+      "remaining": "45033.45"
+    },
+    "INV-2026-00359": {
+      "status": "PAID",
+      "net_paid": "12388.36",
+      "remaining": "0.00",
+      "adjustment": "135.25"
+    },
+    "INV-2026-00208": {
+      "status": "PAID",
+      "net_paid": "12563.71",
+      "remaining": "0.00"
+    },
+    "INV-2026-00803": {
+      "status": "PAID",
+      "net_paid": "12576.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00911": {
+      "status": "PAID",
+      "net_paid": "25031.44",
+      "remaining": "0.00",
+      "credit": "395.49"
+    },
+    "INV-2026-00366": {
+      "status": "PAID",
+      "net_paid": "50037.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00630": {
+      "status": "PAID",
+      "net_paid": "50013.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00851": {
+      "status": "PARTIAL",
+      "net_paid": "10037.75",
+      "remaining": "15056.63"
+    },
+    "INV-2026-00051": {
+      "status": "PARTIAL",
+      "net_paid": "10010.01",
+      "remaining": "15015.03"
+    },
+    "INV-2026-00065": {
+      "status": "PAID",
+      "net_paid": "25036.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00932": {
+      "status": "PARTIAL",
+      "net_paid": "40021.74",
+      "remaining": "60032.61"
+    },
+    "INV-2026-00153": {
+      "status": "PAID",
+      "net_paid": "100083.79",
+      "remaining": "0.00"
+    },
+    "INV-2026-00456": {
+      "status": "PAID",
+      "net_paid": "75097.87",
+      "remaining": "0.00"
+    },
+    "INV-2026-00360": {
+      "status": "PAID",
+      "net_paid": "25012.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00331": {
+      "status": "PAID",
+      "net_paid": "50071.78",
+      "remaining": "0.00"
+    },
+    "INV-2026-00883": {
+      "status": "PAID",
+      "net_paid": "75016.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00732": {
+      "status": "PAID",
+      "net_paid": "50052.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00599": {
+      "status": "PAID",
+      "net_paid": "75074.89",
+      "remaining": "0.00",
+      "credit": "668.16"
+    },
+    "INV-2026-00636": {
+      "status": "PAID",
+      "net_paid": "25072.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00049": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25083.17"
+    },
+    "INV-2026-00474": {
+      "status": "PAID",
+      "net_paid": "25025.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00356": {
+      "status": "PAID",
+      "net_paid": "25082.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00755": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100056.08"
+    },
+    "INV-2026-00684": {
+      "status": "PARTIAL",
+      "net_paid": "40010.10",
+      "remaining": "60015.16"
+    },
+    "INV-2026-00967": {
+      "status": "PAID",
+      "net_paid": "12522.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00294": {
+      "status": "PAID",
+      "net_paid": "25000.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00637": {
+      "status": "PARTIAL",
+      "net_paid": "30002.77",
+      "remaining": "45004.16"
+    },
+    "INV-2026-00012": {
+      "status": "PAID",
+      "net_paid": "25035.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00116": {
+      "status": "PAID",
+      "net_paid": "100086.66",
+      "remaining": "0.00"
+    },
+    "INV-2026-00812": {
+      "status": "PAID",
+      "net_paid": "100013.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00343": {
+      "status": "PARTIAL",
+      "net_paid": "5018.10",
+      "remaining": "7527.16"
+    },
+    "INV-2026-00329": {
+      "status": "PAID",
+      "net_paid": "75008.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00612": {
+      "status": "PAID",
+      "net_paid": "12556.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00707": {
+      "status": "PAID",
+      "net_paid": "25026.10",
+      "remaining": "0.00"
+    },
+    "INV-2026-00702": {
+      "status": "PAID",
+      "net_paid": "50073.66",
+      "remaining": "0.00"
+    },
+    "INV-2026-00835": {
+      "status": "PAID",
+      "net_paid": "50019.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00062": {
+      "status": "PAID",
+      "net_paid": "100032.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00006": {
+      "status": "PAID",
+      "net_paid": "25082.79",
+      "remaining": "0.00"
+    },
+    "INV-2026-00189": {
+      "status": "PAID",
+      "net_paid": "75026.07",
+      "remaining": "0.00"
+    },
+    "INV-2026-00952": {
+      "status": "PAID",
+      "net_paid": "75016.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00441": {
+      "status": "PARTIAL",
+      "net_paid": "20001.03",
+      "remaining": "30001.55"
+    },
+    "INV-2026-00557": {
+      "status": "PAID",
+      "net_paid": "75053.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00141": {
+      "status": "PAID",
+      "net_paid": "12577.11",
+      "remaining": "0.00"
+    },
+    "INV-2026-00196": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25037.88"
+    },
+    "INV-2026-00459": {
+      "status": "PAID",
+      "net_paid": "12505.98",
+      "remaining": "0.00",
+      "adjustment": "84.35"
+    },
+    "INV-2026-00730": {
+      "status": "PAID",
+      "net_paid": "100074.87",
+      "remaining": "0.00"
+    },
+    "INV-2026-00238": {
+      "status": "PAID",
+      "net_paid": "50002.07",
+      "remaining": "0.00"
+    },
+    "INV-2026-00399": {
+      "status": "PAID",
+      "net_paid": "25021.65",
+      "remaining": "0.00"
+    },
+    "INV-2026-00046": {
+      "status": "PAID",
+      "net_paid": "50018.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00338": {
+      "status": "PARTIAL",
+      "net_paid": "20033.34",
+      "remaining": "30050.03"
+    },
+    "INV-2026-00344": {
+      "status": "PAID",
+      "net_paid": "50083.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00768": {
+      "status": "PAID",
+      "net_paid": "25088.24",
+      "remaining": "0.00",
+      "credit": "406.42"
+    },
+    "INV-2026-00355": {
+      "status": "PAID",
+      "net_paid": "25081.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00569": {
+      "status": "PAID",
+      "net_paid": "12567.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00558": {
+      "status": "PAID",
+      "net_paid": "100015.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00382": {
+      "status": "PARTIAL",
+      "net_paid": "40019.60",
+      "remaining": "60029.41"
+    },
+    "INV-2026-00609": {
+      "status": "PAID",
+      "net_paid": "12487.33",
+      "remaining": "0.00",
+      "adjustment": "76.64"
+    },
+    "INV-2026-00089": {
+      "status": "PAID",
+      "net_paid": "25062.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00306": {
+      "status": "PARTIAL",
+      "net_paid": "30019.92",
+      "remaining": "45029.90"
+    },
+    "INV-2026-00773": {
+      "status": "PARTIAL",
+      "net_paid": "10003.44",
+      "remaining": "15005.16"
+    },
+    "INV-2026-00155": {
+      "status": "PAID",
+      "net_paid": "50007.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00938": {
+      "status": "PARTIAL",
+      "net_paid": "5017.91",
+      "remaining": "7526.87"
+    },
+    "INV-2026-00204": {
+      "status": "PAID",
+      "net_paid": "50063.89",
+      "remaining": "0.00"
+    },
+    "INV-2026-00124": {
+      "status": "PAID",
+      "net_paid": "12569.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00461": {
+      "status": "PAID",
+      "net_paid": "75055.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00656": {
+      "status": "PAID",
+      "net_paid": "12522.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00668": {
+      "status": "PAID",
+      "net_paid": "50065.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00928": {
+      "status": "PAID",
+      "net_paid": "12533.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00683": {
+      "status": "PARTIAL",
+      "net_paid": "40011.04",
+      "remaining": "60016.58"
+    },
+    "INV-2026-00322": {
+      "status": "PAID",
+      "net_paid": "75090.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00077": {
+      "status": "PAID",
+      "net_paid": "75067.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00223": {
+      "status": "PAID",
+      "net_paid": "100024.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00555": {
+      "status": "PAID",
+      "net_paid": "75021.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00174": {
+      "status": "PARTIAL",
+      "net_paid": "10020.34",
+      "remaining": "15030.51"
+    },
+    "INV-2026-00333": {
+      "status": "PAID",
+      "net_paid": "100039.20",
+      "remaining": "0.00"
+    },
+    "INV-2026-00605": {
+      "status": "PAID",
+      "net_paid": "100068.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00537": {
+      "status": "PAID",
+      "net_paid": "74332.56",
+      "remaining": "0.00",
+      "adjustment": "743.25"
+    },
+    "INV-2026-00670": {
+      "status": "PAID",
+      "net_paid": "100012.08",
+      "remaining": "0.00"
+    },
+    "INV-2026-00582": {
+      "status": "PARTIAL",
+      "net_paid": "20029.44",
+      "remaining": "30044.17"
+    },
+    "INV-2026-00243": {
+      "status": "PAID",
+      "net_paid": "75071.36",
+      "remaining": "0.00"
+    },
+    "INV-2026-00183": {
+      "status": "PAID",
+      "net_paid": "98364.81",
+      "remaining": "0.00",
+      "adjustment": "1711.30"
+    },
+    "INV-2026-00050": {
+      "status": "PAID",
+      "net_paid": "50083.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00822": {
+      "status": "PAID",
+      "net_paid": "100068.06",
+      "remaining": "0.00"
+    },
+    "INV-2026-00087": {
+      "status": "PAID",
+      "net_paid": "75079.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00431": {
+      "status": "PAID",
+      "net_paid": "12554.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00476": {
+      "status": "PAID",
+      "net_paid": "50091.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00219": {
+      "status": "PAID",
+      "net_paid": "12588.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00951": {
+      "status": "PAID",
+      "net_paid": "100090.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00076": {
+      "status": "PAID",
+      "net_paid": "12438.63",
+      "remaining": "0.00",
+      "adjustment": "131.99"
+    },
+    "INV-2026-00710": {
+      "status": "PAID",
+      "net_paid": "12564.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00403": {
+      "status": "PAID",
+      "net_paid": "12576.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00348": {
+      "status": "PAID",
+      "net_paid": "100079.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00053": {
+      "status": "PAID",
+      "net_paid": "12598.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00295": {
+      "status": "PARTIAL",
+      "net_paid": "30038.91",
+      "remaining": "45058.38"
+    },
+    "INV-2026-00641": {
+      "status": "PAID",
+      "net_paid": "25005.10",
+      "remaining": "0.00"
+    },
+    "INV-2026-00372": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25040.00"
+    },
+    "INV-2026-00186": {
+      "status": "PARTIAL",
+      "net_paid": "40036.62",
+      "remaining": "60054.95"
+    },
+    "INV-2026-00874": {
+      "status": "PAID",
+      "net_paid": "75034.22",
+      "remaining": "0.00"
+    },
+    "INV-2026-00959": {
+      "status": "PARTIAL",
+      "net_paid": "30011.10",
+      "remaining": "45016.67"
+    },
+    "INV-2026-00578": {
+      "status": "PAID",
+      "net_paid": "50008.54",
+      "remaining": "0.00"
+    },
+    "INV-2026-00101": {
+      "status": "PAID",
+      "net_paid": "12593.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00871": {
+      "status": "PAID",
+      "net_paid": "75099.11",
+      "remaining": "0.00"
+    },
+    "INV-2026-00672": {
+      "status": "PAID",
+      "net_paid": "75084.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00726": {
+      "status": "PARTIAL",
+      "net_paid": "10013.04",
+      "remaining": "15019.57"
+    },
+    "INV-2026-00108": {
+      "status": "PAID",
+      "net_paid": "50074.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00075": {
+      "status": "PAID",
+      "net_paid": "75031.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00930": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50026.61"
+    },
+    "INV-2026-00571": {
+      "status": "PAID",
+      "net_paid": "50073.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00248": {
+      "status": "PAID",
+      "net_paid": "12580.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00521": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100031.76"
+    },
+    "INV-2026-00227": {
+      "status": "PAID",
+      "net_paid": "25099.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00071": {
+      "status": "PAID",
+      "net_paid": "100038.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00913": {
+      "status": "PAID",
+      "net_paid": "50065.02",
+      "remaining": "0.00"
+    },
+    "INV-2026-00643": {
+      "status": "PAID",
+      "net_paid": "25011.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00336": {
+      "status": "PAID",
+      "net_paid": "25018.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00992": {
+      "status": "PAID",
+      "net_paid": "50027.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00156": {
+      "status": "PAID",
+      "net_paid": "12585.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00364": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75088.64"
+    },
+    "INV-2026-00624": {
+      "status": "PAID",
+      "net_paid": "50007.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00436": {
+      "status": "PAID",
+      "net_paid": "12545.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00028": {
+      "status": "PAID",
+      "net_paid": "50091.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00413": {
+      "status": "PAID",
+      "net_paid": "100036.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00912": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "100041.35"
+    },
+    "INV-2026-00585": {
+      "status": "PAID",
+      "net_paid": "12567.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00406": {
+      "status": "PAID",
+      "net_paid": "12564.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00756": {
+      "status": "PAID",
+      "net_paid": "50043.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00807": {
+      "status": "PAID",
+      "net_paid": "100036.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00135": {
+      "status": "PAID",
+      "net_paid": "12557.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00701": {
+      "status": "PARTIAL",
+      "net_paid": "10030.56",
+      "remaining": "15045.86"
+    },
+    "INV-2026-00404": {
+      "status": "PAID",
+      "net_paid": "25036.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00635": {
+      "status": "PAID",
+      "net_paid": "75098.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00631": {
+      "status": "PAID",
+      "net_paid": "12570.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00290": {
+      "status": "PARTIAL",
+      "net_paid": "5039.95",
+      "remaining": "7559.93"
+    },
+    "INV-2026-00882": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50084.01"
+    },
+    "INV-2026-00947": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12500.85"
+    },
+    "INV-2026-00401": {
+      "status": "PAID",
+      "net_paid": "50026.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00728": {
+      "status": "PAID",
+      "net_paid": "12507.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00692": {
+      "status": "PAID",
+      "net_paid": "50079.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00916": {
+      "status": "PAID",
+      "net_paid": "25049.14",
+      "remaining": "0.00"
+    },
+    "INV-2026-00691": {
+      "status": "PAID",
+      "net_paid": "98416.68",
+      "remaining": "0.00",
+      "adjustment": "1630.77"
+    },
+    "INV-2026-00529": {
+      "status": "PAID",
+      "net_paid": "50024.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00023": {
+      "status": "PAID",
+      "net_paid": "50026.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00164": {
+      "status": "PAID",
+      "net_paid": "75028.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00307": {
+      "status": "PAID",
+      "net_paid": "75044.60",
+      "remaining": "0.00"
+    },
+    "INV-2026-00402": {
+      "status": "PAID",
+      "net_paid": "75048.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00500": {
+      "status": "PAID",
+      "net_paid": "12501.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00184": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100040.82"
+    },
+    "INV-2026-00960": {
+      "status": "PARTIAL",
+      "net_paid": "20019.73",
+      "remaining": "30029.60"
+    },
+    "INV-2026-00231": {
+      "status": "PAID",
+      "net_paid": "75064.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00216": {
+      "status": "PARTIAL",
+      "net_paid": "30021.42",
+      "remaining": "45032.13"
+    },
+    "INV-2026-00896": {
+      "status": "PAID",
+      "net_paid": "25088.82",
+      "remaining": "0.00"
+    },
+    "INV-2026-00881": {
+      "status": "PAID",
+      "net_paid": "50050.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00734": {
+      "status": "PAID",
+      "net_paid": "50083.11",
+      "remaining": "0.00"
+    },
+    "INV-2026-00386": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "75093.70"
+    },
+    "INV-2026-00299": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25043.34"
+    },
+    "INV-2026-00507": {
+      "status": "PAID",
+      "net_paid": "50011.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00221": {
+      "status": "PAID",
+      "net_paid": "12506.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00712": {
+      "status": "PARTIAL",
+      "net_paid": "40023.12",
+      "remaining": "60034.69"
+    },
+    "INV-2026-00281": {
+      "status": "PAID",
+      "net_paid": "12594.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00858": {
+      "status": "PAID",
+      "net_paid": "75007.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00741": {
+      "status": "PAID",
+      "net_paid": "100094.63",
+      "remaining": "0.00"
+    },
+    "INV-2026-00317": {
+      "status": "PAID",
+      "net_paid": "75014.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00895": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25089.54"
+    },
+    "INV-2026-00827": {
+      "status": "PAID",
+      "net_paid": "12569.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00150": {
+      "status": "PAID",
+      "net_paid": "100043.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00887": {
+      "status": "PAID",
+      "net_paid": "12542.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00908": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12582.28"
+    },
+    "INV-2026-00950": {
+      "status": "PAID",
+      "net_paid": "25070.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00512": {
+      "status": "PAID",
+      "net_paid": "12566.36",
+      "remaining": "0.00"
+    },
+    "INV-2026-00225": {
+      "status": "PARTIAL",
+      "net_paid": "5036.96",
+      "remaining": "7555.44"
+    },
+    "INV-2026-00304": {
+      "status": "PAID",
+      "net_paid": "49806.93",
+      "remaining": "0.00",
+      "adjustment": "290.56"
+    },
+    "INV-2026-00149": {
+      "status": "PARTIAL",
+      "net_paid": "5017.11",
+      "remaining": "7525.68"
+    },
+    "INV-2026-00324": {
+      "status": "PARTIAL",
+      "net_paid": "20021.18",
+      "remaining": "30031.78"
+    },
+    "INV-2026-00472": {
+      "status": "PAID",
+      "net_paid": "100051.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00552": {
+      "status": "PAID",
+      "net_paid": "100024.63",
+      "remaining": "0.00"
+    },
+    "INV-2026-00708": {
+      "status": "PARTIAL",
+      "net_paid": "40030.59",
+      "remaining": "60045.89"
+    },
+    "INV-2026-00865": {
+      "status": "PAID",
+      "net_paid": "75068.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00110": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "100092.24"
+    },
+    "INV-2026-00975": {
+      "status": "PAID",
+      "net_paid": "50080.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00633": {
+      "status": "PAID",
+      "net_paid": "50016.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00130": {
+      "status": "PAID",
+      "net_paid": "12560.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00374": {
+      "status": "PARTIAL",
+      "net_paid": "10011.14",
+      "remaining": "15016.71"
+    },
+    "INV-2026-00328": {
+      "status": "PARTIAL",
+      "net_paid": "20032.66",
+      "remaining": "30049.01"
+    },
+    "INV-2026-00793": {
+      "status": "PARTIAL",
+      "net_paid": "10011.50",
+      "remaining": "15017.25"
+    },
+    "INV-2026-00398": {
+      "status": "PAID",
+      "net_paid": "50068.07",
+      "remaining": "0.00"
+    },
+    "INV-2026-00902": {
+      "status": "PARTIAL",
+      "net_paid": "30024.45",
+      "remaining": "45036.69"
+    },
+    "INV-2026-00549": {
+      "status": "PARTIAL",
+      "net_paid": "20004.31",
+      "remaining": "30006.48"
+    },
+    "INV-2026-00064": {
+      "status": "PAID",
+      "net_paid": "100073.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00942": {
+      "status": "PARTIAL",
+      "net_paid": "30005.61",
+      "remaining": "45008.43"
+    },
+    "INV-2026-00864": {
+      "status": "PARTIAL",
+      "net_paid": "30003.77",
+      "remaining": "45005.67"
+    },
+    "INV-2026-00964": {
+      "status": "PAID",
+      "net_paid": "12559.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00321": {
+      "status": "PAID",
+      "net_paid": "75047.22",
+      "remaining": "0.00"
+    },
+    "INV-2026-00629": {
+      "status": "PAID",
+      "net_paid": "75060.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00377": {
+      "status": "PAID",
+      "net_paid": "100023.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00632": {
+      "status": "PAID",
+      "net_paid": "24936.33",
+      "remaining": "0.00",
+      "adjustment": "153.04"
+    },
+    "INV-2026-00658": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12552.36"
+    },
+    "INV-2026-00349": {
+      "status": "PAID",
+      "net_paid": "49263.93",
+      "remaining": "0.00",
+      "adjustment": "826.49"
+    },
+    "INV-2026-00614": {
+      "status": "PAID",
+      "net_paid": "25007.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00115": {
+      "status": "PAID",
+      "net_paid": "75089.00",
+      "remaining": "0.00"
+    },
+    "INV-2026-00627": {
+      "status": "PARTIAL",
+      "net_paid": "30025.33",
+      "remaining": "45038.01"
+    },
+    "INV-2026-00298": {
+      "status": "PAID",
+      "net_paid": "75011.66",
+      "remaining": "0.00",
+      "credit": "937.64"
+    },
+    "INV-2026-00926": {
+      "status": "PAID",
+      "net_paid": "50088.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00731": {
+      "status": "PAID",
+      "net_paid": "100084.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00229": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "12594.81"
+    },
+    "INV-2026-00239": {
+      "status": "PAID",
+      "net_paid": "75017.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00448": {
+      "status": "PAID",
+      "net_paid": "100049.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00885": {
+      "status": "PARTIAL",
+      "net_paid": "20027.12",
+      "remaining": "30040.69"
+    },
+    "INV-2026-00904": {
+      "status": "PAID",
+      "net_paid": "75002.57",
+      "remaining": "0.00"
+    },
+    "INV-2026-00720": {
+      "status": "PAID",
+      "net_paid": "50090.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00686": {
+      "status": "PARTIAL",
+      "net_paid": "40002.69",
+      "remaining": "60004.05"
+    },
+    "INV-2026-00965": {
+      "status": "PAID",
+      "net_paid": "25081.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00590": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50023.92"
+    },
+    "INV-2026-00230": {
+      "status": "PARTIAL",
+      "net_paid": "20037.73",
+      "remaining": "30056.60"
+    },
+    "INV-2026-00341": {
+      "status": "PAID",
+      "net_paid": "25062.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00093": {
+      "status": "PARTIAL",
+      "net_paid": "10019.44",
+      "remaining": "15029.17"
+    },
+    "INV-2026-00762": {
+      "status": "PAID",
+      "net_paid": "50047.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00548": {
+      "status": "PAID",
+      "net_paid": "50097.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00880": {
+      "status": "PAID",
+      "net_paid": "75087.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00127": {
+      "status": "PAID",
+      "net_paid": "75090.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00841": {
+      "status": "PAID",
+      "net_paid": "73660.66",
+      "remaining": "0.00",
+      "adjustment": "1396.05"
+    },
+    "INV-2026-00892": {
+      "status": "PAID",
+      "net_paid": "100055.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00226": {
+      "status": "PAID",
+      "net_paid": "75041.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00288": {
+      "status": "PAID",
+      "net_paid": "50096.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00393": {
+      "status": "PAID",
+      "net_paid": "25041.06",
+      "remaining": "0.00"
+    },
+    "INV-2026-00335": {
+      "status": "PAID",
+      "net_paid": "100066.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00165": {
+      "status": "PAID",
+      "net_paid": "100049.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00030": {
+      "status": "PAID",
+      "net_paid": "12551.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00446": {
+      "status": "PARTIAL",
+      "net_paid": "5029.62",
+      "remaining": "7544.43"
+    },
+    "INV-2026-00109": {
+      "status": "PARTIAL",
+      "net_paid": "5000.60",
+      "remaining": "7500.92"
+    },
+    "INV-2026-00777": {
+      "status": "PAID",
+      "net_paid": "75078.22",
+      "remaining": "0.00"
+    },
+    "INV-2026-00750": {
+      "status": "PAID",
+      "net_paid": "100077.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00700": {
+      "status": "PARTIAL",
+      "net_paid": "40006.95",
+      "remaining": "60010.44"
+    },
+    "INV-2026-00250": {
+      "status": "PAID",
+      "net_paid": "50042.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00247": {
+      "status": "PAID",
+      "net_paid": "100062.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00554": {
+      "status": "PAID",
+      "net_paid": "25057.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00907": {
+      "status": "PAID",
+      "net_paid": "50087.77",
+      "remaining": "0.00",
+      "credit": "806.41"
+    },
+    "INV-2026-00119": {
+      "status": "PAID",
+      "net_paid": "12517.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00457": {
+      "status": "PAID",
+      "net_paid": "50074.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00763": {
+      "status": "PAID",
+      "net_paid": "100088.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00943": {
+      "status": "PAID",
+      "net_paid": "50040.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00562": {
+      "status": "PAID",
+      "net_paid": "75031.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00309": {
+      "status": "PAID",
+      "net_paid": "12597.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00090": {
+      "status": "PAID",
+      "net_paid": "75043.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00510": {
+      "status": "PAID",
+      "net_paid": "100070.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00131": {
+      "status": "PAID",
+      "net_paid": "100024.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00033": {
+      "status": "PAID",
+      "net_paid": "75064.82",
+      "remaining": "0.00"
+    },
+    "INV-2026-00517": {
+      "status": "PARTIAL",
+      "net_paid": "40005.15",
+      "remaining": "60007.73"
+    },
+    "INV-2026-00586": {
+      "status": "PAID",
+      "net_paid": "75082.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00695": {
+      "status": "PARTIAL",
+      "net_paid": "30027.23",
+      "remaining": "45040.86"
+    },
+    "INV-2026-00772": {
+      "status": "PAID",
+      "net_paid": "100036.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00200": {
+      "status": "PAID",
+      "net_paid": "12533.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00825": {
+      "status": "PAID",
+      "net_paid": "75041.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00722": {
+      "status": "PAID",
+      "net_paid": "75090.08",
+      "remaining": "0.00"
+    },
+    "INV-2026-00996": {
+      "status": "PAID",
+      "net_paid": "50036.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00785": {
+      "status": "PAID",
+      "net_paid": "100098.75",
+      "remaining": "0.00"
+    },
+    "INV-2026-00488": {
+      "status": "PAID",
+      "net_paid": "25060.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00439": {
+      "status": "PAID",
+      "net_paid": "12521.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00843": {
+      "status": "PAID",
+      "net_paid": "12568.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00084": {
+      "status": "PARTIAL",
+      "net_paid": "30036.06",
+      "remaining": "45054.10"
+    },
+    "INV-2026-00628": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25081.29"
+    },
+    "INV-2026-00410": {
+      "status": "PARTIAL",
+      "net_paid": "20007.10",
+      "remaining": "30010.65"
+    },
+    "INV-2026-00711": {
+      "status": "PAID",
+      "net_paid": "75039.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00622": {
+      "status": "PAID",
+      "net_paid": "100077.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00240": {
+      "status": "PAID",
+      "net_paid": "50075.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00455": {
+      "status": "PAID",
+      "net_paid": "100089.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00334": {
+      "status": "PAID",
+      "net_paid": "50090.24",
+      "remaining": "0.00"
+    },
+    "INV-2026-00047": {
+      "status": "PAID",
+      "net_paid": "75025.91",
+      "remaining": "0.00",
+      "credit": "420.14"
+    },
+    "INV-2026-00922": {
+      "status": "PAID",
+      "net_paid": "50092.70",
+      "remaining": "0.00"
+    },
+    "INV-2026-00649": {
+      "status": "PAID",
+      "net_paid": "50065.21",
+      "remaining": "0.00"
+    },
+    "INV-2026-00018": {
+      "status": "PAID",
+      "net_paid": "50059.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00970": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75054.84"
+    },
+    "INV-2026-00654": {
+      "status": "PAID",
+      "net_paid": "75035.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00674": {
+      "status": "PAID",
+      "net_paid": "100029.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00193": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12546.81"
+    },
+    "INV-2026-00424": {
+      "status": "PAID",
+      "net_paid": "50035.59",
+      "remaining": "0.00",
+      "credit": "490.34"
+    },
+    "INV-2026-00528": {
+      "status": "PAID",
+      "net_paid": "100052.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00487": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "75074.32"
+    },
+    "INV-2026-00634": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50048.43"
+    },
+    "INV-2026-00463": {
+      "status": "PAID",
+      "net_paid": "50069.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00837": {
+      "status": "PAID",
+      "net_paid": "25036.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00934": {
+      "status": "PARTIAL",
+      "net_paid": "20003.51",
+      "remaining": "30005.28"
+    },
+    "INV-2026-00287": {
+      "status": "PARTIAL",
+      "net_paid": "30029.52",
+      "remaining": "45044.29"
+    },
+    "INV-2026-00544": {
+      "status": "PAID",
+      "net_paid": "25071.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00126": {
+      "status": "PAID",
+      "net_paid": "25042.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00810": {
+      "status": "PAID",
+      "net_paid": "75089.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00027": {
+      "status": "PAID",
+      "net_paid": "25075.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00143": {
+      "status": "PAID",
+      "net_paid": "50037.28",
+      "remaining": "0.00"
+    },
+    "INV-2026-00412": {
+      "status": "PAID",
+      "net_paid": "100091.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00468": {
+      "status": "PAID",
+      "net_paid": "100009.82",
+      "remaining": "0.00"
+    },
+    "INV-2026-00004": {
+      "status": "PAID",
+      "net_paid": "100069.12",
+      "remaining": "0.00"
+    },
+    "INV-2026-00103": {
+      "status": "PAID",
+      "net_paid": "100013.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00339": {
+      "status": "PAID",
+      "net_paid": "75079.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00365": {
+      "status": "PAID",
+      "net_paid": "100011.21",
+      "remaining": "0.00"
+    },
+    "INV-2026-00059": {
+      "status": "PARTIAL",
+      "net_paid": "10031.14",
+      "remaining": "15046.73"
+    },
+    "INV-2026-00626": {
+      "status": "PAID",
+      "net_paid": "50071.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00388": {
+      "status": "PARTIAL",
+      "net_paid": "20001.43",
+      "remaining": "30002.16"
+    },
+    "INV-2026-00409": {
+      "status": "PARTIAL",
+      "net_paid": "20038.30",
+      "remaining": "30057.47"
+    },
+    "INV-2026-00978": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12592.38"
+    },
+    "INV-2026-00370": {
+      "status": "PAID",
+      "net_paid": "50009.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00246": {
+      "status": "PAID",
+      "net_paid": "25076.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00323": {
+      "status": "PAID",
+      "net_paid": "75014.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00352": {
+      "status": "PAID",
+      "net_paid": "75038.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00380": {
+      "status": "PAID",
+      "net_paid": "50089.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00345": {
+      "status": "PAID",
+      "net_paid": "12546.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00440": {
+      "status": "PAID",
+      "net_paid": "50038.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00619": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50033.02"
+    },
+    "INV-2026-00346": {
+      "status": "PAID",
+      "net_paid": "100095.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00485": {
+      "status": "PARTIAL",
+      "net_paid": "10002.00",
+      "remaining": "15003.02"
+    },
+    "INV-2026-00498": {
+      "status": "PARTIAL",
+      "net_paid": "40020.21",
+      "remaining": "60030.32"
+    },
+    "INV-2026-00838": {
+      "status": "PAID",
+      "net_paid": "12548.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00533": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12550.85"
+    },
+    "INV-2026-00618": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12574.98"
+    },
+    "INV-2026-00886": {
+      "status": "PAID",
+      "net_paid": "100036.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00705": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "75040.67"
+    },
+    "INV-2026-00535": {
+      "status": "PAID",
+      "net_paid": "50047.03",
+      "remaining": "0.00"
+    },
+    "INV-2026-00217": {
+      "status": "PAID",
+      "net_paid": "75045.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00760": {
+      "status": "PARTIAL",
+      "net_paid": "10032.04",
+      "remaining": "15048.07"
+    },
+    "INV-2026-00043": {
+      "status": "PAID",
+      "net_paid": "100076.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00597": {
+      "status": "PAID",
+      "net_paid": "50038.93",
+      "remaining": "0.00"
+    },
+    "INV-2026-00820": {
+      "status": "PAID",
+      "net_paid": "12583.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00008": {
+      "status": "PAID",
+      "net_paid": "100068.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00273": {
+      "status": "PAID",
+      "net_paid": "25044.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00063": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "75061.18"
+    },
+    "INV-2026-00010": {
+      "status": "PAID",
+      "net_paid": "12526.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00104": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100092.60"
+    },
+    "INV-2026-00689": {
+      "status": "PAID",
+      "net_paid": "25093.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00497": {
+      "status": "PAID",
+      "net_paid": "50097.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00828": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12588.66"
+    },
+    "INV-2026-00241": {
+      "status": "PAID",
+      "net_paid": "75028.85",
+      "remaining": "0.00"
+    },
+    "INV-2026-00600": {
+      "status": "PARTIAL",
+      "net_paid": "5032.75",
+      "remaining": "7549.14"
+    },
+    "INV-2026-00031": {
+      "status": "PAID",
+      "net_paid": "50010.84",
+      "remaining": "0.00"
+    },
+    "INV-2026-00988": {
+      "status": "PARTIAL",
+      "net_paid": "40033.20",
+      "remaining": "60049.80"
+    },
+    "INV-2026-00066": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "50003.44"
+    },
+    "INV-2026-00284": {
+      "status": "PAID",
+      "net_paid": "25019.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00854": {
+      "status": "PAID",
+      "net_paid": "25085.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00920": {
+      "status": "PARTIAL",
+      "net_paid": "5011.22",
+      "remaining": "7516.85"
+    },
+    "INV-2026-00088": {
+      "status": "PAID",
+      "net_paid": "25065.70",
+      "remaining": "0.00"
+    },
+    "INV-2026-00301": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12589.22"
+    },
+    "INV-2026-00923": {
+      "status": "PAID",
+      "net_paid": "100006.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00171": {
+      "status": "PAID",
+      "net_paid": "75027.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00775": {
+      "status": "PAID",
+      "net_paid": "12522.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00776": {
+      "status": "PAID",
+      "net_paid": "100025.87",
+      "remaining": "0.00"
+    },
+    "INV-2026-00640": {
+      "status": "PAID",
+      "net_paid": "75059.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00642": {
+      "status": "PAID",
+      "net_paid": "100071.79",
+      "remaining": "0.00"
+    },
+    "INV-2026-00917": {
+      "status": "PAID",
+      "net_paid": "12505.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00856": {
+      "status": "PAID",
+      "net_paid": "12591.21",
+      "remaining": "0.00"
+    },
+    "INV-2026-00266": {
+      "status": "PAID",
+      "net_paid": "12587.79",
+      "remaining": "0.00"
+    },
+    "INV-2026-00197": {
+      "status": "PAID",
+      "net_paid": "25035.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00969": {
+      "status": "PAID",
+      "net_paid": "98451.24",
+      "remaining": "0.00",
+      "adjustment": "1611.00"
+    },
+    "INV-2026-00061": {
+      "status": "PAID",
+      "net_paid": "100069.32",
+      "remaining": "0.00"
+    },
+    "INV-2026-00206": {
+      "status": "PAID",
+      "net_paid": "25079.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00747": {
+      "status": "PAID",
+      "net_paid": "75051.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00218": {
+      "status": "PAID",
+      "net_paid": "50013.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00581": {
+      "status": "PAID",
+      "net_paid": "50013.74",
+      "remaining": "0.00"
+    },
+    "INV-2026-00462": {
+      "status": "PAID",
+      "net_paid": "75068.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00113": {
+      "status": "PARTIAL",
+      "net_paid": "20004.50",
+      "remaining": "30006.77"
+    },
+    "INV-2026-00515": {
+      "status": "PARTIAL",
+      "net_paid": "30006.93",
+      "remaining": "45010.41"
+    },
+    "INV-2026-00187": {
+      "status": "PAID",
+      "net_paid": "50072.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00499": {
+      "status": "PAID",
+      "net_paid": "25064.75",
+      "remaining": "0.00"
+    },
+    "INV-2026-00939": {
+      "status": "PAID",
+      "net_paid": "75037.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00138": {
+      "status": "PAID",
+      "net_paid": "12529.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00721": {
+      "status": "PAID",
+      "net_paid": "12563.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00191": {
+      "status": "PAID",
+      "net_paid": "50085.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00869": {
+      "status": "PARTIAL",
+      "net_paid": "20006.05",
+      "remaining": "30009.09"
+    },
+    "INV-2026-00936": {
+      "status": "PAID",
+      "net_paid": "50099.15",
+      "remaining": "0.00"
+    },
+    "INV-2026-00175": {
+      "status": "PARTIAL",
+      "net_paid": "10009.65",
+      "remaining": "15014.49"
+    },
+    "INV-2026-00442": {
+      "status": "PAID",
+      "net_paid": "50008.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00990": {
+      "status": "PAID",
+      "net_paid": "50087.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00995": {
+      "status": "PAID",
+      "net_paid": "12501.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00671": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50012.15"
+    },
+    "INV-2026-00427": {
+      "status": "PAID",
+      "net_paid": "49044.73",
+      "remaining": "0.00",
+      "adjustment": "965.19"
+    },
+    "INV-2026-00538": {
+      "status": "PARTIAL",
+      "net_paid": "40002.68",
+      "remaining": "60004.04"
+    },
+    "INV-2026-00428": {
+      "status": "PAID",
+      "net_paid": "50031.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00836": {
+      "status": "PAID",
+      "net_paid": "100064.39",
+      "remaining": "0.00"
+    },
+    "INV-2026-00962": {
+      "status": "PARTIAL",
+      "net_paid": "10028.48",
+      "remaining": "15042.73"
+    },
+    "INV-2026-00100": {
+      "status": "PAID",
+      "net_paid": "12538.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00002": {
+      "status": "PAID",
+      "net_paid": "25036.57",
+      "remaining": "0.00"
+    },
+    "INV-2026-00991": {
+      "status": "PAID",
+      "net_paid": "12517.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00173": {
+      "status": "PAID",
+      "net_paid": "100054.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00966": {
+      "status": "PARTIAL",
+      "net_paid": "40012.81",
+      "remaining": "60019.22"
+    },
+    "INV-2026-00849": {
+      "status": "PAID",
+      "net_paid": "100035.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00716": {
+      "status": "PAID",
+      "net_paid": "75021.94",
+      "remaining": "0.00"
+    },
+    "INV-2026-00799": {
+      "status": "PAID",
+      "net_paid": "25073.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00845": {
+      "status": "PAID",
+      "net_paid": "12516.53",
+      "remaining": "0.00"
+    },
+    "INV-2026-00215": {
+      "status": "PAID",
+      "net_paid": "75053.63",
+      "remaining": "0.00"
+    },
+    "INV-2026-00767": {
+      "status": "PAID",
+      "net_paid": "50078.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00276": {
+      "status": "PAID",
+      "net_paid": "12594.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00147": {
+      "status": "PAID",
+      "net_paid": "100065.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00353": {
+      "status": "PAID",
+      "net_paid": "12552.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00587": {
+      "status": "PAID",
+      "net_paid": "25063.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00652": {
+      "status": "PAID",
+      "net_paid": "100063.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00112": {
+      "status": "PAID",
+      "net_paid": "100043.45",
+      "remaining": "0.00"
+    },
+    "INV-2026-00092": {
+      "status": "PAID",
+      "net_paid": "100079.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00746": {
+      "status": "PAID",
+      "net_paid": "12299.43",
+      "remaining": "0.00",
+      "adjustment": "231.82"
+    },
+    "INV-2026-00771": {
+      "status": "PAID",
+      "net_paid": "25008.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00422": {
+      "status": "PAID",
+      "net_paid": "12580.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00752": {
+      "status": "PARTIAL",
+      "net_paid": "40021.30",
+      "remaining": "60031.95"
+    },
+    "INV-2026-00860": {
+      "status": "PAID",
+      "net_paid": "75066.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00797": {
+      "status": "PAID",
+      "net_paid": "75053.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00392": {
+      "status": "PAID",
+      "net_paid": "100057.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00675": {
+      "status": "PAID",
+      "net_paid": "75082.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00546": {
+      "status": "PAID",
+      "net_paid": "25059.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00872": {
+      "status": "PAID",
+      "net_paid": "12511.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00310": {
+      "status": "PAID",
+      "net_paid": "75052.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00709": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "50081.48"
+    },
+    "INV-2026-00259": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25050.16"
+    },
+    "INV-2026-00903": {
+      "status": "PAID",
+      "net_paid": "100079.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00170": {
+      "status": "PAID",
+      "net_paid": "75035.01",
+      "remaining": "0.00"
+    },
+    "INV-2026-00434": {
+      "status": "PAID",
+      "net_paid": "100035.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00194": {
+      "status": "PAID",
+      "net_paid": "50055.02",
+      "remaining": "0.00"
+    },
+    "INV-2026-00531": {
+      "status": "PAID",
+      "net_paid": "50045.00",
+      "remaining": "0.00"
+    },
+    "INV-2026-00083": {
+      "status": "PAID",
+      "net_paid": "75040.92",
+      "remaining": "0.00"
+    },
+    "INV-2026-00601": {
+      "status": "PAID",
+      "net_paid": "100002.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00824": {
+      "status": "PAID",
+      "net_paid": "75050.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00921": {
+      "status": "PAID",
+      "net_paid": "75071.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00862": {
+      "status": "PARTIAL",
+      "net_paid": "40031.03",
+      "remaining": "60046.55"
+    },
+    "INV-2026-00729": {
+      "status": "PAID",
+      "net_paid": "25054.56",
+      "remaining": "0.00"
+    },
+    "INV-2026-00660": {
+      "status": "PAID",
+      "net_paid": "100047.57",
+      "remaining": "0.00"
+    },
+    "INV-2026-00095": {
+      "status": "PARTIAL",
+      "net_paid": "5020.55",
+      "remaining": "7530.83"
+    },
+    "INV-2026-00846": {
+      "status": "PAID",
+      "net_paid": "12573.14",
+      "remaining": "0.00"
+    },
+    "INV-2026-00120": {
+      "status": "PAID",
+      "net_paid": "25044.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00013": {
+      "status": "PAID",
+      "net_paid": "12515.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00166": {
+      "status": "PARTIAL",
+      "net_paid": "40000.02",
+      "remaining": "60000.04"
+    },
+    "INV-2026-00679": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "100046.53"
+    },
+    "INV-2026-00593": {
+      "status": "PAID",
+      "net_paid": "100000.86",
+      "remaining": "0.00"
+    },
+    "INV-2026-00617": {
+      "status": "PARTIAL",
+      "net_paid": "30011.94",
+      "remaining": "45017.92"
+    },
+    "INV-2026-00254": {
+      "status": "PAID",
+      "net_paid": "25066.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00261": {
+      "status": "PAID",
+      "net_paid": "100086.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00151": {
+      "status": "PAID",
+      "net_paid": "12597.74",
+      "remaining": "0.00"
+    },
+    "INV-2026-00698": {
+      "status": "PARTIAL",
+      "net_paid": "20022.63",
+      "remaining": "30033.95"
+    },
+    "INV-2026-00467": {
+      "status": "PAID",
+      "net_paid": "12561.05",
+      "remaining": "0.00"
+    },
+    "INV-2026-00620": {
+      "status": "PARTIAL",
+      "net_paid": "10002.74",
+      "remaining": "15004.12"
+    },
+    "INV-2026-00268": {
+      "status": "PARTIAL",
+      "net_paid": "30018.12",
+      "remaining": "45027.18"
+    },
+    "INV-2026-00152": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "50051.39"
+    },
+    "INV-2026-00661": {
+      "status": "PAID",
+      "net_paid": "25028.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00682": {
+      "status": "PAID",
+      "net_paid": "50087.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00715": {
+      "status": "PAID",
+      "net_paid": "100001.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00029": {
+      "status": "PAID",
+      "net_paid": "50009.16",
+      "remaining": "0.00"
+    },
+    "INV-2026-00693": {
+      "status": "PAID",
+      "net_paid": "75048.73",
+      "remaining": "0.00"
+    },
+    "INV-2026-00724": {
+      "status": "PARTIAL",
+      "net_paid": "5025.81",
+      "remaining": "7538.72"
+    },
+    "INV-2026-00647": {
+      "status": "PARTIAL",
+      "net_paid": "20029.09",
+      "remaining": "30043.64"
+    },
+    "INV-2026-00371": {
+      "status": "PAID",
+      "net_paid": "50061.41",
+      "remaining": "0.00"
+    },
+    "INV-2026-00036": {
+      "status": "PAID",
+      "net_paid": "100043.04",
+      "remaining": "0.00"
+    },
+    "INV-2026-00490": {
+      "status": "PAID",
+      "net_paid": "12508.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00987": {
+      "status": "PARTIAL",
+      "net_paid": "30038.15",
+      "remaining": "45057.24"
+    },
+    "INV-2026-00253": {
+      "status": "PAID",
+      "net_paid": "100031.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00754": {
+      "status": "PAID",
+      "net_paid": "50028.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00937": {
+      "status": "PAID",
+      "net_paid": "98994.30",
+      "remaining": "0.00",
+      "adjustment": "1070.69"
+    },
+    "INV-2026-00853": {
+      "status": "PAID",
+      "net_paid": "50038.81",
+      "remaining": "0.00"
+    },
+    "INV-2026-00667": {
+      "status": "PARTIAL",
+      "net_paid": "40005.64",
+      "remaining": "60008.48"
+    },
+    "INV-2026-00060": {
+      "status": "PAID",
+      "net_paid": "25043.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00714": {
+      "status": "PAID",
+      "net_paid": "100077.10",
+      "remaining": "0.00"
+    },
+    "INV-2026-00378": {
+      "status": "PAID",
+      "net_paid": "75041.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00706": {
+      "status": "PAID",
+      "net_paid": "50094.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00983": {
+      "status": "PAID",
+      "net_paid": "75022.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00501": {
+      "status": "PAID",
+      "net_paid": "50034.60",
+      "remaining": "0.00"
+    },
+    "INV-2026-00727": {
+      "status": "PAID",
+      "net_paid": "100065.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00522": {
+      "status": "PAID",
+      "net_paid": "50024.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00357": {
+      "status": "PAID",
+      "net_paid": "50016.44",
+      "remaining": "0.00"
+    },
+    "INV-2026-00740": {
+      "status": "PAID",
+      "net_paid": "75043.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00770": {
+      "status": "PAID",
+      "net_paid": "12596.14",
+      "remaining": "0.00"
+    },
+    "INV-2026-00790": {
+      "status": "PARTIAL",
+      "net_paid": "20010.64",
+      "remaining": "30015.98"
+    },
+    "INV-2026-00262": {
+      "status": "PAID",
+      "net_paid": "75090.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00447": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25007.10"
+    },
+    "INV-2026-00782": {
+      "status": "PAID",
+      "net_paid": "25005.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00199": {
+      "status": "PAID",
+      "net_paid": "100076.33",
+      "remaining": "0.00"
+    },
+    "INV-2026-00167": {
+      "status": "PARTIAL",
+      "net_paid": "20013.77",
+      "remaining": "30020.66"
+    },
+    "INV-2026-00580": {
+      "status": "PAID",
+      "net_paid": "12584.52",
+      "remaining": "0.00"
+    },
+    "INV-2026-00395": {
+      "status": "PAID",
+      "net_paid": "12550.61",
+      "remaining": "0.00"
+    },
+    "INV-2026-00128": {
+      "status": "PAID",
+      "net_paid": "100001.58",
+      "remaining": "0.00"
+    },
+    "INV-2026-00040": {
+      "status": "PAID",
+      "net_paid": "12517.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00419": {
+      "status": "PAID",
+      "net_paid": "25063.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00073": {
+      "status": "PAID",
+      "net_paid": "25093.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00603": {
+      "status": "PAID",
+      "net_paid": "25047.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00657": {
+      "status": "PAID",
+      "net_paid": "74270.50",
+      "remaining": "0.00",
+      "adjustment": "757.78"
+    },
+    "INV-2026-00316": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25095.90"
+    },
+    "INV-2026-00502": {
+      "status": "PAID",
+      "net_paid": "50047.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00394": {
+      "status": "PAID",
+      "net_paid": "25015.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00383": {
+      "status": "PAID",
+      "net_paid": "75040.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00761": {
+      "status": "PAID",
+      "net_paid": "75057.14",
+      "remaining": "0.00"
+    },
+    "INV-2026-00405": {
+      "status": "PARTIAL",
+      "net_paid": "30036.52",
+      "remaining": "45054.79"
+    },
+    "INV-2026-00426": {
+      "status": "PAID",
+      "net_paid": "12560.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00415": {
+      "status": "PAID",
+      "net_paid": "50066.89",
+      "remaining": "0.00"
+    },
+    "INV-2026-00963": {
+      "status": "PAID",
+      "net_paid": "75049.11",
+      "remaining": "0.00"
+    },
+    "INV-2026-00384": {
+      "status": "PAID",
+      "net_paid": "50032.63",
+      "remaining": "0.00"
+    },
+    "INV-2026-00944": {
+      "status": "PAID",
+      "net_paid": "12543.90",
+      "remaining": "0.00"
+    },
+    "INV-2026-00748": {
+      "status": "PAID",
+      "net_paid": "25067.65",
+      "remaining": "0.00"
+    },
+    "INV-2026-00513": {
+      "status": "PAID",
+      "net_paid": "49507.86",
+      "remaining": "0.00",
+      "adjustment": "520.29"
+    },
+    "INV-2026-00014": {
+      "status": "PARTIAL",
+      "net_paid": "5023.52",
+      "remaining": "7535.29"
+    },
+    "INV-2026-00005": {
+      "status": "PAID",
+      "net_paid": "12515.35",
+      "remaining": "0.00"
+    },
+    "INV-2026-00195": {
+      "status": "PARTIAL",
+      "net_paid": "40005.28",
+      "remaining": "60007.92"
+    },
+    "INV-2026-00159": {
+      "status": "PARTIAL",
+      "net_paid": "20008.16",
+      "remaining": "30012.25"
+    },
+    "INV-2026-00201": {
+      "status": "PAID",
+      "net_paid": "75095.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00481": {
+      "status": "PARTIAL",
+      "net_paid": "10017.90",
+      "remaining": "15026.87"
+    },
+    "INV-2026-00733": {
+      "status": "PAID",
+      "net_paid": "75049.02",
+      "remaining": "0.00",
+      "credit": "1223.29"
+    },
+    "INV-2026-00140": {
+      "status": "PAID",
+      "net_paid": "25017.71",
+      "remaining": "0.00"
+    },
+    "INV-2026-00342": {
+      "status": "PARTIAL",
+      "net_paid": "40033.30",
+      "remaining": "60049.97"
+    },
+    "INV-2026-00074": {
+      "status": "PARTIAL",
+      "net_paid": "30015.92",
+      "remaining": "45023.89"
+    },
+    "INV-2026-00924": {
+      "status": "PAID",
+      "net_paid": "25092.86",
+      "remaining": "0.00"
+    },
+    "INV-2026-00935": {
+      "status": "PAID",
+      "net_paid": "75038.03",
+      "remaining": "0.00"
+    },
+    "INV-2026-00576": {
+      "status": "PAID",
+      "net_paid": "100068.59",
+      "remaining": "0.00"
+    },
+    "INV-2026-00385": {
+      "status": "PAID",
+      "net_paid": "75017.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00291": {
+      "status": "PAID",
+      "net_paid": "25034.57",
+      "remaining": "0.00"
+    },
+    "INV-2026-00465": {
+      "status": "PAID",
+      "net_paid": "75010.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00314": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "12528.70"
+    },
+    "INV-2026-00475": {
+      "status": "PARTIAL",
+      "net_paid": "30014.69",
+      "remaining": "45022.05"
+    },
+    "INV-2026-00390": {
+      "status": "PAID",
+      "net_paid": "100008.03",
+      "remaining": "0.00"
+    },
+    "INV-2026-00264": {
+      "status": "PARTIAL",
+      "net_paid": "20016.47",
+      "remaining": "30024.71"
+    },
+    "INV-2026-00180": {
+      "status": "PAID",
+      "net_paid": "25024.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00745": {
+      "status": "PAID",
+      "net_paid": "25005.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00567": {
+      "status": "PAID",
+      "net_paid": "75025.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00157": {
+      "status": "PAID",
+      "net_paid": "25059.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00551": {
+      "status": "PAID",
+      "net_paid": "75046.55",
+      "remaining": "0.00"
+    },
+    "INV-2026-00610": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "12563.38"
+    },
+    "INV-2026-00308": {
+      "status": "PAID",
+      "net_paid": "100080.90",
+      "remaining": "0.00"
+    },
+    "INV-2026-00778": {
+      "status": "DISPUTED",
+      "net_paid": "0.00",
+      "remaining": "25047.06"
+    },
+    "INV-2026-00086": {
+      "status": "PAID",
+      "net_paid": "12538.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00875": {
+      "status": "PAID",
+      "net_paid": "50002.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00438": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "25018.01"
+    },
+    "INV-2026-00972": {
+      "status": "PAID",
+      "net_paid": "50098.83",
+      "remaining": "0.00"
+    },
+    "INV-2026-00781": {
+      "status": "PAID",
+      "net_paid": "12528.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00021": {
+      "status": "PAID",
+      "net_paid": "25016.54",
+      "remaining": "0.00",
+      "credit": "397.76"
+    },
+    "INV-2026-00494": {
+      "status": "PAID",
+      "net_paid": "75067.85",
+      "remaining": "0.00"
+    },
+    "INV-2026-00813": {
+      "status": "PAID",
+      "net_paid": "75086.53",
+      "remaining": "0.00",
+      "credit": "1021.17"
+    },
+    "INV-2026-00840": {
+      "status": "PAID",
+      "net_paid": "75037.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00160": {
+      "status": "PAID",
+      "net_paid": "100050.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00779": {
+      "status": "PAID",
+      "net_paid": "50009.69",
+      "remaining": "0.00"
+    },
+    "INV-2026-00444": {
+      "status": "PARTIAL",
+      "net_paid": "5031.20",
+      "remaining": "7546.82"
+    },
+    "INV-2026-00753": {
+      "status": "PAID",
+      "net_paid": "75086.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00625": {
+      "status": "PAID",
+      "net_paid": "50044.76",
+      "remaining": "0.00"
+    },
+    "INV-2026-00518": {
+      "status": "PAID",
+      "net_paid": "50055.62",
+      "remaining": "0.00"
+    },
+    "INV-2026-00433": {
+      "status": "PAID",
+      "net_paid": "12590.80",
+      "remaining": "0.00"
+    },
+    "INV-2026-00452": {
+      "status": "PAID",
+      "net_paid": "12513.23",
+      "remaining": "0.00"
+    },
+    "INV-2026-00483": {
+      "status": "PAID",
+      "net_paid": "12529.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00172": {
+      "status": "PAID",
+      "net_paid": "12546.49",
+      "remaining": "0.00"
+    },
+    "INV-2026-00387": {
+      "status": "PARTIAL",
+      "net_paid": "40019.38",
+      "remaining": "60029.09"
+    },
+    "INV-2026-00408": {
+      "status": "PAID",
+      "net_paid": "75060.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00369": {
+      "status": "PAID",
+      "net_paid": "50004.74",
+      "remaining": "0.00"
+    },
+    "INV-2026-00082": {
+      "status": "PAID",
+      "net_paid": "75030.06",
+      "remaining": "0.00"
+    },
+    "INV-2026-00493": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "75079.57"
+    },
+    "INV-2026-00801": {
+      "status": "PAID",
+      "net_paid": "100001.87",
+      "remaining": "0.00"
+    },
+    "INV-2026-00884": {
+      "status": "PAID",
+      "net_paid": "50033.28",
+      "remaining": "0.00"
+    },
+    "INV-2026-00279": {
+      "status": "PARTIAL",
+      "net_paid": "20031.30",
+      "remaining": "30046.97"
+    },
+    "INV-2026-00207": {
+      "status": "PARTIAL",
+      "net_paid": "20028.56",
+      "remaining": "30042.84"
+    },
+    "INV-2026-00651": {
+      "status": "PAID",
+      "net_paid": "12530.48",
+      "remaining": "0.00"
+    },
+    "INV-2026-00460": {
+      "status": "PARTIAL",
+      "net_paid": "30029.59",
+      "remaining": "45044.39"
+    },
+    "INV-2026-00591": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "12547.00"
+    },
+    "INV-2026-00293": {
+      "status": "PAID",
+      "net_paid": "25090.43",
+      "remaining": "0.00"
+    },
+    "INV-2026-00311": {
+      "status": "PARTIAL",
+      "net_paid": "20001.69",
+      "remaining": "30002.54"
+    },
+    "INV-2026-00980": {
+      "status": "PAID",
+      "net_paid": "100004.40",
+      "remaining": "0.00"
+    },
+    "INV-2026-00621": {
+      "status": "PARTIAL",
+      "net_paid": "20033.77",
+      "remaining": "30050.67"
+    },
+    "INV-2026-00181": {
+      "status": "PAID",
+      "net_paid": "12517.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00435": {
+      "status": "PAID",
+      "net_paid": "50024.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00251": {
+      "status": "PAID",
+      "net_paid": "50097.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00203": {
+      "status": "PAID",
+      "net_paid": "75000.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00739": {
+      "status": "PAID",
+      "net_paid": "50004.36",
+      "remaining": "0.00"
+    },
+    "INV-2026-00169": {
+      "status": "PAID",
+      "net_paid": "50076.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00319": {
+      "status": "PAID",
+      "net_paid": "50017.13",
+      "remaining": "0.00"
+    },
+    "INV-2026-00479": {
+      "status": "PARTIAL",
+      "net_paid": "40036.48",
+      "remaining": "60054.73"
+    },
+    "INV-2026-00743": {
+      "status": "PARTIAL",
+      "net_paid": "10034.35",
+      "remaining": "15051.54"
+    },
+    "INV-2026-00437": {
+      "status": "PAID",
+      "net_paid": "25088.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00081": {
+      "status": "PAID",
+      "net_paid": "100073.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00520": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100018.68"
+    },
+    "INV-2026-00242": {
+      "status": "PAID",
+      "net_paid": "50088.17",
+      "remaining": "0.00"
+    },
+    "INV-2026-00957": {
+      "status": "PAID",
+      "net_paid": "12591.67",
+      "remaining": "0.00"
+    },
+    "INV-2026-00815": {
+      "status": "PAID",
+      "net_paid": "12589.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00852": {
+      "status": "PAID",
+      "net_paid": "100097.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00563": {
+      "status": "PAID",
+      "net_paid": "25025.38",
+      "remaining": "0.00"
+    },
+    "INV-2026-00607": {
+      "status": "PAID",
+      "net_paid": "12586.18",
+      "remaining": "0.00"
+    },
+    "INV-2026-00178": {
+      "status": "PAID",
+      "net_paid": "75094.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00094": {
+      "status": "PAID",
+      "net_paid": "12594.89",
+      "remaining": "0.00"
+    },
+    "INV-2026-00129": {
+      "status": "PAID",
+      "net_paid": "12524.42",
+      "remaining": "0.00"
+    },
+    "INV-2026-00210": {
+      "status": "PAID",
+      "net_paid": "25087.51",
+      "remaining": "0.00"
+    },
+    "INV-2026-00145": {
+      "status": "PAID",
+      "net_paid": "50045.64",
+      "remaining": "0.00"
+    },
+    "INV-2026-00650": {
+      "status": "PAID",
+      "net_paid": "50040.89",
+      "remaining": "0.00"
+    },
+    "INV-2026-00054": {
+      "status": "PAID",
+      "net_paid": "75003.19",
+      "remaining": "0.00"
+    },
+    "INV-2026-00198": {
+      "status": "PARTIAL",
+      "net_paid": "30026.71",
+      "remaining": "45040.07"
+    },
+    "INV-2026-00072": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "75035.10"
+    },
+    "INV-2026-00504": {
+      "status": "PAID",
+      "net_paid": "75028.78",
+      "remaining": "0.00"
+    },
+    "INV-2026-00891": {
+      "status": "PAID",
+      "net_paid": "100040.26",
+      "remaining": "0.00"
+    },
+    "INV-2026-00067": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "100037.70"
+    },
+    "INV-2026-00007": {
+      "status": "PAID",
+      "net_paid": "12591.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00645": {
+      "status": "PAID",
+      "net_paid": "100005.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00453": {
+      "status": "PARTIAL",
+      "net_paid": "40009.72",
+      "remaining": "60014.58"
+    },
+    "INV-2026-00188": {
+      "status": "PAID",
+      "net_paid": "100069.91",
+      "remaining": "0.00"
+    },
+    "INV-2026-00330": {
+      "status": "PAID",
+      "net_paid": "50089.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-01000": {
+      "status": "PAID",
+      "net_paid": "100081.99",
+      "remaining": "0.00"
+    },
+    "INV-2026-00391": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "75046.89"
+    },
+    "INV-2026-00894": {
+      "status": "PAID",
+      "net_paid": "25057.70",
+      "remaining": "0.00"
+    },
+    "INV-2026-00623": {
+      "status": "PAID",
+      "net_paid": "12531.31",
+      "remaining": "0.00"
+    },
+    "INV-2026-00228": {
+      "status": "REFUNDED",
+      "net_paid": "0.00",
+      "remaining": "12526.83"
+    },
+    "INV-2026-00737": {
+      "status": "PAID",
+      "net_paid": "50054.27",
+      "remaining": "0.00"
+    },
+    "INV-2026-00713": {
+      "status": "PAID",
+      "net_paid": "12546.09",
+      "remaining": "0.00"
+    },
+    "INV-2026-00704": {
+      "status": "PARTIAL",
+      "net_paid": "20025.17",
+      "remaining": "30037.76"
+    },
+    "INV-2026-00821": {
+      "status": "PAID",
+      "net_paid": "12574.29",
+      "remaining": "0.00"
+    },
+    "INV-2026-00255": {
+      "status": "PAID",
+      "net_paid": "100039.37",
+      "remaining": "0.00"
+    },
+    "INV-2026-00681": {
+      "status": "PAID",
+      "net_paid": "100044.96",
+      "remaining": "0.00"
+    },
+    "INV-2026-00940": {
+      "status": "PAID",
+      "net_paid": "100061.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00929": {
+      "status": "PAID",
+      "net_paid": "25065.25",
+      "remaining": "0.00"
+    },
+    "INV-2026-00056": {
+      "status": "PAID",
+      "net_paid": "12539.46",
+      "remaining": "0.00"
+    },
+    "INV-2026-00553": {
+      "status": "PAID",
+      "net_paid": "12595.47",
+      "remaining": "0.00"
+    },
+    "INV-2026-00211": {
+      "status": "PAID",
+      "net_paid": "75096.97",
+      "remaining": "0.00"
+    },
+    "INV-2026-00249": {
+      "status": "PAID",
+      "net_paid": "25079.88",
+      "remaining": "0.00"
+    },
+    "INV-2026-00351": {
+      "status": "OPEN",
+      "net_paid": "0.00",
+      "remaining": "25039.12"
+    },
+    "INV-2026-00340": {
+      "status": "PAID",
+      "net_paid": "24656.09",
+      "remaining": "0.00",
+      "adjustment": "418.74"
+    },
+    "INV-2026-00751": {
+      "status": "PAID",
+      "net_paid": "25084.98",
+      "remaining": "0.00"
+    },
+    "INV-2026-00868": {
+      "status": "PAID",
+      "net_paid": "50012.95",
+      "remaining": "0.00"
+    },
+    "INV-2026-00235": {
+      "status": "PAID",
+      "net_paid": "100006.72",
+      "remaining": "0.00"
+    },
+    "INV-2026-00025": {
+      "status": "PARTIAL",
+      "net_paid": "20004.67",
+      "remaining": "30007.02"
+    },
+    "INV-2026-00769": {
+      "status": "PAID",
+      "net_paid": "100044.50",
+      "remaining": "0.00"
+    },
+    "INV-2026-00296": {
+      "status": "PAID",
+      "net_paid": "50005.34",
+      "remaining": "0.00"
+    },
+    "INV-2026-00833": {
+      "status": "PARTIAL",
+      "net_paid": "30005.25",
+      "remaining": "45007.89"
+    },
+    "INV-2026-00664": {
+      "status": "PAID",
+      "net_paid": "75004.30",
+      "remaining": "0.00"
+    },
+    "INV-2026-00425": {
+      "status": "PAID",
+      "net_paid": "75038.68",
+      "remaining": "0.00"
+    },
+    "INV-2026-00811": {
+      "status": "PAID",
+      "net_paid": "100035.78",
+      "remaining": "0.00"
+    },
+    "INV-2026-00534": {
+      "status": "PAID",
+      "net_paid": "75006.16",
+      "remaining": "0.00"
+    }
+  },
+  "version": 2,
+  "v2_scenarios": {
+    "short_pay": 30,
+    "overpay": 20,
+    "cheque_return": 20
+  }
+}

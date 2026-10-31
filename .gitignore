@@ -1,0 +1,8 @@
+node_modules/
+dist/
+target/
+__pycache__/
+*.pyc
+ml-service/data/models/
+ml-service/data/feedback.csv
+.pytest_cache/

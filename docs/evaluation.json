@@ -1,0 +1,200 @@
+{
+  "generatedAt": "2026-10-26T09:40:58.702629934Z",
+  "split": "test",
+  "transactions": 1226,
+  "invoices": 1000,
+  "comparison": [
+    {
+      "label": "Exact only (reference + amount)",
+      "split": "test",
+      "precision": 1.0000,
+      "recall": 0.1647,
+      "correct": 42,
+      "predicted": 42,
+      "expected": 255,
+      "autoRate": 0.1721,
+      "manualLeft": 0.8279,
+      "reviewTxns": 0,
+      "unmatchedTxns": 202,
+      "invoiceTxns": 244,
+      "statusAccuracy": 0.2250
+    },
+    {
+      "label": "+ fuzzy + composite, rule scorer",
+      "split": "test",
+      "precision": 1.0000,
+      "recall": 0.2941,
+      "correct": 75,
+      "predicted": 75,
+      "expected": 255,
+      "autoRate": 0.3074,
+      "manualLeft": 0.6926,
+      "reviewTxns": 127,
+      "unmatchedTxns": 42,
+      "invoiceTxns": 244,
+      "statusAccuracy": 0.2950
+    },
+    {
+      "label": "Full pipeline, ML scorer",
+      "split": "test",
+      "precision": 1.0000,
+      "recall": 0.9804,
+      "correct": 250,
+      "predicted": 250,
+      "expected": 255,
+      "autoRate": 0.9795,
+      "manualLeft": 0.0205,
+      "reviewTxns": 1,
+      "unmatchedTxns": 4,
+      "invoiceTxns": 244,
+      "statusAccuracy": 0.9750
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "cheque_return",
+      "expected": 6,
+      "predicted": 6,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "full_payment",
+      "expected": 97,
+      "predicted": 97,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "multi_invoice_payment",
+      "expected": 17,
+      "predicted": 17,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "overpay",
+      "expected": 5,
+      "predicted": 5,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "partial_payment",
+      "expected": 33,
+      "predicted": 33,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "refund",
+      "expected": 16,
+      "predicted": 16,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "scenario": "short_pay",
+      "expected": 6,
+      "predicted": 2,
+      "precision": 1.0000,
+      "recall": 0.3333
+    },
+    {
+      "scenario": "split_payment",
+      "expected": 75,
+      "predicted": 74,
+      "precision": 1.0000,
+      "recall": 0.9867
+    }
+  ],
+  "channels": [
+    {
+      "channel": "CHEQUE",
+      "expected": 51,
+      "predicted": 51,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "channel": "IMPS",
+      "expected": 69,
+      "predicted": 66,
+      "precision": 1.0000,
+      "recall": 0.9565
+    },
+    {
+      "channel": "NEFT",
+      "expected": 46,
+      "predicted": 45,
+      "precision": 1.0000,
+      "recall": 0.9783
+    },
+    {
+      "channel": "QR",
+      "expected": 43,
+      "predicted": 43,
+      "precision": 1.0000,
+      "recall": 1.0000
+    },
+    {
+      "channel": "UPI_ID",
+      "expected": 46,
+      "predicted": 45,
+      "precision": 1.0000,
+      "recall": 0.9783
+    }
+  ],
+  "unseenDataset": {
+    "label": "Unseen seed, all customers",
+    "split": "all",
+    "precision": 1.0000,
+    "recall": 0.9726,
+    "correct": 1206,
+    "predicted": 1206,
+    "expected": 1240,
+    "autoRate": 0.9711,
+    "manualLeft": 0.0289,
+    "reviewTxns": 23,
+    "unmatchedTxns": 11,
+    "invoiceTxns": 1178,
+    "statusAccuracy": 0.9690
+  },
+  "correctionsCurve": [
+    {
+      "corrections": 0,
+      "queueAfter": 169,
+      "autoRate": 0.3074,
+      "humanTouches": 169,
+      "precision": 1.0000
+    },
+    {
+      "corrections": 10,
+      "queueAfter": 152,
+      "autoRate": 0.3361,
+      "humanTouches": 162,
+      "precision": 1.0000
+    },
+    {
+      "corrections": 25,
+      "queueAfter": 135,
+      "autoRate": 0.3443,
+      "humanTouches": 160,
+      "precision": 1.0000
+    },
+    {
+      "corrections": 50,
+      "queueAfter": 113,
+      "autoRate": 0.3320,
+      "humanTouches": 163,
+      "precision": 1.0000
+    },
+    {
+      "corrections": 100,
+      "queueAfter": 63,
+      "autoRate": 0.3320,
+      "humanTouches": 163,
+      "precision": 1.0000
+    }
+  ]
+}

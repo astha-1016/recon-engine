@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/reconcile}
+    username: ${DB_USER:reconcile}
+    password: ${DB_PASSWORD:reconcile}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
+app:
+  jwt-secret: ${JWT_SECRET:change-this-secret-it-must-be-at-least-32-bytes}
+  ml-url: ${ML_URL:http://localhost:8000}
+  ml-enabled: ${ML_ENABLED:true}
+  payee-vpa: ${PAYEE_VPA:merchant@examplebank}
+  payee-name: ${PAYEE_NAME:Example Merchant}
+  evaluation-file: ${EVAL_FILE:docs/evaluation.json}
+  cors-origins: ${CORS_ORIGINS:http://localhost:5173}
+  seed-password: ${SEED_PASSWORD:change-me-now}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
