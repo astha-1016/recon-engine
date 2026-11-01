@@ -74,7 +74,6 @@ public final class Reconciler {
         for (Ledger.Entry e : ledger.all()) refIndex.put(TextNorm.refKey(e.inv.id()), e);
         Map<String, Link> links = ReversalLinker.link(in.txns(), cfg);
         Map<String, Long> reversedBy = new HashMap<>();
-        res.scorerVersion = scorer.version();
 
         List<BankTxn> ordered = new ArrayList<>(in.txns());
         ordered.sort(Comparator.comparing(BankTxn::date)
@@ -95,6 +94,7 @@ public final class Reconciler {
                 throw new IllegalStateException("Failed on transaction " + t.id() + ": " + e.getMessage(), e);
             }
         }
+        res.scorerVersion = scorer.version();   // read after scoring: the ML version is known only once the service has answered
         return res;
     }
 
