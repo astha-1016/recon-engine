@@ -58,7 +58,9 @@ public final class IdentityResolver {
         if (hit != null) {
             int total = hit.values().stream().mapToInt(Integer::intValue).sum();
             hit.forEach((cid, n) -> { id.scores.put(cid, n / (double) total); id.aliasHits.add(cid); });
-            return id;
+            // An alias is the whole answer only for opaque payers (UPI handle, phone, masked account).
+            // Business names are shared by several customers, so those stay candidates too.
+            if (kind != PayerKind.NAME) return id;
         }
         switch (kind) {
             case PHONE_VPA -> {
