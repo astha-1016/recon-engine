@@ -22,6 +22,6 @@ java -cp build/classes com.reconcile.engine.Cli compare --data build/noisy42 --m
 echo; echo "################ Noisy data, by scenario and channel (full pipeline)"
 java -cp build/classes com.reconcile.engine.Cli eval --data build/noisy42 --mode ml --ml "$ML" --split test
 echo; echo "################ Never-seen noisy seed, all customers (full pipeline)"
-java -cp build/classes com.reconcile.engine.Cli eval --data build/noisy7 --mode ml --ml "$ML" --split all | head -6
+java -cp build/classes com.reconcile.engine.Cli eval --data build/noisy7 --mode ml --ml "$ML" --split all
 echo; echo "################ Harsher noise (level 2), never-seen seed"
-java -cp build/classes com.reconcile.engine.Cli eval --data build/harsh7 --mode ml --ml "$ML" --split all | head -6
+java -cp build/classes com.reconcile.engine.Cli eval --data build/harsh7 --mode ml --ml "$ML" --split all

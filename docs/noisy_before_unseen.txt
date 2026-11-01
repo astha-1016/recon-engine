@@ -1,0 +1,21 @@
+(1228 transactions reconciled in 88413 ms, scorer gb-20261031-134415-688924)
+== ml | split=all ==
+Allocation precision 100.0%  recall 83.9%  (correct 1040 / predicted 1040 / expected 1240)
+Invoice payments: 1178 | auto 978 (83.0%, fully-correct 100.0%) | review 44 | unmatched 156 | manual 0
+Manual effort reduced from 100% to 17.0% | bank fees left alone 50/50 | final invoice status accuracy 80.1% (1000 invoices)
+by scenario               expected predicted precision    recall
+cheque_return                   40        40    100.0%    100.0%
+fee_deducted                   149         3    100.0%      2.0%
+full_payment                   351       349    100.0%     99.4%
+multi_invoice_payment          100       100    100.0%    100.0%
+overpay                         20         3    100.0%     15.0%
+partial_payment                150       149    100.0%     99.3%
+refund                         100       100    100.0%    100.0%
+short_pay                       30         5    100.0%     16.7%
+split_payment                  300       291    100.0%     97.0%
+by channel                expected predicted precision    recall
+CHEQUE                         290       255    100.0%     87.9%
+IMPS                           238       193    100.0%     81.1%
+NEFT                           243       197    100.0%     81.1%
+QR                             243       205    100.0%     84.4%
+UPI_ID                         226       190    100.0%     84.1%
