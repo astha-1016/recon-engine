@@ -14,6 +14,7 @@ services:
 
   ml:
     build: ./ml-service
+    ports: ["8000:8000"]
     environment:
       ML_DATA_DIR: /srv/data
     volumes:

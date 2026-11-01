@@ -1,0 +1,9 @@
+Created 1000 invoices, 1226 transactions, 200 customers in build\clean42.
+Created 1000 invoices, 1226 transactions in build\noisy42 (noise level 1.0: 135 fee-deducted payments, 12 amount-collision pairs).
+Created 1000 invoices, 1228 transactions in build\noisy7 (noise level 1.0: 149 fee-deducted payments, 12 amount-collision pairs).
+Created 1000 invoices, 1228 transactions in build\harsh7 (noise level 2.0: 263 fee-deducted payments, 24 amount-collision pairs).
+
+################ Same model, CLEAN data (held-out test customers)
+split=test                             precision    recall auto-rate manual left  status acc.
+1. Exact only (reference + amount)        100.0%     16.5%     17.2%       82.8%        22.5%
+2. + fuzzy + composite, rule scorer       100.0%     29.4%     30.7%       69.3%        29.5%

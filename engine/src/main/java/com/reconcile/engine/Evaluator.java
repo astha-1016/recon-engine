@@ -112,7 +112,7 @@ public final class Evaluator {
             customerSplit.putIfAbsent(t.customerId(), t.split());
             cash.merge(t.invoiceId(), t.amount(), Long::sum);
             if (t.amount() < 0) lastReversal.put(t.invoiceId(), t.eventType());
-            if (t.scenario().equals("short_pay")) shortPaid.add(t.invoiceId());
+            if ((t.scenario().equals("short_pay") || t.scenario().equals("fee_deducted"))) shortPaid.add(t.invoiceId());
         }
         for (Invoice inv : ds.invoices) {
             String cs = customerSplit.get(inv.customerId());

@@ -1,0 +1,55 @@
+Created 1000 invoices, 1226 transactions, 200 customers in build\clean42.
+Created 1000 invoices, 1226 transactions in build\noisy42 (noise level 1.0: 135 fee-deducted payments, 12 amount-collision pairs).
+Created 1000 invoices, 1228 transactions in build\noisy7 (noise level 1.0: 149 fee-deducted payments, 12 amount-collision pairs).
+Created 1000 invoices, 1228 transactions in build\harsh7 (noise level 2.0: 263 fee-deducted payments, 24 amount-collision pairs).
+
+################ Same model, CLEAN data (held-out test customers)
+split=test                             precision    recall auto-rate manual left  status acc.
+1. Exact only (reference + amount)        100.0%     16.5%     17.2%       82.8%        22.5%
+2. + fuzzy + composite, rule scorer       100.0%     29.4%     30.7%       69.3%        29.5%
+3. Full pipeline, ML scorer               100.0%     97.3%     97.1%        2.9%        96.5%
+
+################ Same model, NOISY data (held-out test customers)
+split=test                             precision    recall auto-rate manual left  status acc.
+1. Exact only (reference + amount)        100.0%      4.7%      4.9%       95.1%        10.0%
+2. + fuzzy + composite, rule scorer       100.0%     11.8%     12.3%       87.7%        14.0%
+3. Full pipeline, ML scorer               100.0%     88.6%     88.1%       11.9%        85.5%
+
+################ Noisy data, by scenario and channel (full pipeline)
+(1226 transactions reconciled in 86253 ms, scorer gb-20261101-071310-563601)
+== ml | split=test ==
+Allocation precision 100.0%  recall 88.6%  (correct 226 / predicted 226 / expected 255)
+Invoice payments: 244 | auto 215 (88.1%, fully-correct 100.0%) | review 18 | unmatched 11 | manual 0
+Manual effort reduced from 100% to 11.9% | bank fees left alone 50/50 | final invoice status accuracy 85.5% (200 invoices)
+by scenario               expected predicted precision    recall
+cheque_return                    6         6    100.0%    100.0%
+fee_deducted                    27         7    100.0%     25.9%
+full_payment                    70        70    100.0%    100.0%
+multi_invoice_payment           17        17    100.0%    100.0%
+overpay                          5         2    100.0%     40.0%
+partial_payment                 33        33    100.0%    100.0%
+refund                          16        16    100.0%    100.0%
+short_pay                        6         1    100.0%     16.7%
+split_payment                   75        74    100.0%     98.7%
+by channel                expected predicted precision    recall
+CHEQUE                          51        49    100.0%     96.1%
+IMPS                            69        60    100.0%     87.0%
+NEFT                            46        41    100.0%     89.1%
+QR                              43        37    100.0%     86.0%
+UPI_ID                          46        39    100.0%     84.8%
+
+################ Never-seen noisy seed, all customers (full pipeline)
+(1228 transactions reconciled in 86160 ms, scorer gb-20261101-071310-563601)
+== ml | split=all ==
+Allocation precision 100.0%  recall 87.3%  (correct 1082 / predicted 1082 / expected 1240)
+Invoice payments: 1178 | auto 1020 (86.6%, fully-correct 100.0%) | review 112 | unmatched 46 | manual 0
+Manual effort reduced from 100% to 13.4% | bank fees left alone 50/50 | final invoice status accuracy 84.4% (1000 invoices)
+by scenario               expected predicted precision    recall
+
+################ Harsher noise (level 2), never-seen seed
+(1228 transactions reconciled in 94241 ms, scorer gb-20261101-071310-563601)
+== ml | split=all ==
+Allocation precision 99.9%  recall 73.7%  (correct 914 / predicted 915 / expected 1240)
+Invoice payments: 1178 | auto 857 (72.8%, fully-correct 99.9%) | review 194 | unmatched 127 | manual 0
+Manual effort reduced from 100% to 27.2% | bank fees left alone 50/50 | final invoice status accuracy 67.7% (1000 invoices)
+by scenario               expected predicted precision    recall
