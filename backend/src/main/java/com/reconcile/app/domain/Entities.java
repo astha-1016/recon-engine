@@ -108,6 +108,17 @@ public final class Entities {
         public Instant decidedAt = Instant.now();
     }
 
+    /** A person put part of an unapplied credit (surplus of a payment) against another invoice. */
+    @Entity @Table(name = "credit_applications")
+    public static class CreditApplicationE {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Long id;
+        public String txnId;
+        public String invoiceId;
+        public long amount;
+        public String appliedBy;
+        public Instant appliedAt = Instant.now();
+    }
+
     @Entity @Table(name = "feedback_log")
     public static class FeedbackE {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Long id;
@@ -119,6 +130,8 @@ public final class Entities {
         public String humanDecision;
         public String decidedBy;
         public Instant decidedAt = Instant.now();
+        /** Set when the decision was undone; revoked rows are kept for the audit trail but never used for training. */
+        public boolean revoked;
     }
 
     @Entity @Table(name = "app_users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))

@@ -28,9 +28,28 @@ class NoisyTests(unittest.TestCase):
                                       sorted(self.clean['bank_transactions'], key=lambda t: t['transaction_id'])))
         self.assertGreater(changed, 50)
 
-    def test_row_counts_unchanged(self):
-        self.assertEqual(len(self.data['bank_transactions']), len(self.clean['bank_transactions']))
-        self.assertEqual(len(self.data['ground_truth']), len(self.clean['ground_truth']))
+    def test_only_duplicate_rows_are_added(self):
+        dups = self.summary['duplicate_rows']
+        self.assertEqual(dups, 15)
+        self.assertEqual(len(self.data['bank_transactions']), len(self.clean['bank_transactions']) + dups)
+        self.assertEqual(len(self.data['ground_truth']), len(self.clean['ground_truth']) + dups)
+
+    def test_duplicates_repeat_an_existing_credit_and_have_no_invoice(self):
+        tx = {t['transaction_id']: t for t in self.data['bank_transactions']}
+        seen = 0
+        for g in self.data['ground_truth']:
+            if g['scenario'] == 'duplicate_row':
+                seen += 1
+                dup, orig = tx[g['transaction_id']], tx[g['original_transaction_id']]
+                self.assertEqual(g['invoice_id'], '')
+                for field in ('amount', 'bank_reference', 'payer_name', 'transaction_date', 'direction'):
+                    self.assertEqual(dup[field], orig[field], field)
+        self.assertEqual(seen, 15)
+
+    def test_no_other_transactions_share_a_bank_reference(self):
+        from collections import Counter
+        counts = Counter(t['bank_reference'] for t in self.data['bank_transactions'] if t['bank_reference'])
+        self.assertEqual(sum(1 for c in counts.values() if c > 1), 15)
 
     def test_fee_deducted_is_a_small_shortfall(self):
         inv = {i['invoice_id']: cents(i['amount']) for i in self.data['invoices']}

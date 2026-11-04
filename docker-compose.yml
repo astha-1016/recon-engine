@@ -36,6 +36,8 @@ services:
       ML_URL: http://ml:8000
       JWT_SECRET: ${JWT_SECRET:-dev-only-secret-dev-only-secret-0123456789}
       SEED_PASSWORD: ${SEED_PASSWORD:-change-me-now}
+      # Set REQUIRE_STRONG_SECRETS=true (in .env) and the backend refuses to start on the placeholder secrets.
+      REQUIRE_STRONG_SECRETS: ${REQUIRE_STRONG_SECRETS:-false}
       EVAL_FILE: /app/docs/evaluation.json
       CORS_ORIGINS: http://localhost:8081
     volumes:

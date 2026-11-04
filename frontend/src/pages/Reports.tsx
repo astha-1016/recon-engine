@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { api, pct, type Session } from '../api'
 
-type Arm = { label: string; precision: number; recall: number; autoRate: number; manualLeft: number; statusAccuracy: number; correct: number; predicted: number; expected: number }
+type Arm = { label: string; precision: number; recall: number; autoRate: number; manualLeft: number; statusAccuracy: number; correct: number; predicted: number; expected: number; reviewTxns?: number; reviewTop1Correct?: number }
+type DatasetRow = { label: string; split: string; arms: Arm[] }
 type Breakdown = { scenario?: string; channel?: string; expected: number; predicted: number; precision: number; recall: number }
 type Evaluation = {
   generatedAt: string; split: string; transactions: number; invoices: number
-  comparison: Arm[]; scenarios: Breakdown[]; channels: Breakdown[]; unseenDataset?: Arm
+  comparison: Arm[]; scenarios: Breakdown[]; channels: Breakdown[]; unseenDataset?: Arm; datasets?: DatasetRow[]
   correctionsCurve: { corrections: number; queueAfter: number; humanTouches: number }[]
 }
 type Models = { active: string | null; models: { version: string; algorithm: string; active: boolean; train_rows: number; feedback_rows: number; holdout_metrics: { average_precision: number; precision_at_auto: number | null; recall_at_auto: number | null } }[] }
@@ -53,6 +54,25 @@ export default function Reports({ session }: { session: Session }) {
               </tbody>
             </table>
           </div>
+
+          {ev.datasets && ev.datasets.length > 0 && (
+            <div className="card" style={{ marginBottom: 16 }}>
+              <h3 style={{ marginTop: 0 }}>How it holds up when the data gets messy</h3>
+              <p className="small muted">Noise added: typos in payer names, invoice numbers removed, payment dates shifted, bank charges deducted, customers with identical amounts, and duplicate bank rows. Precision is the number to watch: a wrong auto-match costs more than a missed one.</p>
+              <table>
+                <thead><tr><th>Dataset</th><th>Pipeline</th><th className="num">Precision</th><th className="num">Recall</th><th className="num">Auto-matched</th><th className="num">Review items with right top suggestion</th></tr></thead>
+                <tbody>
+                  {ev.datasets.flatMap((d) => d.arms.map((a, i) => (
+                    <tr key={d.label + a.label}>
+                      <td>{i === 0 ? <strong>{d.label}</strong> : ''}</td><td>{a.label}</td>
+                      <td className="num">{pct(a.precision)}</td><td className="num">{pct(a.recall)}</td><td className="num">{pct(a.autoRate)}</td>
+                      <td className="num">{a.reviewTxns && i === 2 ? `${a.reviewTop1Correct} of ${a.reviewTxns}` : '–'}</td>
+                    </tr>
+                  )))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))' }}>
             <div className="card">

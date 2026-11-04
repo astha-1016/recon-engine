@@ -16,7 +16,12 @@ import java.util.stream.Collectors;
 public final class Reconciler {
 
     public record Input(List<Customer> customers, List<Invoice> invoices, List<BankTxn> txns,
-                        List<Alias> aliases, List<ManualDecision> manual) {}
+                        List<Alias> aliases, List<ManualDecision> manual, List<CreditApplication> creditApplications) {
+        public Input(List<Customer> customers, List<Invoice> invoices, List<BankTxn> txns,
+                     List<Alias> aliases, List<ManualDecision> manual) {
+            this(customers, invoices, txns, aliases, manual, List.of());
+        }
+    }
 
     public static final class Result {
         public final List<Allocation> allocations = new ArrayList<>();
@@ -24,6 +29,8 @@ public final class Reconciler {
         public final List<Credit> credits = new ArrayList<>();
         public final Map<String, Outcome> outcomes = new LinkedHashMap<>();
         public final List<Alias> learnedAliases = new ArrayList<>();
+        /** Things a person asked for that could not be applied (e.g. a credit that no longer exists). */
+        public final List<String> warnings = new ArrayList<>();
         public Ledger ledger;
         public String scorerVersion = "";
     }
@@ -69,17 +76,20 @@ public final class Reconciler {
         }
 
         IdentityResolver resolver = new IdentityResolver(customers, aliases, cfg.identityThreshold);
+        Map<String, String> duplicates = DuplicateDetector.find(in.txns());
+        List<BankTxn> distinct = new ArrayList<>();
+        for (BankTxn t : in.txns()) if (!duplicates.containsKey(t.id())) distinct.add(t);
         CandidateGenerator generator = new CandidateGenerator(cfg, ledger, resolver);
         Map<String, Ledger.Entry> refIndex = new HashMap<>();
         for (Ledger.Entry e : ledger.all()) refIndex.put(TextNorm.refKey(e.inv.id()), e);
-        Map<String, Link> links = ReversalLinker.link(in.txns(), cfg);
+        Map<String, Link> links = ReversalLinker.link(distinct, cfg);
         Map<String, Long> reversedBy = new HashMap<>();
 
         List<BankTxn> ordered = new ArrayList<>(in.txns());
         ordered.sort(Comparator.comparing(BankTxn::date)
                 .thenComparing((BankTxn t) -> t.direction() == Direction.CR ? 0 : 1).thenComparing(BankTxn::id));
 
-        for (BankTxn t : ordered) {
+        java.util.function.Consumer<BankTxn> handle = t -> {
             Outcome o = new Outcome(t.id());
             o.kind = Classifier.kind(t);
             o.channel = Classifier.channel(t);
@@ -87,15 +97,56 @@ public final class Reconciler {
             try {
                 ManualDecision md = manual.get(t.id());
                 if (md != null) applyManual(t, md, o, res, ledger, reversedBy);
-                else if (o.kind == TxnKind.BANK_FEE) { o.decision = Decision.CLASSIFIED; o.reason = "Bank fee: not an invoice payment"; }
+                else if (duplicates.containsKey(t.id())) {
+                    o.kind = TxnKind.DUPLICATE;
+                    o.decision = Decision.CLASSIFIED;
+                    o.linkedTxnId = duplicates.get(t.id());
+                    o.reason = "Duplicate of " + duplicates.get(t.id()) + " (same amount and bank reference): not reconciled";
+                } else if (o.kind == TxnKind.BANK_FEE) { o.decision = Decision.CLASSIFIED; o.reason = "Bank fee: not an invoice payment"; }
                 else if (t.direction() == Direction.DR) reverse(t, links.get(t.id()), o, res, ledger, reversedBy);
                 else pay(t, o, res, ledger, resolver, generator, refIndex);
             } catch (Exception e) {
                 throw new IllegalStateException("Failed on transaction " + t.id() + ": " + e.getMessage(), e);
             }
+        };
+
+        for (BankTxn t : ordered) handle.accept(t);
+        for (int round = 1; round <= cfg.resolutionRounds; round++) {
+            int progress = 0;
+            for (BankTxn t : ordered) {
+                Outcome prev = res.outcomes.get(t.id());
+                boolean waiting = prev.decision == Decision.REVIEW || prev.decision == Decision.UNMATCHED;
+                if (!waiting || prev.method == Method.REVERSAL || manual.containsKey(t.id())) continue;
+                handle.accept(t);
+                Outcome now = res.outcomes.get(t.id());
+                if (now.decision == Decision.AUTO) {
+                    progress++;
+                    now.reason = (now.reason == null || now.reason.isBlank() ? "" : now.reason + "; ") + "resolved in round " + round + " once other payments were matched";
+                }
+            }
+            if (progress == 0) break;
         }
+        applyCredits(in.creditApplications(), res, ledger);
         res.scorerVersion = scorer.version();   // read after scoring: the ML version is known only once the service has answered
         return res;
+    }
+
+    /** A person moved part of a payment's surplus onto another invoice. */
+    private void applyCredits(List<CreditApplication> apps, Result res, Ledger ledger) {
+        for (CreditApplication a : apps) {
+            int idx = -1;
+            for (int i = 0; i < res.credits.size(); i++) if (res.credits.get(i).txnId().equals(a.txnId())) idx = i;
+            Ledger.Entry inv = ledger.get(a.invoiceId());
+            if (idx < 0) { res.warnings.add("Credit from " + a.txnId() + " no longer exists; application to " + a.invoiceId() + " skipped"); continue; }
+            Credit c = res.credits.get(idx);
+            if (inv == null) { res.warnings.add("Unknown invoice " + a.invoiceId()); continue; }
+            if (a.amount() <= 0 || a.amount() > c.amount()) { res.warnings.add("Credit from " + a.txnId() + " has only " + Money.format(c.amount()) + " left; cannot apply " + Money.format(a.amount())); continue; }
+            if (a.amount() > ledger.outstanding(inv)) { res.warnings.add("Invoice " + a.invoiceId() + " only owes " + Money.format(ledger.outstanding(inv)) + "; cannot apply " + Money.format(a.amount())); continue; }
+            ledger.pay(a.invoiceId(), a.amount());
+            res.allocations.add(new Allocation(a.txnId(), a.invoiceId(), a.amount(), Method.MANUAL, 1.0));
+            if (c.amount() == a.amount()) res.credits.remove(idx);
+            else res.credits.set(idx, new Credit(c.txnId(), c.customerId(), c.amount() - a.amount()));
+        }
     }
 
     // ------------------------------------------------------------ payments
@@ -132,8 +183,13 @@ public final class Reconciler {
         o.top = new ArrayList<>(cands.subList(0, Math.min(3, cands.size())));
 
         Candidate best = cands.get(0);
+        boolean unidentified = cfg.requireIdentityForAuto && best.features[Features.IDENTITY] == 0 && !best.refHit;
         List<Candidate> near = cands.stream().filter(c -> c != best && best.score - c.score < cfg.margin).collect(Collectors.toList());
-        if (best.score >= cfg.autoThreshold) {
+        if (best.score >= cfg.autoThreshold && unidentified) {
+            o.decision = Decision.REVIEW;
+            o.confidence = best.score;
+            o.reason = "Matched on amount alone and the payer is not identified (strict policy): please confirm";
+        } else if (best.score >= cfg.autoThreshold) {
             if (near.isEmpty()) {
                 apply(t, best, best.parts.size() > 1 ? Method.COMPOSITE : Method.FUZZY, best.score, o, res, ledger);
             } else if (near.stream().allMatch(c -> interchangeable(best, c))) {

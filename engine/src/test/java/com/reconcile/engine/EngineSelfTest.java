@@ -53,6 +53,21 @@ public final class EngineSelfTest {
         return new Reconciler(new Config(), STUB).run(new Reconciler.Input(cs, invs, txns, aliases, manual));
     }
 
+    static Reconciler.Result run(Config cfg, Scorer scorer, List<Customer> cs, List<Invoice> invs, List<BankTxn> txns,
+                                 List<ManualDecision> manual, List<CreditApplication> credits) {
+        return new Reconciler(cfg, scorer).run(new Reconciler.Input(cs, invs, txns, List.of(), manual, credits));
+    }
+
+    /** Scores 0.95 whenever the amount is exact, whether or not the payer is known (to test policy switches). */
+    static final Scorer AMOUNT_ONLY = new Scorer() {
+        public double[] score(List<double[]> rows) {
+            double[] out = new double[rows.size()];
+            for (int i = 0; i < out.length; i++) out[i] = rows.get(i)[Features.AMOUNT_EXACT] == 1 ? 0.95 : 0.1;
+            return out;
+        }
+        public String version() { return "amount-only"; }
+    };
+
     static long allocated(Reconciler.Result r, String txn, String invoice) {
         return r.allocations.stream().filter(a -> a.txnId().equals(txn) && a.invoiceId().equals(invoice)).mapToLong(Allocation::amount).sum();
     }
@@ -65,6 +80,10 @@ public final class EngineSelfTest {
         text();
         classifier();
         pipeline();
+        duplicates();
+        credits();
+        strictPolicy();
+        resolutionRounds();
         featureParity();
         System.out.printf("%d checks, %d failures%n", checks, failures);
         if (failures > 0) System.exit(1);
@@ -186,6 +205,95 @@ public final class EngineSelfTest {
 
         // outstanding is derived and never negative
         check("outstanding derived", r.ledger.outstanding(r.ledger.get("I1")) == 0);
+    }
+
+    static void duplicates() {
+        var invs = List.of(inv("I1", "C1", "Acme Traders Pvt Ltd", "1000.00", 1), inv("I2", "C1", "Acme Traders Pvt Ltd", "2500.00", 1));
+        // the same statement line imported twice: same bank reference and amount
+        var twin1 = cr("A", 8, "1000.00", "Acme Traders Pvt Ltd", "NEFT", "NEFT PAYMENT");
+        var twin2 = new BankTxn("B", d(8), twin1.amount(), Direction.CR, twin1.payer(), "NEFT", twin1.bankRef(), "", "NEFT PAYMENT");
+        var r = run(CUSTOMERS, invs, List.of(twin1, twin2), List.of(), List.of());
+        long rows = r.allocations.stream().filter(a -> a.invoiceId().equals("I1")).map(Allocation::txnId).distinct().count();
+        check("a duplicated bank row is applied once, not twice", rows == 1 && r.allocations.stream().mapToLong(Allocation::amount).sum() == Money.parse("1000.00"));
+        check("the duplicate is classified, never reconciled", r.outcomes.get("B").kind == TxnKind.DUPLICATE && r.outcomes.get("B").decision == Decision.CLASSIFIED);
+        check("the duplicate points at its twin", r.outcomes.get("B").linkedTxnId.equals("A"));
+        check("detector finds exactly one duplicate", DuplicateDetector.find(List.of(twin1, twin2)).size() == 1);
+        // two genuinely different payments with the same amount but different references are NOT duplicates
+        var other = new BankTxn("C", d(9), twin1.amount(), Direction.CR, twin1.payer(), "NEFT", "UTR-OTHER", "", "NEFT PAYMENT");
+        check("same amount, different reference is not a duplicate", DuplicateDetector.find(List.of(twin1, other)).isEmpty());
+        // same amount and reference but different amounts are not duplicates either
+        var different = new BankTxn("D", d(8), Money.parse("1000.01"), Direction.CR, twin1.payer(), "NEFT", twin1.bankRef(), "", "NEFT PAYMENT");
+        check("same reference, different amount is not a duplicate", DuplicateDetector.find(List.of(twin1, different)).isEmpty());
+        // without a reference, an identical row (date, amount, payer, channel, narration) is a duplicate
+        var n1 = new BankTxn("E", d(8), Money.parse("500.00"), Direction.CR, "Acme", "QR", "", "", "QR PAYMENT");
+        var n2 = new BankTxn("F", d(8), Money.parse("500.00"), Direction.CR, "Acme", "QR", "", "", "QR PAYMENT");
+        check("identical rows with no reference are duplicates", DuplicateDetector.find(List.of(n1, n2)).size() == 1);
+    }
+
+    static void credits() {
+        var invs = List.of(inv("I1", "C1", "Acme Traders Pvt Ltd", "10000.00", 1), inv("I2", "C1", "Acme Traders Pvt Ltd", "7000.00", 20));
+        var pay = List.of(cr("T1", 8, "10100.00", "9876543210@oksbi", "IMPS", "IMPS PAYMENT"));
+        var base = run(new Config(), STUB, CUSTOMERS, invs, pay, List.of(), List.of());
+        check("overpayment leaves a credit", base.credits.size() == 1 && base.credits.get(0).amount() == Money.parse("100.00"));
+
+        var applied = run(new Config(), STUB, CUSTOMERS, invs, pay, List.of(),
+                List.of(new CreditApplication("T1", "I2", Money.parse("60.00"))));
+        check("part of a credit can be applied to another invoice", allocated(applied, "T1", "I2") == Money.parse("60.00"));
+        check("the credit shrinks by what was applied", applied.credits.size() == 1 && applied.credits.get(0).amount() == Money.parse("40.00"));
+        check("the other invoice is now partly paid", applied.ledger.status(applied.ledger.get("I2")) == InvoiceStatus.PARTIALLY_PAID);
+        check("applied credit is recorded as a manual allocation", applied.allocations.stream().anyMatch(a -> a.invoiceId().equals("I2") && a.method() == Method.MANUAL));
+
+        var all = run(new Config(), STUB, CUSTOMERS, invs, pay, List.of(),
+                List.of(new CreditApplication("T1", "I2", Money.parse("100.00"))));
+        check("a fully used credit disappears", all.credits.isEmpty() && all.warnings.isEmpty());
+
+        var tooMuch = run(new Config(), STUB, CUSTOMERS, invs, pay, List.of(),
+                List.of(new CreditApplication("T1", "I2", Money.parse("100.01"))));
+        check("cannot apply more credit than exists", allocated(tooMuch, "T1", "I2") == 0 && tooMuch.warnings.size() == 1);
+
+        var gone = run(new Config(), STUB, CUSTOMERS, invs, pay, List.of(), List.of(new CreditApplication("NOPE", "I2", 100)));
+        check("applying a credit that does not exist is refused", gone.warnings.size() == 1 && allocated(gone, "NOPE", "I2") == 0);
+
+        var small = List.of(inv("I1", "C1", "Acme Traders Pvt Ltd", "10000.00", 1), inv("I2", "C1", "Acme Traders Pvt Ltd", "30.00", 20));
+        var over = run(new Config(), STUB, CUSTOMERS, small, pay, List.of(), List.of(new CreditApplication("T1", "I2", Money.parse("50.00"))));
+        check("cannot apply more than the invoice owes", allocated(over, "T1", "I2") == 0 && over.warnings.size() == 1);
+    }
+
+    static void strictPolicy() {
+        var invs = List.of(inv("I1", "C1", "Acme Traders Pvt Ltd", "1234.56", 1));
+        var txns = List.of(cr("T1", 8, "1234.56", "zz.unknown@exampleupi", "QR", "QR PAYMENT"));
+        var normal = run(new Config(), AMOUNT_ONLY, CUSTOMERS, invs, txns, List.of(), List.of());
+        check("default policy auto-matches a unique exact amount even for an unknown payer", normal.outcomes.get("T1").decision == Decision.AUTO);
+        Config strict = new Config();
+        strict.requireIdentityForAuto = true;
+        var s = run(strict, AMOUNT_ONLY, CUSTOMERS, invs, txns, List.of(), List.of());
+        check("strict policy sends an unidentified payer to review", s.outcomes.get("T1").decision == Decision.REVIEW && s.allocations.isEmpty());
+        var known = List.of(cr("T1", 8, "1234.56", "9876543210@okhdfc", "QR", "QR PAYMENT"));
+        var k = run(strict, AMOUNT_ONLY, CUSTOMERS, invs, known, List.of(), List.of());
+        check("strict policy still auto-matches an identified payer", k.outcomes.get("T1").decision == Decision.AUTO);
+        var withRef = List.of(cr("T1", 8, "1234.56", "zz.unknown@exampleupi", "QR", "QR PAYMENT INV-2026-00001"));
+        var refInv = List.of(inv("INV-2026-00001", "C1", "Acme Traders Pvt Ltd", "1234.56", 1));
+        var rr = run(strict, AMOUNT_ONLY, CUSTOMERS, refInv, withRef, List.of(), List.of());
+        check("strict policy still auto-matches when the invoice number is quoted", rr.outcomes.get("T1").decision == Decision.AUTO);
+    }
+
+    /** Two customers share a business name, so an unreferenced payment is ambiguous until the other one is settled. */
+    static void resolutionRounds() {
+        var cs = List.of(new Customer("C1", "Acme Traders Pvt Ltd", "", ""), new Customer("C2", "Acme Traders Pvt Ltd", "", ""));
+        var invs = List.of(inv("INV-2026-00001", "C1", "Acme Traders Pvt Ltd", "1000.00", 1), inv("INV-2026-00002", "C2", "Acme Traders Pvt Ltd", "1000.00", 1));
+        var txns = List.of(cr("T1", 8, "1000.00", "Acme Traders Pvt Ltd", "NEFT", "NEFT PAYMENT"),
+                           cr("T2", 12, "1000.00", "Acme Traders Pvt Ltd", "NEFT", "NEFT PAYMENT INV-2026-00002"));
+        Config off = new Config();
+        off.resolutionRounds = 0;
+        var first = run(off, STUB, cs, invs, txns, List.of(), List.of());
+        check("without rounds the ambiguous payment waits for a person", first.outcomes.get("T1").decision == Decision.REVIEW);
+        check("the referenced payment is matched either way", allocated(first, "T2", "INV-2026-00002") == Money.parse("1000.00"));
+        var second = run(new Config(), STUB, cs, invs, txns, List.of(), List.of());
+        check("with rounds it resolves once the other invoice is taken", second.outcomes.get("T1").decision == Decision.AUTO
+                && allocated(second, "T1", "INV-2026-00001") == Money.parse("1000.00"));
+        check("the reason explains it was resolved in a later round", second.outcomes.get("T1").reason.contains("round 1"));
+        check("rounds never touch what a person decided", run(new Config(), STUB, cs, invs, txns,
+                List.of(new ManualDecision("T1", List.of(new Part("INV-2026-00002", Money.parse("1000.00"))))), List.of()).outcomes.get("T1").method == Method.MANUAL);
     }
 
     /** The Java feature list and the Python service must agree, or scores would be silently wrong. */

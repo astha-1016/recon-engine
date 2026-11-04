@@ -12,7 +12,7 @@ import java.util.*;
 public final class DataSet {
 
     public record Truth(String txnId, String invoiceId, String customerId, long amount, String scenario,
-                        String eventType, String split) {}
+                        String eventType, String split, String originalTxnId) {}
 
     public final List<Customer> customers = new ArrayList<>();
     public final List<Invoice> invoices = new ArrayList<>();
@@ -34,7 +34,8 @@ public final class DataSet {
         if (Files.exists(gt))
             for (Map<String, String> r : Csv.read(gt))
                 ds.truth.add(new Truth(r.get("transaction_id"), r.get("invoice_id"), r.get("customer_id"), Money.parse(r.get("allocated_amount")),
-                        r.get("scenario"), r.get("event_type"), r.get("evaluation_split")));
+                        r.get("scenario"), r.get("event_type"), r.get("evaluation_split"),
+                        r.getOrDefault("original_transaction_id", "")));
         return ds;
     }
 

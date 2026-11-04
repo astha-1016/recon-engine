@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  engine-and-ml:
+    name: Generators, engine, ML service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: ml-service/requirements.txt
+      - run: pip install -r ml-service/requirements.txt
+      - name: Dataset generator tests
+        run: cd data-generator && python -m unittest test_generator_v2 test_generator_v3
+      - name: Engine self-test
+        run: |
+          mkdir -p build/main build/test
+          javac --release 17 -d build/main engine/src/main/java/com/reconcile/engine/*.java
+          javac --release 17 -cp build/main -d build/test engine/src/test/java/com/reconcile/engine/EngineSelfTest.java
+          cd engine && java -cp ../build/main:../build/test com.reconcile.engine.EngineSelfTest
+      - name: ML service tests
+        run: cd ml-service && python -m pytest -q tests
+
+  backend:
+    name: Backend (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17', cache: maven }
+      - name: Build engine and backend, run all tests
+        run: mvn -B verify
+
+  frontend:
+    name: Frontend (type-check and build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: cd frontend && npm install --no-audit --no-fund && npm run build

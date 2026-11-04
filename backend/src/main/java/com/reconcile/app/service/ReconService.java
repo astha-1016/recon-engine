@@ -26,7 +26,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReconService {
     private static final Logger log = LoggerFactory.getLogger(ReconService.class);
 
-    public record RunSummary(int transactions, int auto, int review, int unmatched, int classified, long millis, String scorer) {}
+    public record RunSummary(int transactions, int auto, int review, int unmatched, int classified, long millis, String scorer,
+                             List<String> warnings) {}
 
     private final CustomerRepo customers;
     private final InvoiceRepo invoices;
@@ -37,6 +38,7 @@ public class ReconService {
     private final CreditRepo credits;
     private final OutcomeRepo outcomes;
     private final ManualRepo manual;
+    private final CreditApplicationRepo creditApps;
     private final AppProperties props;
     private final ObjectMapper mapper;
     private final TransactionTemplate tx;
@@ -49,10 +51,10 @@ public class ReconService {
 
     public ReconService(CustomerRepo customers, InvoiceRepo invoices, TxnRepo txns, AliasRepo aliases, AllocationRepo allocations,
                         AdjustmentRepo adjustments, CreditRepo credits, OutcomeRepo outcomes, ManualRepo manual,
-                        AppProperties props, ObjectMapper mapper, PlatformTransactionManager tm) {
+                        CreditApplicationRepo creditApps, AppProperties props, ObjectMapper mapper, PlatformTransactionManager tm) {
         this.customers = customers; this.invoices = invoices; this.txns = txns; this.aliases = aliases;
         this.allocations = allocations; this.adjustments = adjustments; this.credits = credits;
-        this.outcomes = outcomes; this.manual = manual; this.props = props; this.mapper = mapper;
+        this.outcomes = outcomes; this.manual = manual; this.creditApps = creditApps; this.props = props; this.mapper = mapper;
         this.tx = new TransactionTemplate(tm);
     }
 
@@ -101,9 +103,11 @@ public class ReconService {
         for (ManualE m : manual.findAll()) byTxn.computeIfAbsent(m.txnId, k -> new ArrayList<>()).add(new Part(m.invoiceId, m.amount));
         List<ManualDecision> decisions = new ArrayList<>();
         byTxn.forEach((id, parts) -> decisions.add(new ManualDecision(id, parts)));
+        List<CreditApplication> applications = new ArrayList<>();
+        for (CreditApplicationE c : creditApps.findAll()) applications.add(new CreditApplication(c.txnId, c.invoiceId, c.amount));
 
         FallbackScorer scorer = new FallbackScorer(props.mlEnabled() ? new HttpScorer(props.mlUrl()) : null);
-        Reconciler.Result res = new Reconciler(new Config(), scorer).run(new Reconciler.Input(cs, invs, ts, als, decisions));
+        Reconciler.Result res = new Reconciler(new Config(), scorer).run(new Reconciler.Input(cs, invs, ts, als, decisions, applications));
 
         allocations.deleteAllInBatch(); adjustments.deleteAllInBatch(); credits.deleteAllInBatch(); outcomes.deleteAllInBatch();
         List<AllocationE> a = new ArrayList<>();
@@ -139,7 +143,8 @@ public class ReconService {
 
         for (InvoiceE i : invoiceRows) i.status = res.ledger.status(res.ledger.get(i.id)).name();
         invoices.saveAll(invoiceRows);
-        return new RunSummary(res.outcomes.size(), auto, review, unmatched, classified, System.currentTimeMillis() - t0, res.scorerVersion);
+        return new RunSummary(res.outcomes.size(), auto, review, unmatched, classified, System.currentTimeMillis() - t0, res.scorerVersion,
+                List.copyOf(res.warnings));
     }
 
     private String candidatesJson(List<Candidate> top) {

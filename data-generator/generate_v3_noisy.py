@@ -13,6 +13,8 @@ Noise (all scaled by --level; level 0 returns the v2 data unchanged):
                     (scenario renamed to 'fee_deducted'; the invoice must still close as PAID with an adjustment)
   amount collisions 12 invoice pairs from different customers are given the SAME amount, so amount alone
                     can no longer identify the payer
+  duplicate rows    ~15 credits are listed twice (same bank reference and amount, new row id). They must NOT be
+                    reconciled, or the same money would settle two invoices (scenario 'duplicate_row')
 """
 import argparse
 import csv
@@ -123,7 +125,24 @@ def build_noisy(count=1000, seed=42, short_n=30, over_n=20, return_n=20, level=1
         if tid not in linked and scenario_of.get(tid) in (JITTER_SCENARIOS | {'fee_deducted'}) and r.random() < 0.50 * level:
             t['transaction_date'] = (date.fromisoformat(t['transaction_date']) + timedelta(days=r.randrange(1, 7))).isoformat()
 
-    summary.update(version=3, noise_level=level, amount_collision_pairs=pairs,
+    # 4) duplicate bank rows: the same credit imported twice
+    dup_candidates = sorted(t for t in truth_by_txn if t not in linked and txns[t]['direction'] == 'CR')
+    r.shuffle(dup_candidates)
+    dups = 0
+    for k, tid in enumerate(dup_candidates[:int(round(15 * level))], start=1):
+        copy = dict(txns[tid])
+        copy['transaction_id'] = f'TXN-DUP{k:04d}'
+        data['bank_transactions'].append(copy)
+        data['ground_truth'].append(dict(
+            transaction_id=copy['transaction_id'], invoice_id='', customer_id='', allocated_amount='0.00',
+            scenario='duplicate_row', event_type='UNMATCHED', original_transaction_id=tid, payer_is_alias=0,
+            missing_invoice_reference=1, evaluation_split=truth_by_txn[tid][0]['evaluation_split']))
+        dups += 1
+    if dups:
+        r.shuffle(data['bank_transactions'])
+
+    summary.update(version=3, noise_level=level, amount_collision_pairs=pairs, duplicate_rows=dups,
+                   transaction_count=len(data['bank_transactions']),
                    fee_deducted=sum(1 for g in data['ground_truth'] if g['scenario'] == 'fee_deducted'))
     return data, summary
 
@@ -148,7 +167,7 @@ def main():
     (a.output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
     print(f"Created {summary['invoice_count']} invoices, {summary['transaction_count']} transactions in {a.output} "
           f"(noise level {a.level}: {summary.get('fee_deducted', 0)} fee-deducted payments, "
-          f"{summary.get('amount_collision_pairs', 0)} amount-collision pairs).")
+          f"{summary.get('amount_collision_pairs', 0)} amount-collision pairs, {summary.get('duplicate_rows', 0)} duplicate rows).")
 
 
 if __name__ == '__main__':

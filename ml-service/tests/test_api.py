@@ -95,11 +95,16 @@ def test_unknown_feedback_feature_rejected(client):
 
 def test_worse_model_is_not_promoted(client):
     first = client.post("/train", json={}).json()
-    # poisoned feedback: confident but wrong labels drag the new model down
-    poison = [{"txn_id": f"P{i}", "label": 0, "features": {"amount_exact": 1.0, "identity_score": 1.0}} for i in range(4000)]
+    # Label-flipped feedback on realistic rows (the same feature region as the real data) is what a bad batch of
+    # human corrections would look like. It contradicts what the model knows, so the new model must score worse.
+    base = pd.read_csv(main.BASE_DATASET)
+    sample = base[base["split"] == "train"].sample(4000, replace=True, random_state=3)
+    poison = [{"txn_id": f"P{i}", "label": 1 - int(r["label"]), "features": {k: float(r[k]) for k in FEATURE_NAMES}}
+              for i, (_, r) in enumerate(sample.iterrows())]
     client.post("/feedback", json={"rows": poison})
     second = client.post("/train", json={"use_feedback": True}).json()
     assert second["promoted"] is False
+    assert second["holdout_metrics"]["average_precision"] < first["holdout_metrics"]["average_precision"]
     assert client.get("/models").json()["active"] == first["version"]
 
 
@@ -109,3 +114,28 @@ def test_rollback_to_earlier_version(client):
     assert client.post(f"/models/{a}/activate").json()["active"] == a
     assert client.post("/models/does-not-exist/activate").status_code == 404
     assert {m["version"] for m in client.get("/models").json()["models"]} >= {a, b}
+
+
+def test_feedback_can_be_removed_for_one_transaction(client):
+    client.post("/train", json={})
+    rows = [{"txn_id": t, "label": 1, "features": {"amount_exact": 1.0}} for t in ("A", "A", "B")]
+    client.post("/feedback", json={"rows": rows})
+    assert client.get("/health").json()["feedback_rows"] == 3
+    assert client.delete("/feedback/A").json() == {"removed": 2, "total_feedback_rows": 1}
+    assert client.delete("/feedback/does-not-exist").json()["removed"] == 0
+    assert client.get("/health").json()["feedback_rows"] == 1
+
+
+def test_model_trained_on_an_older_feature_set_is_not_used_and_is_replaced(client):
+    first = client.post("/train", json={}).json()["version"]
+    meta_file = main.registry.root / first / "meta.json"
+    import json as _json
+    meta = _json.loads(meta_file.read_text())
+    meta["features"] = FEATURE_NAMES[:-4]          # pretend it was trained before the newest features existed
+    meta_file.write_text(_json.dumps(meta))
+    assert client.get("/health").json()["model_compatible"] is False
+    assert client.post("/score", json=score_body([[0.0] * len(FEATURE_NAMES)])).status_code == 503
+    second = client.post("/train", json={}).json()
+    assert second["promoted"] is True                  # the stale model is not allowed to block a good one
+    assert client.get("/health").json()["model_compatible"] is True
+    assert client.post("/score", json=score_body([[0.0] * len(FEATURE_NAMES)])).status_code == 200

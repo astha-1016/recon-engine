@@ -37,6 +37,11 @@ public class MlClient {
         return send("POST", "/train", Map.of("algorithm", algorithm, "use_feedback", true));
     }
 
+    /** Undo: drop the stored training rows of one transaction. */
+    public void removeFeedback(String txnId) throws Exception {
+        if (enabled) send("DELETE", "/feedback/" + java.net.URLEncoder.encode(txnId, java.nio.charset.StandardCharsets.UTF_8), null);
+    }
+
     public void feedback(List<Map<String, Object>> rows) throws Exception {
         if (enabled && !rows.isEmpty()) send("POST", "/feedback", Map.of("rows", rows));
     }
