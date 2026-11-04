@@ -6,6 +6,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  flyway:
+    enabled: false   # tests build the schema from the entities on in-memory H2
 app:
   jwt-secret: test-secret-test-secret-test-secret-123456
   ml-url: http://localhost:8000

@@ -45,16 +45,7 @@ public class IngestService {
         for (Map<String, String> r : rows) {
             line++;
             try {
-                require(r, "invoice_id", "customer_id", "customer_name", "amount", "invoice_date", "due_date");
-                InvoiceE e = new InvoiceE();
-                e.id = r.get("invoice_id").trim();
-                e.customerId = r.get("customer_id").trim();
-                e.customerName = r.get("customer_name").trim();
-                e.amount = Money.parse(r.get("amount"));
-                if (e.amount <= 0) throw new IllegalArgumentException("amount must be positive");
-                e.issueDate = LocalDate.parse(r.get("invoice_date").trim());
-                e.dueDate = LocalDate.parse(r.get("due_date").trim());
-                e.rowHash = hash(e.id, e.customerId, e.customerName, r.get("amount"), e.issueDate, e.dueDate);
+                InvoiceE e = toInvoice(r);
                 if (invoices.existsByRowHash(e.rowHash)) { duplicates++; continue; }
                 if (invoices.existsById(e.id)) throw new IllegalArgumentException("invoice " + e.id + " already exists with different content");
                 invoices.save(e);
@@ -72,22 +63,7 @@ public class IngestService {
         for (Map<String, String> r : rows) {
             line++;
             try {
-                require(r, "transaction_id", "transaction_date", "amount");
-                TxnE e = new TxnE();
-                e.id = r.get("transaction_id").trim();
-                e.txnDate = LocalDate.parse(r.get("transaction_date").trim());
-                long amount = Money.parse(r.get("amount"));
-                String dir = r.getOrDefault("direction", "").trim().toUpperCase();
-                if (dir.isEmpty()) dir = amount < 0 ? "DR" : "CR";
-                if (!dir.equals("CR") && !dir.equals("DR")) throw new IllegalArgumentException("direction must be CR or DR");
-                e.direction = dir;
-                e.amount = dir.equals("DR") ? -Math.abs(amount) : Math.abs(amount);
-                e.payer = r.getOrDefault("payer_name", "").trim();
-                e.channel = r.getOrDefault("channel", "").trim();
-                e.bankRef = r.getOrDefault("bank_reference", "").trim();
-                e.reversalRef = r.getOrDefault("reversal_reference", "").trim();
-                e.narration = r.getOrDefault("narration", "").trim();
-                e.rowHash = hash(e.id, e.txnDate, r.get("amount"), dir, e.payer, e.channel, e.bankRef, e.reversalRef, e.narration);
+                TxnE e = toTxn(r);
                 if (txns.existsByRowHash(e.rowHash)) { duplicates++; continue; }
                 if (txns.existsById(e.id)) throw new IllegalArgumentException("transaction " + e.id + " already exists with different content");
                 txns.save(e);
@@ -118,6 +94,42 @@ public class IngestService {
             }
         }
         return new Report(rows.size(), inserted, 0, errors);
+    }
+
+    /** Validates one invoice row and maps it to an entity. Shared by file upload and the manual create/edit forms. */
+    static InvoiceE toInvoice(Map<String, String> r) {
+        require(r, "invoice_id", "customer_id", "customer_name", "amount", "invoice_date", "due_date");
+        InvoiceE e = new InvoiceE();
+        e.id = r.get("invoice_id").trim();
+        e.customerId = r.get("customer_id").trim();
+        e.customerName = r.get("customer_name").trim();
+        e.amount = Money.parse(r.get("amount"));
+        if (e.amount <= 0) throw new IllegalArgumentException("amount must be positive");
+        e.issueDate = LocalDate.parse(r.get("invoice_date").trim());
+        e.dueDate = LocalDate.parse(r.get("due_date").trim());
+        e.rowHash = hash(e.id, e.customerId, e.customerName, r.get("amount"), e.issueDate, e.dueDate);
+        return e;
+    }
+
+    /** Validates one bank-statement row and maps it to an entity. Shared by file upload and the manual forms. */
+    static TxnE toTxn(Map<String, String> r) {
+        require(r, "transaction_id", "transaction_date", "amount");
+        TxnE e = new TxnE();
+        e.id = r.get("transaction_id").trim();
+        e.txnDate = LocalDate.parse(r.get("transaction_date").trim());
+        long amount = Money.parse(r.get("amount"));
+        String dir = r.getOrDefault("direction", "").trim().toUpperCase();
+        if (dir.isEmpty()) dir = amount < 0 ? "DR" : "CR";
+        if (!dir.equals("CR") && !dir.equals("DR")) throw new IllegalArgumentException("direction must be CR or DR");
+        e.direction = dir;
+        e.amount = dir.equals("DR") ? -Math.abs(amount) : Math.abs(amount);
+        e.payer = r.getOrDefault("payer_name", "").trim();
+        e.channel = r.getOrDefault("channel", "").trim();
+        e.bankRef = r.getOrDefault("bank_reference", "").trim();
+        e.reversalRef = r.getOrDefault("reversal_reference", "").trim();
+        e.narration = r.getOrDefault("narration", "").trim();
+        e.rowHash = hash(e.id, e.txnDate, r.get("amount"), dir, e.payer, e.channel, e.bankRef, e.reversalRef, e.narration);
+        return e;
     }
 
     private static void require(Map<String, String> row, String... columns) {

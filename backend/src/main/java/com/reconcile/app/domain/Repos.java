@@ -46,10 +46,14 @@ public final class Repos {
     public interface ManualRepo extends JpaRepository<ManualE, Long> {
         List<ManualE> findByTxnId(String txnId);
         void deleteByTxnId(String txnId);
+        boolean existsByInvoiceId(String invoiceId);
+        boolean existsByTxnId(String txnId);
     }
 
     public interface CreditApplicationRepo extends JpaRepository<CreditApplicationE, Long> {
         List<CreditApplicationE> findByTxnId(String txnId);
+        boolean existsByInvoiceId(String invoiceId);
+        boolean existsByTxnId(String txnId);
     }
 
     public interface FeedbackRepo extends JpaRepository<FeedbackE, Long> {

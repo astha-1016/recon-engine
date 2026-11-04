@@ -66,6 +66,11 @@ export type InvoiceView = {
   id: string; customerId: string; customerName: string; amount: number; paid: number; adjusted: number; outstanding: number
   issueDate: string; dueDate: string; status: string
 }
+export type TxnRow = {
+  id: string; date: string; amount: number; direction: string; payer: string; channel: string
+  bankRef: string; reversalRef: string; narration: string; status: string
+}
+export type UserView = { id: number; username: string; role: 'ADMIN' | 'ACCOUNTANT' | 'VIEWER' }
 export type Report = { rows: number; inserted: number; duplicates: number; errors: string[] }
 export type InvoiceOption = { id: string; outstanding: number; dueDate: string }
 export type CreditView = { txnId: string; txnDate: string; payer: string; customerId: string; customerName: string; amount: number; openInvoices: InvoiceOption[] }

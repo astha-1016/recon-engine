@@ -15,6 +15,10 @@ Then in the UI: **Upload** `data-generator/sample/customers.csv`, `invoices.csv`
 
 Before sharing the app anywhere, copy `.env.example` to `.env`, set real values, and keep `REQUIRE_STRONG_SECRETS=true`: the backend then refuses to start on placeholder secrets.
 
+## Using it with your own data
+
+Everything is stored in PostgreSQL and survives restarts. To go from the demo to real use: **Settings → Remove demo data**, add your staff under **Settings → Users**, then load your data with **Upload** or add single rows with **Invoices → New invoice** and **Payments → Record payment**. Wrong rows can be edited (Admin/Accountant) or deleted (Admin). Backups, restore and schema migrations are in [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+
 ## What is in the box
 
 | Folder | What it is |

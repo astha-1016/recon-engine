@@ -1,5 +1,16 @@
 # What changed in this version
 
+## Running it with real data
+- **Add rows by hand**: Invoices → New invoice, Payments → Record payment (same validation as an upload).
+- **Edit and delete** invoices and payments (edit: Admin/Accountant, delete: Admin). Rows used by a manual decision or credit application are locked until the decision is undone. Allocations re-run after every change; each change is audited.
+- **Payments page**: browse bank-statement lines with their match result.
+- **User management** (Settings, Admin): add/remove users, change role, set a password; everyone can change their own password (10+ characters). The last admin cannot be removed or demoted.
+- **Remove demo data** (Settings, Admin): wipes business data after typing RESET; keeps users, audit log and models.
+- **Flyway migrations** (`V1` baseline, `V2` indexes); existing databases are baselined, not recreated. `DDL_AUTO=validate` available once verified.
+- **Backups**: `scripts/backup.*` and `scripts/restore.*`, plus `docs/OPERATIONS.md`.
+- API error messages are now returned (`server.error.include-message`), so forms show why a request was refused.
+- New tests: `RecordsAndUsersTest`.
+
 ## Matching quality
 - **Resolution rounds**: payments still waiting are re-examined once other payments have claimed their invoices.
 - **Training on realistic states** (two-stage `scripts/train.sh`): removes a train/serve mismatch in the candidate pools. The model service now also refuses a model trained on a different feature list and retrains instead of mis-scoring.
