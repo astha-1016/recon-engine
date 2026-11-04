@@ -57,7 +57,7 @@ public final class Entities {
         public Instant createdAt = Instant.now();
     }
 
-    @Entity @Table(name = "allocations")
+    @Entity(name = "AllocationE") @Table(name = "allocations")
     public static class AllocationE {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Long id;
         public String txnId;
@@ -76,7 +76,7 @@ public final class Entities {
         public String type;
     }
 
-    @Entity @Table(name = "unapplied_credits")
+    @Entity(name = "CreditE") @Table(name = "unapplied_credits")
     public static class CreditE {
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Long id;
         public String txnId;
@@ -84,7 +84,7 @@ public final class Entities {
         public long amount;
     }
 
-    @Entity @Table(name = "txn_outcomes")
+    @Entity(name = "OutcomeE") @Table(name = "txn_outcomes")
     public static class OutcomeE {
         @Id public String txnId;
         public String kind;
@@ -140,6 +140,8 @@ public final class Entities {
         public String username;
         public String passwordHash;
         public String role;
+        /** Bumped whenever the password or role changes. A token carries the value it was issued with; a mismatch ends the session. */
+        public int tokenVersion;
     }
 
     @Entity @Table(name = "audit_log")

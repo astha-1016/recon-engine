@@ -171,12 +171,114 @@ class RecordsAndUsersTest {
     }
 
     @Test
-    void resetNeedsAnAdminAndAnExplicitConfirmation() throws Exception {
+    void resetNeedsAnAdminTheTypedWordAndThePassword() throws Exception {
         String admin = login("admin"), accountant = login("accountant");
         mvc.perform(post("/api/admin/reset").header("Authorization", accountant).contentType("application/json")
-                .content("{\"confirm\":\"RESET\"}")).andExpect(status().isForbidden());
+                .content("{\"confirm\":\"RESET\",\"password\":\"test-password\"}")).andExpect(status().isForbidden());
         mvc.perform(post("/api/admin/reset").header("Authorization", admin).contentType("application/json")
-                .content("{\"confirm\":\"yes\"}")).andExpect(status().isBadRequest());
-        assertTrue(getJson("/api/admin/summary", admin).has("invoices"));
+                .content("{\"confirm\":\"yes\",\"password\":\"test-password\"}")).andExpect(status().isBadRequest());
+        // the typed word alone is not enough, and neither is the wrong password
+        mvc.perform(post("/api/admin/reset").header("Authorization", admin).contentType("application/json")
+                .content("{\"confirm\":\"RESET\"}")).andExpect(status().isBadRequest());
+        mvc.perform(post("/api/admin/reset").header("Authorization", admin).contentType("application/json")
+                .content("{\"confirm\":\"RESET\",\"password\":\"not-the-password\"}")).andExpect(status().isBadRequest());
+        assertTrue(getJson("/api/admin/summary", admin).has("invoices"));   // the real reset is exercised in AdminResetTest
+    }
+
+    private void createUser(String admin, String name, String pw, String role) throws Exception {
+        mvc.perform(post("/api/users").header("Authorization", admin).contentType("application/json")
+                .content("{\"username\":\"" + name + "\",\"password\":\"" + pw + "\",\"role\":\"" + role + "\"}")).andExpect(status().isCreated());
+    }
+
+    private long userId(String admin, String name) throws Exception {
+        for (JsonNode u : getJson("/api/users", admin)) if (u.get("username").asText().equals(name)) return u.get("id").asLong();
+        throw new AssertionError("no such user " + name);
+    }
+
+    @Test
+    void sessionsEndWhenRoleOrPasswordChangesOrTheUserIsDeleted() throws Exception {
+        String admin = login("admin");
+        String pw = "a-long-password-1";
+        createUser(admin, "sess.role", pw, "ADMIN");
+        createUser(admin, "sess.pass", pw, "ACCOUNTANT");
+        createUser(admin, "sess.del", pw, "ACCOUNTANT");
+        String role = login("sess.role", pw), pass = login("sess.pass", pw), del = login("sess.del", pw);
+        // all three work now
+        for (String t : new String[]{role, pass, del}) mvc.perform(get("/api/dashboard").header("Authorization", t)).andExpect(status().isOk());
+        assertEquals(200, mvc.perform(get("/api/users").header("Authorization", role)).andReturn().getResponse().getStatus());
+
+        // a demoted admin loses admin powers on the very next request, not after 8 hours
+        mvc.perform(put("/api/users/" + userId(admin, "sess.role") + "/role").header("Authorization", admin).contentType("application/json")
+                .content("{\"role\":\"VIEWER\"}")).andExpect(status().isOk());
+        mvc.perform(get("/api/users").header("Authorization", role)).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/dashboard").header("Authorization", role)).andExpect(status().isUnauthorized());
+        login("sess.role", pw);   // signing in again works and carries the new role
+        // an admin resetting a password kicks out whoever holds the old session
+        mvc.perform(put("/api/users/" + userId(admin, "sess.pass") + "/password").header("Authorization", admin).contentType("application/json")
+                .content("{\"password\":\"a-brand-new-password-2\"}")).andExpect(status().isOk());
+        mvc.perform(get("/api/dashboard").header("Authorization", pass)).andExpect(status().isUnauthorized());
+        login("sess.pass", "a-brand-new-password-2");
+        // deleting the user ends the session too
+        mvc.perform(delete("/api/users/" + userId(admin, "sess.del")).header("Authorization", admin)).andExpect(status().isOk());
+        mvc.perform(get("/api/dashboard").header("Authorization", del)).andExpect(status().isUnauthorized());
+        // the admin's own session is untouched by all of that
+        mvc.perform(get("/api/dashboard").header("Authorization", admin)).andExpect(status().isOk());
+        for (String n : new String[]{"sess.role", "sess.pass"})
+            mvc.perform(delete("/api/users/" + userId(admin, n)).header("Authorization", admin)).andExpect(status().isOk());
+    }
+
+    @Test
+    void changingYourOwnPasswordNeedsAMatchingConfirmationAndKeepsYouSignedIn() throws Exception {
+        String admin = login("admin");
+        String pw = "a-long-password-1";
+        createUser(admin, "own.change", pw, "VIEWER");
+        String old = login("own.change", pw);
+        String body = "{\"currentPassword\":\"" + pw + "\",\"newPassword\":\"second-long-password-2\",\"confirmPassword\":\"second-long-passwurd-2\"}";
+        mvc.perform(post("/api/auth/change-password").header("Authorization", old).contentType("application/json").content(body))
+                .andExpect(status().isBadRequest());                       // typo in the confirmation: nothing changes
+        login("own.change", pw);
+        mvc.perform(post("/api/auth/change-password").header("Authorization", old).contentType("application/json")
+                .content("{\"currentPassword\":\"" + pw + "\",\"newPassword\":\"" + pw + "\",\"confirmPassword\":\"" + pw + "\"}"))
+                .andExpect(status().isBadRequest());                       // same password again is refused
+        String res = mvc.perform(post("/api/auth/change-password").header("Authorization", old).contentType("application/json")
+                        .content(body.replace("passwurd", "password"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        String fresh = "Bearer " + mapper.readTree(res).get("token").asText();
+        mvc.perform(get("/api/dashboard").header("Authorization", old)).andExpect(status().isUnauthorized());   // old session ended
+        mvc.perform(get("/api/dashboard").header("Authorization", fresh)).andExpect(status().isOk());           // the one that changed it lives on
+        mvc.perform(delete("/api/users/" + userId(admin, "own.change")).header("Authorization", admin)).andExpect(status().isOk());
+    }
+
+    @Test
+    void repeatedWrongPasswordsLockThatNameButNotOthers() throws Exception {
+        String admin = login("admin");
+        String pw = "a-long-password-1";
+        createUser(admin, "lock.me", pw, "VIEWER");
+        String wrong = "{\"username\":\"lock.me\",\"password\":\"nope\"}";
+        for (int i = 0; i < 5; i++)
+            mvc.perform(post("/api/auth/login").contentType("application/json").content(wrong)).andExpect(status().isUnauthorized());
+        // now even the right password is refused for a while
+        mvc.perform(post("/api/auth/login").contentType("application/json").content("{\"username\":\"lock.me\",\"password\":\"" + pw + "\"}"))
+                .andExpect(status().isTooManyRequests());
+        mvc.perform(post("/api/auth/login").contentType("application/json").content("{\"username\":\"LOCK.ME\",\"password\":\"" + pw + "\"}"))
+                .andExpect(status().isTooManyRequests());                  // case does not dodge the lock
+        login("viewer");                                                   // other accounts are unaffected
+        // unknown names are throttled the same way, so the response does not reveal which names exist
+        String ghost = "{\"username\":\"no.such.user\",\"password\":\"nope\"}";
+        for (int i = 0; i < 5; i++)
+            mvc.perform(post("/api/auth/login").contentType("application/json").content(ghost)).andExpect(status().isUnauthorized());
+        mvc.perform(post("/api/auth/login").contentType("application/json").content(ghost)).andExpect(status().isTooManyRequests());
+        // a lock does not stop an admin from managing the account
+        mvc.perform(delete("/api/users/" + userId(admin, "lock.me")).header("Authorization", admin)).andExpect(status().isOk());
+    }
+
+    @Test
+    void adminCannotChangeOwnRoleOrUseTheAdminPasswordRouteOnThemselves() throws Exception {
+        String admin = login("admin");
+        long adminId = userId(admin, "admin");
+        mvc.perform(put("/api/users/" + adminId + "/role").header("Authorization", admin).contentType("application/json")
+                .content("{\"role\":\"ADMIN\"}")).andExpect(status().isConflict());
+        mvc.perform(put("/api/users/" + adminId + "/password").header("Authorization", admin).contentType("application/json")
+                .content("{\"password\":\"some-other-password-3\"}")).andExpect(status().isConflict());
+        login("admin");   // password unchanged
     }
 }

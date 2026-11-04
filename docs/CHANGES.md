@@ -49,3 +49,12 @@ git rm -f noisy-data-upgrade.zip scripts/apply_noisy_upgrade.py docs/NOISY_UPGRA
 ## Not done
 - Per-bank statement parsers, TDS/GST handling, multi-currency, post-dated cheques, real-time Kafka/Redis. These remain future work.
 - Bulk approve of review items and an audit-log page.
+
+## Security hardening (sessions, sign-in, reset)
+- **Sessions end when permissions change.** Tokens carry a per-user `tokenVersion`; every request re-checks it (and the role) against the database. A role change, a password change (own or by an admin) or a deletion ends that user's existing sign-ins immediately. Changing your own password returns a fresh token so you stay signed in on that browser. New migration `V3__user_token_version.sql`; tokens issued before the upgrade are rejected once, so everyone signs in again.
+- **Sign-in throttling.** 5 wrong passwords lock a username for 15 minutes (`LoginThrottle`, in memory, per username because behind nginx all requests share one address). Unknown names are throttled and timed like real ones. Change-password and reset have their own counters.
+- **Secure compose default.** `REQUIRE_STRONG_SECRETS` now defaults to `true` in `docker-compose.yml`; a throwaway demo needs `REQUIRE_STRONG_SECRETS=false docker compose up`.
+- **Change password** asks for the new password twice (client and server check) and refuses an unchanged password.
+- **Admin "Set password"** uses a masked two-field dialog instead of `window.prompt`; an admin cannot use it on themselves.
+- **Role dropdown** asks for confirmation, is disabled on your own row, and the server refuses a self role change.
+- **Reset** now needs the typed word and the admin's password, writes `backups/pre-reset-<time>.json.gz` first (nothing is deleted if that fails), retires the `feedback_log` labels (marked revoked and withdrawn from the ML service), and is covered by a real end-to-end test (`AdminResetTest`, own in-memory database).
