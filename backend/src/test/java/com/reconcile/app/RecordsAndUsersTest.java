@@ -135,7 +135,7 @@ class RecordsAndUsersTest {
         mvc.perform(post("/api/users").header("Authorization", admin).contentType("application/json")
                 .content("{\"username\":\"temp.user1\",\"password\":\"" + pw + "\",\"role\":\"VIEWER\"}")).andExpect(status().isConflict());
         mvc.perform(post("/api/users").header("Authorization", admin).contentType("application/json")
-                .content("{\"username\":\"temp.user2\",\"password\":\"short\",\"role\":\"VIEWER\"}")).andExpect(status().isBadRequest());
+                .content("{\"username\":\"temp.user2\",\"password\":\"abcd\",\"role\":\"VIEWER\"}")).andExpect(status().isBadRequest());
         mvc.perform(post("/api/users").header("Authorization", admin).contentType("application/json")
                 .content("{\"username\":\"temp.user2\",\"password\":\"" + pw + "\",\"role\":\"BOSS\"}")).andExpect(status().isBadRequest());
 

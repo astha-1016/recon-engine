@@ -4,7 +4,7 @@
 - **Add rows by hand**: Invoices → New invoice, Payments → Record payment (same validation as an upload).
 - **Edit and delete** invoices and payments (edit: Admin/Accountant, delete: Admin). Rows used by a manual decision or credit application are locked until the decision is undone. Allocations re-run after every change; each change is audited.
 - **Payments page**: browse bank-statement lines with their match result.
-- **User management** (Settings, Admin): add/remove users, change role, set a password; everyone can change their own password (10+ characters). The last admin cannot be removed or demoted.
+- **User management** (Settings, Admin): add/remove users, change role, set a password; everyone can change their own password (5+ characters). The last admin cannot be removed or demoted.
 - **Remove demo data** (Settings, Admin): wipes business data after typing RESET; keeps users, audit log and models.
 - **Flyway migrations** (`V1` baseline, `V2` indexes); existing databases are baselined, not recreated. `DDL_AUTO=validate` available once verified.
 - **Backups**: `scripts/backup.*` and `scripts/restore.*`, plus `docs/OPERATIONS.md`.
