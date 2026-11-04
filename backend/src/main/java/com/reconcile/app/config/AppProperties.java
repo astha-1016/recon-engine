@@ -8,10 +8,11 @@ public record AppProperties(String jwtSecret, String mlUrl, boolean mlEnabled, S
 
     /** Placeholder values shipped in the repo. With require-strong-secrets=true the app refuses to start on them. */
     public boolean usesPlaceholderJwtSecret() {
-        return jwtSecret.startsWith("change-this") || jwtSecret.startsWith("dev-only") || jwtSecret.startsWith("test-secret");
+    return jwtSecret.startsWith("change-this") || jwtSecret.startsWith("dev-only")
+            || jwtSecret.startsWith("test-secret") || jwtSecret.startsWith("replace-with");
     }
-
     public boolean usesPlaceholderPassword() {
-        return seedPassword.equals("change-me-now") || seedPassword.equals("test-password");
+        return seedPassword.equals("change-me-now") || seedPassword.equals("test-password")
+                || seedPassword.startsWith("replace-with") || seedPassword.startsWith("<");
     }
 }
