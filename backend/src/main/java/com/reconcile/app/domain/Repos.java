@@ -13,6 +13,7 @@ public final class Repos {
     public interface CustomerRepo extends JpaRepository<CustomerE, String> {}
 
     public interface InvoiceRepo extends JpaRepository<InvoiceE, String> {
+        List<InvoiceE> findByCustomerId(String customerId);
         boolean existsByRowHash(String rowHash);
         List<InvoiceE> findByIdIn(Collection<String> ids);
     }
@@ -33,7 +34,9 @@ public final class Repos {
 
     public interface AdjustmentRepo extends JpaRepository<AdjustmentE, Long> {}
 
-    public interface CreditRepo extends JpaRepository<CreditE, Long> {}
+    public interface CreditRepo extends JpaRepository<CreditE, Long> {
+        Optional<CreditE> findFirstByTxnId(String txnId);
+    }
 
     public interface OutcomeRepo extends JpaRepository<OutcomeE, String> {
         List<OutcomeE> findByDecisionIn(Collection<String> decisions);
@@ -45,7 +48,13 @@ public final class Repos {
         void deleteByTxnId(String txnId);
     }
 
-    public interface FeedbackRepo extends JpaRepository<FeedbackE, Long> {}
+    public interface CreditApplicationRepo extends JpaRepository<CreditApplicationE, Long> {
+        List<CreditApplicationE> findByTxnId(String txnId);
+    }
+
+    public interface FeedbackRepo extends JpaRepository<FeedbackE, Long> {
+        List<FeedbackE> findByTxnId(String txnId);
+    }
 
     public interface UserRepo extends JpaRepository<UserE, Long> {
         Optional<UserE> findByUsername(String username);

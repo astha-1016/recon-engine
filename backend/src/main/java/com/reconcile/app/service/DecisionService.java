@@ -99,6 +99,8 @@ public class DecisionService {
     // ------------------------------------------------------------------ helpers
 
     private void save(String txnId, List<Map<String, Object>> parts, String actor) {
+        List<ManualE> previous = manual.findByTxnId(txnId);
+        if (!previous.isEmpty()) forgetAlias(txnId, previous);   // re-deciding replaces the earlier decision, including what it taught
         manual.deleteByTxnId(txnId);
         manual.flush();
         for (Map<String, Object> p : parts) {
@@ -122,6 +124,39 @@ public class DecisionService {
             if (have.equals(want)) return ((Number) c.get("rank")).intValue();
         }
         return -2;
+    }
+
+    /** Undo a person's decision: the payment goes back to the engine, and what the decision taught is withdrawn. */
+    @Transactional
+    public void undo(String txnId, String actor) {
+        List<ManualE> rows = manual.findByTxnId(txnId);
+        if (rows.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no manual decision to undo for " + txnId);
+        forgetAlias(txnId, rows);
+        manual.deleteByTxnId(txnId);
+        for (FeedbackE f : feedback.findByTxnId(txnId)) {
+            f.revoked = true;          // kept for the audit trail, never used for training
+            feedback.save(f);
+        }
+        try {
+            ml.removeFeedback(txnId);  // and removed from the pending training rows
+        } catch (Exception e) {
+            log.warn("Could not remove feedback for {} from the ML service: {}", txnId, e.getMessage());
+        }
+        auditLog(txnId, "UNDO", "manual decision removed (" + rows.size() + " line(s))", actor);
+        recon.runAsync();
+    }
+
+    /** Reverse of learnAlias: lower the alias's confirmation count and delete it when nobody vouches for it any more. */
+    private void forgetAlias(String txnId, List<ManualE> rows) {
+        TxnE t = txns.findById(txnId).orElse(null);
+        if (t == null || !"CR".equals(t.direction) || t.payer == null || t.payer.isBlank()) return;
+        Set<String> owners = new HashSet<>();
+        for (ManualE m : rows) invoices.findById(m.invoiceId).ifPresent(i -> owners.add(i.customerId));
+        if (owners.size() != 1) return;
+        aliases.findByPayerKeyAndCustomerId(TextNorm.aliasKey(t.payer), owners.iterator().next()).ifPresent(a -> {
+            a.confirmedCount--;
+            if (a.confirmedCount <= 0) aliases.delete(a); else aliases.save(a);
+        });
     }
 
     private void learnAlias(String txnId, List<Map<String, Object>> parts) {

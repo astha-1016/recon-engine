@@ -19,21 +19,31 @@ public final class Cli {
         if (args.length == 0) { System.err.println("commands: eval | compare | export | curve"); System.exit(2); }
         Map<String, String> opt = new HashMap<>();
         for (int i = 1; i + 1 < args.length; i += 2) opt.put(args[i].replaceFirst("^--", ""), args[i + 1]);
+        strict = "true".equalsIgnoreCase(opt.getOrDefault("strict", "false"));
+        rounds = Integer.parseInt(opt.getOrDefault("rounds", String.valueOf(rounds)));
+        auto = Double.parseDouble(opt.getOrDefault("auto", String.valueOf(auto)));
         DataSet ds = DataSet.load(Path.of(opt.getOrDefault("data", "data-generator/sample")));
         String split = opt.getOrDefault("split", "test");
         if (split.equals("all")) split = null;
         switch (args[0]) {
             case "eval" -> eval(ds, opt, split);
             case "compare" -> compare(ds, opt, split);
-            case "export" -> export(ds, Path.of(opt.getOrDefault("out", "features.csv")));
+            case "export" -> export(ds, Path.of(opt.getOrDefault("out", "features.csv")), opt);
             case "curve" -> curve(ds, opt, split);
             case "report" -> report(ds, opt, split);
             default -> { System.err.println("unknown command " + args[0]); System.exit(2); }
         }
     }
 
+    private static boolean strict = false;
+    private static int rounds = new Config().resolutionRounds;
+    private static double auto = new Config().autoThreshold;
+
     private static Reconciler.Result run(DataSet ds, String mode, String ml, List<ManualDecision> manual) {
         Config cfg = mode.equals("exact") ? Config.exactOnly() : new Config();
+        cfg.requireIdentityForAuto = strict;
+        cfg.resolutionRounds = rounds;
+        cfg.autoThreshold = auto;
         Scorer scorer = mode.equals("ml") ? new HttpScorer(ml) : new RuleScorer();
         return new Reconciler(cfg, scorer).run(ds.input(List.of(), manual));
     }
@@ -58,7 +68,7 @@ public final class Cli {
     }
 
     /** Writes every candidate the fuzzy tier considered, labelled from ground truth, for training. Truth is used for labels only. */
-    private static void export(DataSet ds, Path out) throws Exception {
+    private static void export(DataSet ds, Path out, Map<String, String> opt) throws Exception {
         Map<String, Map<String, Long>> truth = new HashMap<>();
         for (DataSet.Truth t : ds.truth) if (!t.invoiceId().isEmpty()) truth.computeIfAbsent(t.txnId(), k -> new HashMap<>()).put(t.invoiceId(), t.amount());
         Map<String, String> split = ds.txnSplit();
@@ -73,11 +83,16 @@ public final class Cli {
                         && c.parts.stream().allMatch(p -> Objects.equals(want.get(p.invoiceId()), p.amount()));
                 if (label) positives[0]++;
                 List<String> row = new ArrayList<>(List.of(t.id(), split.getOrDefault(t.id(), "unknown"), label ? "1" : "0"));
-                for (double v : c.features) row.add(v == Math.rint(v) ? Long.toString((long) v) : Double.toString(v));
+                for (double v : c.features) row.add(v == Math.rint(v) ? Long.toString((long) v) : Double.toString(Math.round(v * 1e6) / 1e6));
                 rows.add(row);
             }
         };
-        new Reconciler(new Config(), new RuleScorer()).withSink(sink).run(ds.input(List.of(), List.of()));
+        // With --ml the export follows the same decisions the deployed model would make, so later-round rows
+        // (payments re-examined after others were matched) look like what the model will really see.
+        Scorer scorer = opt.get("ml") != null ? new HttpScorer(opt.get("ml")) : new RuleScorer();
+        Config cfg = new Config();
+        cfg.resolutionRounds = rounds;
+        new Reconciler(cfg, scorer).withSink(sink).run(ds.input(List.of(), List.of()));
         Csv.write(out, header, rows);
         System.out.printf("Wrote %d candidate rows (%d positive) to %s%n", rows.size(), positives[0], out);
     }
@@ -126,6 +141,7 @@ public final class Cli {
         m.put("correct", r.overall.correct); m.put("predicted", r.overall.predicted); m.put("expected", r.overall.expected);
         m.put("autoRate", r.autoRate()); m.put("manualLeft", 1 - r.effortReduction());
         m.put("reviewTxns", r.reviewTxns); m.put("unmatchedTxns", r.unmatchedTxns); m.put("invoiceTxns", r.invoiceTxns);
+        m.put("reviewTop1Correct", r.reviewTop1Correct); m.put("reviewTop1Rate", r.reviewTop1Rate());
         m.put("statusAccuracy", r.statusAccuracy());
         return m;
     }
@@ -163,6 +179,23 @@ public final class Cli {
         out.put("scenarios", breakdown(detail.byScenario, "scenario"));
         out.put("channels", breakdown(detail.byChannel, "channel"));
 
+        // Extra datasets, each measured with all three pipeline arms. Format: "label=dir:split;label=dir:split"
+        List<Map<String, Object>> datasets = new ArrayList<>();
+        if (opt.get("extras") != null && ml != null) {
+            for (String entry : opt.get("extras").split(";")) {
+                String[] kv = entry.split("=", 2);
+                String[] where = kv[1].split(":");
+                String sp = where.length > 1 && !where[1].equals("all") ? where[1] : null;
+                DataSet other = DataSet.load(Path.of(where[0]));
+                List<Map<String, Object>> armRows = new ArrayList<>();
+                for (String[] a : arms) armRows.add(reportMap(Evaluator.evaluate(other, run(other, a[0], ml, List.of()), sp, a[1])));
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("label", kv[0]); row.put("split", sp == null ? "all" : sp); row.put("arms", armRows);
+                datasets.add(row);
+                System.out.println("  measured: " + kv[0]);
+            }
+        }
+        out.put("datasets", datasets);
         if (opt.get("data2") != null && ml != null) {
             DataSet other = DataSet.load(Path.of(opt.get("data2")));
             out.put("unseenDataset", reportMap(Evaluator.evaluate(other, run(other, "ml", ml, List.of()), null, "Unseen seed, all customers")));

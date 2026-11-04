@@ -5,11 +5,11 @@ cd "$(dirname "$0")/.."
 
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) SEP=";";; *) SEP=":";; esac
 if python --version >/dev/null 2>&1; then PY=python; else PY=python3; fi
-OUT=build
+OUT=build/check          # a private folder: never touch build/ itself, it holds evaluation datasets
 rm -rf "$OUT"; mkdir -p "$OUT/main" "$OUT/test"
 
 echo "== 1/4 dataset generators"
-(cd data-generator && $PY -m unittest test_generator_v2 2>&1 | tail -3)
+(cd data-generator && $PY -m unittest test_generator_v2 test_generator_v3 2>&1 | tail -3)
 
 echo "== 2/4 engine (compile + self-test)"
 javac --release 17 -d "$OUT/main" engine/src/main/java/com/reconcile/engine/*.java

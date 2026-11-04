@@ -54,7 +54,7 @@ export type Dashboard = {
   autoMatched: number; pendingReview: number; unmatched: number; classified: number; autoMatchRate: number
   pendingReviewValue: number; unmatchedValue: number; outstandingTotal: number; unappliedCredits: number
   invoicesByStatus: Record<string, number>; running: boolean
-  lastRun: { transactions: number; auto: number; review: number; unmatched: number; classified: number; millis: number; scorer: string } | null
+  lastRun: { transactions: number; auto: number; review: number; unmatched: number; classified: number; millis: number; scorer: string; warnings: string[] } | null
 }
 export type PartView = { invoiceId: string; customerName: string; amount: number; invoiceAmount: number }
 export type CandidateView = { rank: number; score: number; customerId: string; parts: PartView[]; adjustment: number; excess: number }
@@ -67,6 +67,13 @@ export type InvoiceView = {
   issueDate: string; dueDate: string; status: string
 }
 export type Report = { rows: number; inserted: number; duplicates: number; errors: string[] }
+export type InvoiceOption = { id: string; outstanding: number; dueDate: string }
+export type CreditView = { txnId: string; txnDate: string; payer: string; customerId: string; customerName: string; amount: number; openInvoices: InvoiceOption[] }
+export type ApplicationView = { id: number; txnId: string; invoiceId: string; amount: number; appliedBy: string; appliedAt: string }
+export type DecisionView = {
+  txnId: string; date: string; txnAmount: number; direction: string; payer: string; decidedBy: string; decidedAt: string
+  parts: { invoiceId: string; customerName: string; amount: number }[]
+}
 
 /** Paise -> rupees with Indian digit grouping. Display only; all arithmetic stays in paise on the server. */
 export const rupees = (paise: number) =>

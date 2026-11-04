@@ -60,6 +60,11 @@ export default function Dashboard({ session, goTo }: { session: Session; goTo: (
             {d.lastRun.scorer === 'rules-fallback' && ' The ML service was unreachable, so the rule scorer was used.'}
           </p>
         )}
+        {d.lastRun && d.lastRun.warnings && d.lastRun.warnings.length > 0 && (
+          <div className="small err" style={{ marginTop: 8 }}>
+            {d.lastRun.warnings.map((w, i) => <div key={i}>⚠ {w}</div>)}
+          </div>
+        )}
       </div>
     </>
   )

@@ -39,6 +39,8 @@ def main():
     ap.add_argument("--seeds", type=int, nargs="+", default=[42, 101, 102, 103, 104])
     ap.add_argument("--noisy-seeds", type=int, nargs="*", default=[], help="extra seeds generated with noise")
     ap.add_argument("--noise-level", type=float, default=1.0)
+    ap.add_argument("--ml", default=None, help="URL of a running ML service: export rows following ITS decisions "
+                    "(includes payments re-examined in later resolution rounds). Without it the rule scorer is used.")
     args = ap.parse_args()
 
     jobs = [(s, False) for s in args.seeds] + [(s, True) for s in args.noisy_seeds]
@@ -50,8 +52,10 @@ def main():
             heavy = seed != 42  # extra short-pay / overpay / cheque-return volume for the rare scenarios
             write_dataset(d, seed, 40 if heavy else 30, 30 if heavy else 20, 25 if heavy else 20, noisy, args.noise_level)
             feats = Path(tmp) / f"f{tag}.csv"
-            subprocess.run(["java", "-cp", args.classes, "com.reconcile.engine.Cli", "export", "--data", str(d), "--out", str(feats)],
-                           check=True, stdout=subprocess.DEVNULL)
+            cmd = ["java", "-cp", args.classes, "com.reconcile.engine.Cli", "export", "--data", str(d), "--out", str(feats)]
+            if args.ml:
+                cmd += ["--ml", args.ml]
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL)
             with feats.open() as f:
                 r = csv.reader(f)
                 header = next(r)

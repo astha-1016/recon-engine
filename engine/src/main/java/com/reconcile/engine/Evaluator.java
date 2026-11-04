@@ -22,9 +22,12 @@ public final class Evaluator {
         public final Map<String, Counts> byChannel = new TreeMap<>();
         public int invoiceTxns, autoTxns, reviewTxns, unmatchedTxns, manualTxns;
         public int autoTxnsFullyCorrect;
+        /** Of the payments sent to review, how many had the right plan as the top suggestion (one click for a person). */
+        public int reviewTop1Correct;
         public int feeTxns, feesLeftAlone;
         public int invoices, statusCorrect;
 
+        public double reviewTop1Rate() { return reviewTxns == 0 ? 0 : reviewTop1Correct / (double) reviewTxns; }
         public double autoRate() { return invoiceTxns == 0 ? 0 : autoTxns / (double) invoiceTxns; }
         public double autoTxnPrecision() { return autoTxns == 0 ? 1 : autoTxnsFullyCorrect / (double) autoTxns; }
         /** Share of invoice payments that no longer need a person, versus 100% manual today. */
@@ -40,6 +43,9 @@ public final class Evaluator {
         Map<String, BankTxn> txns = new HashMap<>();
         for (BankTxn t : ds.txns) txns.put(t.id(), t);
 
+        // Two identical bank rows are interchangeable: money applied once, to either row, is correct.
+        Map<String, String> dupOf = new HashMap<>();
+        for (DataSet.Truth t : ds.truth) if (t.scenario().equals("duplicate_row") && !t.originalTxnId().isEmpty()) dupOf.put(t.txnId(), t.originalTxnId());
         Map<String, Long> expected = new HashMap<>();
         Map<String, String> scenarioOf = new HashMap<>();
         Map<String, Set<String>> truthTxnInvoices = new HashMap<>();
@@ -48,7 +54,10 @@ public final class Evaluator {
             if (t.invoiceId().isEmpty()) {
                 rep.feeTxns++;
                 Outcome o = res.outcomes.get(t.txnId());
-                if (o != null && res.allocations.stream().noneMatch(a -> a.txnId().equals(t.txnId()))) rep.feesLeftAlone++;
+                String orig = dupOf.get(t.txnId());
+                // a duplicate row is "left alone" if the pair of identical rows was applied at most once
+                long applied = res.allocations.stream().filter(a -> a.txnId().equals(t.txnId()) || (orig != null && a.txnId().equals(orig))).map(Allocation::txnId).distinct().count();
+                if (o != null && (orig == null ? applied == 0 : applied <= 1)) rep.feesLeftAlone++;
                 continue;
             }
             String key = t.txnId() + "|" + t.invoiceId();
@@ -63,12 +72,13 @@ public final class Evaluator {
         Set<String> wrongTxns = new HashSet<>();
         for (Allocation a : res.allocations) {
             if (a.method() == Method.MANUAL) continue;
-            String ts = txnSplit.get(a.txnId());
+            String txnKey = dupOf.getOrDefault(a.txnId(), a.txnId());   // an allocation on a duplicate row counts for its original
+            String ts = txnSplit.get(txnKey);
             if (ts == null || (split != null && !split.equals(ts))) continue;
-            String key = a.txnId() + "|" + a.invoiceId();
+            String key = txnKey + "|" + a.invoiceId();
             rep.overall.predicted++;
             String scenario = scenarioOf.getOrDefault(key, "unexpected");
-            String channel = channelOf(res, txns, a.txnId());
+            String channel = channelOf(res, txns, txnKey);
             bump(rep.byScenario, scenario).predicted++;
             bump(rep.byChannel, channel).predicted++;
             Long want = expected.get(key);
@@ -76,22 +86,39 @@ public final class Evaluator {
                 rep.overall.correct++;
                 bump(rep.byScenario, scenario).correct++;
                 bump(rep.byChannel, channel).correct++;
-            } else wrongTxns.add(a.txnId());
+            } else wrongTxns.add(txnKey);
         }
 
         for (String txnId : truthTxnInvoices.keySet()) {
             Outcome o = res.outcomes.get(txnId);
             if (o == null) continue;
+            if (o.kind == Model.TxnKind.DUPLICATE) {   // the engine kept the twin row and flagged this one: judge the pair
+                String twin = o.linkedTxnId;
+                Outcome to = res.outcomes.get(twin);
+                if (to != null) o = to;
+            }
             rep.invoiceTxns++;
             if (o.method == Method.MANUAL) rep.manualTxns++;
             else if (o.decision == Decision.AUTO) {
                 rep.autoTxns++;
                 if (!wrongTxns.contains(txnId)) rep.autoTxnsFullyCorrect++;
-            } else if (o.decision == Decision.REVIEW) rep.reviewTxns++;
+            } else if (o.decision == Decision.REVIEW) {
+                rep.reviewTxns++;
+                if (!o.top.isEmpty() && matchesTruth(o.top.get(0), truthTxnInvoices.get(txnId), expected, txnId)) rep.reviewTop1Correct++;
+            }
             else rep.unmatchedTxns++;
         }
         scoreStatuses(ds, res, split, rep);
         return rep;
+    }
+
+    private static boolean matchesTruth(Model.Candidate c, Set<String> invoices, Map<String, Long> expected, String txnId) {
+        if (invoices == null || c.parts.size() != invoices.size()) return false;
+        for (Model.Part p : c.parts) {
+            Long want = expected.get(txnId + "|" + p.invoiceId());
+            if (want == null || want != p.amount()) return false;
+        }
+        return true;
     }
 
     private static String channelOf(Reconciler.Result res, Map<String, BankTxn> txns, String txnId) {
@@ -139,7 +166,9 @@ public final class Evaluator {
                 pct(r.overall.precision()), pct(r.overall.recall()), r.overall.correct, r.overall.predicted, r.overall.expected));
         sb.append(String.format("Invoice payments: %d | auto %d (%s, fully-correct %s) | review %d | unmatched %d | manual %d%n",
                 r.invoiceTxns, r.autoTxns, pct(r.autoRate()), pct(r.autoTxnPrecision()), r.reviewTxns, r.unmatchedTxns, r.manualTxns));
-        sb.append(String.format("Manual effort reduced from 100%% to %s | bank fees left alone %d/%d | final invoice status accuracy %s (%d invoices)%n",
+        sb.append(String.format("Review queue: top suggestion is the right answer for %d of %d items (%s), so most need only a click%n",
+                r.reviewTop1Correct, r.reviewTxns, pct(r.reviewTop1Rate())));
+        sb.append(String.format("Manual effort reduced from 100%% to %s | non-invoice rows (bank fees, duplicates) left alone %d/%d | final invoice status accuracy %s (%d invoices)%n",
                 pct(1 - r.effortReduction()), r.feesLeftAlone, r.feeTxns, pct(r.statusAccuracy()), r.invoices));
         sb.append(String.format("%-24s %9s %9s %9s %9s%n", "by scenario", "expected", "predicted", "precision", "recall"));
         r.byScenario.forEach((k, c) -> sb.append(String.format("%-24s %9d %9d %9s %9s%n", k, c.expected, c.predicted, pct(c.precision()), pct(c.recall()))));

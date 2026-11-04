@@ -7,3 +7,4 @@ ml-service/data/models/
 ml-service/data/feedback.csv
 .pytest_cache/
 build/
+.env

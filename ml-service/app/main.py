@@ -25,7 +25,7 @@ _train_lock = threading.Lock()
 @asynccontextmanager
 async def lifespan(_app):
     """First start: if base data is present and there is no model, train one so /score works immediately."""
-    if registry.active_version() is None and BASE_DATASET.exists():
+    if usable_version() is None and BASE_DATASET.exists():
         train(TrainRequest(use_feedback=False))
     yield
 
@@ -71,9 +71,22 @@ def load_feedback() -> pd.DataFrame:
     return pd.read_csv(FEEDBACK_FILE)
 
 
+def usable_version():
+    """The active model, but only if it was trained on exactly the feature list the engine sends now.
+    A model from an older feature set would fail or silently mis-score, so it is treated as absent."""
+    version = registry.active_version()
+    if version is None:
+        return None
+    try:
+        return version if registry.meta(version).get("features") == FEATURE_NAMES else None
+    except FileNotFoundError:
+        return None
+
+
 @app.get("/health")
 def health():
-    return {"status": "ok", "active_model": registry.active_version(),
+    active = registry.active_version()
+    return {"status": "ok", "active_model": active, "model_compatible": usable_version() is not None,
             "feedback_rows": len(load_feedback()), "features": len(FEATURE_NAMES)}
 
 
@@ -84,9 +97,9 @@ def features():
 
 @app.post("/score", response_model=ScoreResponse)
 def score(req: ScoreRequest):
-    version = registry.active_version()
+    version = usable_version()
     if version is None:
-        raise HTTPException(503, "No trained model yet. POST /train first.")
+        raise HTTPException(503, "No usable trained model (none yet, or it was trained on an older feature set). POST /train first.")
     missing = [f for f in FEATURE_NAMES if f not in req.features]
     if missing:
         raise HTTPException(422, f"Missing features: {missing}")
@@ -116,6 +129,17 @@ def feedback(req: FeedbackRequest):
     return {"stored": len(rows), "total_feedback_rows": len(load_feedback())}
 
 
+@app.delete("/feedback/{txn_id}")
+def remove_feedback(txn_id: str):
+    """Undo: drop the stored labelled rows for one transaction (used when a person undoes a decision)."""
+    fb = load_feedback()
+    keep = fb[fb["txn_id"] != txn_id]
+    removed = len(fb) - len(keep)
+    if removed:
+        keep.to_csv(FEEDBACK_FILE, index=False)
+    return {"removed": removed, "total_feedback_rows": len(keep)}
+
+
 @app.post("/train")
 def train(req: TrainRequest):
     """Retrain on base training rows (+ stored human feedback), evaluate on the fixed validation holdout,
@@ -134,14 +158,14 @@ def train(req: TrainRequest):
         except ValueError as e:
             raise HTTPException(422, str(e))
         version = registry.new_version(req.algorithm)
-        active = registry.active_version()
+        active = usable_version()
         # Re-score the active model on *this* holdout so the comparison is apples-to-apples even if the data changed.
         active_metrics = None
         if active:
             active_p = registry.load(active).predict_proba(holdout[FEATURE_NAMES])[:, 1]
             active_metrics = metrics(holdout["label"].astype(int).to_numpy(), active_p)
         promote, reason = better(trained.holdout_metrics, active_metrics)
-        meta = {"algorithm": req.algorithm, "trained_at": datetime.now(timezone.utc).isoformat(),
+        meta = {"algorithm": req.algorithm, "features": FEATURE_NAMES, "trained_at": datetime.now(timezone.utc).isoformat(),
                 "train_rows": trained.train_rows, "feedback_rows": int(len(fb)),
                 "holdout_metrics": trained.holdout_metrics}
         registry.save(version, trained.model, meta)

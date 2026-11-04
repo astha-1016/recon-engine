@@ -58,6 +58,8 @@ public class SecurityConfig {
     SecretKey jwtKey(AppProperties props) {
         byte[] bytes = props.jwtSecret().getBytes(StandardCharsets.UTF_8);
         if (bytes.length < 32) throw new IllegalStateException("app.jwt-secret must be at least 32 bytes");
+        if (props.requireStrongSecrets() && props.usesPlaceholderJwtSecret())
+            throw new IllegalStateException("REQUIRE_STRONG_SECRETS is on but JWT_SECRET is still a placeholder. Set a long random JWT_SECRET.");
         return new SecretKeySpec(bytes, "HmacSHA256");
     }
 

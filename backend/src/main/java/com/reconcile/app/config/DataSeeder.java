@@ -25,6 +25,10 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        if (props.requireStrongSecrets() && props.usesPlaceholderPassword())
+            throw new IllegalStateException("REQUIRE_STRONG_SECRETS is on but SEED_PASSWORD is still a placeholder. Set a real SEED_PASSWORD.");
+        if (props.usesPlaceholderPassword() || props.usesPlaceholderJwtSecret())
+            log.warn("Running with placeholder secrets. Fine for a local demo; set JWT_SECRET and SEED_PASSWORD (and REQUIRE_STRONG_SECRETS=true) before sharing this anywhere.");
         if (users.count() > 0) return;
         for (String[] u : new String[][]{{"admin", "ADMIN"}, {"accountant", "ACCOUNTANT"}, {"viewer", "VIEWER"}}) {
             UserE e = new UserE();

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T09:40:58.702629934Z",
+  "generatedAt": "2026-11-03T05:22:37.859784514Z",
   "split": "test",
   "transactions": 1226,
   "invoices": 1000,
@@ -17,6 +17,8 @@
       "reviewTxns": 0,
       "unmatchedTxns": 202,
       "invoiceTxns": 244,
+      "reviewTop1Correct": 0,
+      "reviewTop1Rate": 0.0000,
       "statusAccuracy": 0.2250
     },
     {
@@ -29,25 +31,29 @@
       "expected": 255,
       "autoRate": 0.3074,
       "manualLeft": 0.6926,
-      "reviewTxns": 127,
-      "unmatchedTxns": 42,
+      "reviewTxns": 128,
+      "unmatchedTxns": 41,
       "invoiceTxns": 244,
+      "reviewTop1Correct": 128,
+      "reviewTop1Rate": 1.0000,
       "statusAccuracy": 0.2950
     },
     {
       "label": "Full pipeline, ML scorer",
       "split": "test",
       "precision": 1.0000,
-      "recall": 0.9804,
-      "correct": 250,
-      "predicted": 250,
+      "recall": 0.9961,
+      "correct": 254,
+      "predicted": 254,
       "expected": 255,
-      "autoRate": 0.9795,
-      "manualLeft": 0.0205,
+      "autoRate": 0.9959,
+      "manualLeft": 0.0041,
       "reviewTxns": 1,
-      "unmatchedTxns": 4,
+      "unmatchedTxns": 0,
       "invoiceTxns": 244,
-      "statusAccuracy": 0.9750
+      "reviewTop1Correct": 1,
+      "reviewTop1Rate": 1.0000,
+      "statusAccuracy": 0.9950
     }
   ],
   "scenarios": [
@@ -96,16 +102,16 @@
     {
       "scenario": "short_pay",
       "expected": 6,
-      "predicted": 2,
+      "predicted": 5,
       "precision": 1.0000,
-      "recall": 0.3333
+      "recall": 0.8333
     },
     {
       "scenario": "split_payment",
       "expected": 75,
-      "predicted": 74,
+      "predicted": 75,
       "precision": 1.0000,
-      "recall": 0.9867
+      "recall": 1.0000
     }
   ],
   "channels": [
@@ -119,16 +125,16 @@
     {
       "channel": "IMPS",
       "expected": 69,
-      "predicted": 66,
+      "predicted": 68,
       "precision": 1.0000,
-      "recall": 0.9565
+      "recall": 0.9855
     },
     {
       "channel": "NEFT",
       "expected": 46,
-      "predicted": 45,
+      "predicted": 46,
       "precision": 1.0000,
-      "recall": 0.9783
+      "recall": 1.0000
     },
     {
       "channel": "QR",
@@ -140,25 +146,200 @@
     {
       "channel": "UPI_ID",
       "expected": 46,
-      "predicted": 45,
+      "predicted": 46,
       "precision": 1.0000,
-      "recall": 0.9783
+      "recall": 1.0000
+    }
+  ],
+  "datasets": [
+    {
+      "label": "Noisy data, held-out test customers",
+      "split": "test",
+      "arms": [
+        {
+          "label": "Exact only (reference + amount)",
+          "split": "test",
+          "precision": 1.0000,
+          "recall": 0.0471,
+          "correct": 12,
+          "predicted": 12,
+          "expected": 255,
+          "autoRate": 0.0492,
+          "manualLeft": 0.9508,
+          "reviewTxns": 0,
+          "unmatchedTxns": 232,
+          "invoiceTxns": 244,
+          "reviewTop1Correct": 0,
+          "reviewTop1Rate": 0.0000,
+          "statusAccuracy": 0.1000
+        },
+        {
+          "label": "+ fuzzy + composite, rule scorer",
+          "split": "test",
+          "precision": 1.0000,
+          "recall": 0.1176,
+          "correct": 30,
+          "predicted": 30,
+          "expected": 255,
+          "autoRate": 0.1230,
+          "manualLeft": 0.8770,
+          "reviewTxns": 137,
+          "unmatchedTxns": 77,
+          "invoiceTxns": 244,
+          "reviewTop1Correct": 137,
+          "reviewTop1Rate": 1.0000,
+          "statusAccuracy": 0.1400
+        },
+        {
+          "label": "Full pipeline, ML scorer",
+          "split": "test",
+          "precision": 1.0000,
+          "recall": 0.9647,
+          "correct": 246,
+          "predicted": 246,
+          "expected": 255,
+          "autoRate": 0.9631,
+          "manualLeft": 0.0369,
+          "reviewTxns": 8,
+          "unmatchedTxns": 1,
+          "invoiceTxns": 244,
+          "reviewTop1Correct": 7,
+          "reviewTop1Rate": 0.8750,
+          "statusAccuracy": 0.9550
+        }
+      ]
+    },
+    {
+      "label": "Noisy data, unseen seed",
+      "split": "all",
+      "arms": [
+        {
+          "label": "Exact only (reference + amount)",
+          "split": "all",
+          "precision": 1.0000,
+          "recall": 0.0766,
+          "correct": 95,
+          "predicted": 95,
+          "expected": 1240,
+          "autoRate": 0.0730,
+          "manualLeft": 0.9270,
+          "reviewTxns": 0,
+          "unmatchedTxns": 1092,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 0,
+          "reviewTop1Rate": 0.0000,
+          "statusAccuracy": 0.1230
+        },
+        {
+          "label": "+ fuzzy + composite, rule scorer",
+          "split": "all",
+          "precision": 1.0000,
+          "recall": 0.1290,
+          "correct": 160,
+          "predicted": 160,
+          "expected": 1240,
+          "autoRate": 0.1265,
+          "manualLeft": 0.8735,
+          "reviewTxns": 616,
+          "unmatchedTxns": 413,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 616,
+          "reviewTop1Rate": 1.0000,
+          "statusAccuracy": 0.1560
+        },
+        {
+          "label": "Full pipeline, ML scorer",
+          "split": "all",
+          "precision": 0.9991,
+          "recall": 0.9411,
+          "correct": 1167,
+          "predicted": 1168,
+          "expected": 1240,
+          "autoRate": 0.9389,
+          "manualLeft": 0.0611,
+          "reviewTxns": 58,
+          "unmatchedTxns": 14,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 51,
+          "reviewTop1Rate": 0.8793,
+          "statusAccuracy": 0.9290
+        }
+      ]
+    },
+    {
+      "label": "Harsh noise (2x), unseen seed",
+      "split": "all",
+      "arms": [
+        {
+          "label": "Exact only (reference + amount)",
+          "split": "all",
+          "precision": 1.0000,
+          "recall": 0.0000,
+          "correct": 0,
+          "predicted": 0,
+          "expected": 1240,
+          "autoRate": 0.0000,
+          "manualLeft": 1.0000,
+          "reviewTxns": 0,
+          "unmatchedTxns": 1178,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 0,
+          "reviewTop1Rate": 0.0000,
+          "statusAccuracy": 0.0500
+        },
+        {
+          "label": "+ fuzzy + composite, rule scorer",
+          "split": "all",
+          "precision": 1.0000,
+          "recall": 0.0161,
+          "correct": 20,
+          "predicted": 20,
+          "expected": 1240,
+          "autoRate": 0.0144,
+          "manualLeft": 0.9856,
+          "reviewTxns": 500,
+          "unmatchedTxns": 661,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 497,
+          "reviewTop1Rate": 0.9940,
+          "statusAccuracy": 0.0600
+        },
+        {
+          "label": "Full pipeline, ML scorer",
+          "split": "all",
+          "precision": 0.9990,
+          "recall": 0.7677,
+          "correct": 952,
+          "predicted": 953,
+          "expected": 1240,
+          "autoRate": 0.7581,
+          "manualLeft": 0.2419,
+          "reviewTxns": 215,
+          "unmatchedTxns": 70,
+          "invoiceTxns": 1178,
+          "reviewTop1Correct": 193,
+          "reviewTop1Rate": 0.8977,
+          "statusAccuracy": 0.7170
+        }
+      ]
     }
   ],
   "unseenDataset": {
     "label": "Unseen seed, all customers",
     "split": "all",
     "precision": 1.0000,
-    "recall": 0.9726,
-    "correct": 1206,
-    "predicted": 1206,
+    "recall": 0.9903,
+    "correct": 1228,
+    "predicted": 1228,
     "expected": 1240,
-    "autoRate": 0.9711,
-    "manualLeft": 0.0289,
-    "reviewTxns": 23,
-    "unmatchedTxns": 11,
+    "autoRate": 0.9898,
+    "manualLeft": 0.0102,
+    "reviewTxns": 12,
+    "unmatchedTxns": 0,
     "invoiceTxns": 1178,
-    "statusAccuracy": 0.9690
+    "reviewTop1Correct": 11,
+    "reviewTop1Rate": 0.9167,
+    "statusAccuracy": 0.9880
   },
   "correctionsCurve": [
     {
@@ -170,30 +351,30 @@
     },
     {
       "corrections": 10,
-      "queueAfter": 152,
-      "autoRate": 0.3361,
-      "humanTouches": 162,
+      "queueAfter": 153,
+      "autoRate": 0.3320,
+      "humanTouches": 163,
       "precision": 1.0000
     },
     {
       "corrections": 25,
-      "queueAfter": 135,
-      "autoRate": 0.3443,
-      "humanTouches": 160,
+      "queueAfter": 125,
+      "autoRate": 0.3852,
+      "humanTouches": 150,
       "precision": 1.0000
     },
     {
       "corrections": 50,
-      "queueAfter": 113,
-      "autoRate": 0.3320,
-      "humanTouches": 163,
+      "queueAfter": 88,
+      "autoRate": 0.4344,
+      "humanTouches": 138,
       "precision": 1.0000
     },
     {
       "corrections": 100,
-      "queueAfter": 63,
-      "autoRate": 0.3320,
-      "humanTouches": 163,
+      "queueAfter": 42,
+      "autoRate": 0.4180,
+      "humanTouches": 142,
       "precision": 1.0000
     }
   ]

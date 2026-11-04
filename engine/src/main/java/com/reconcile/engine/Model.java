@@ -8,7 +8,7 @@ public final class Model {
     private Model() {}
 
     public enum Direction { CR, DR }
-    public enum TxnKind { PAYMENT, REFUND, REVERSAL, CHEQUE_RETURN, BANK_FEE, OTHER_DEBIT }
+    public enum TxnKind { PAYMENT, REFUND, REVERSAL, CHEQUE_RETURN, BANK_FEE, OTHER_DEBIT, DUPLICATE }
     public enum Channel { QR, UPI_ID, NEFT, IMPS, RTGS, CHEQUE, CASH, BANK, UNKNOWN }
     public enum PayerKind { NAME, VPA, PHONE_VPA, MASK }
     public enum Method { EXACT, FUZZY, COMPOSITE, MANUAL, REVERSAL }
@@ -37,6 +37,9 @@ public final class Model {
     public record Credit(String txnId, String customerId, long amount) {}
 
     public record ManualDecision(String txnId, List<Part> parts) {}
+
+    /** A person put part of an unapplied credit (the surplus of a payment) against another invoice. */
+    public record CreditApplication(String txnId, String invoiceId, long amount) {}
 
     public record Alias(String payer, String customerId) {}
 

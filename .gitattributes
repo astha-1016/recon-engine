@@ -1,0 +1,6 @@
+# One line-ending rule for everyone, so Windows and Linux stop producing whole-file diffs.
+* text=auto
+*.sh text eol=lf
+*.csv -text
+*.gz binary
+*.png binary

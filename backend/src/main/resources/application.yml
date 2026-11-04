@@ -21,6 +21,7 @@ app:
   evaluation-file: ${EVAL_FILE:docs/evaluation.json}
   cors-origins: ${CORS_ORIGINS:http://localhost:5173}
   seed-password: ${SEED_PASSWORD:change-me-now}
+  require-strong-secrets: ${REQUIRE_STRONG_SECRETS:false}
 
 management:
   endpoints:

@@ -6,8 +6,10 @@ import Exceptions from './pages/Exceptions'
 import Upload from './pages/Upload'
 import Invoices from './pages/Invoices'
 import Reports from './pages/Reports'
+import Credits from './pages/Credits'
+import Decisions from './pages/Decisions'
 
-const TABS = ['Dashboard', 'Exceptions', 'Upload', 'Invoices', 'Reports'] as const
+const TABS = ['Dashboard', 'Exceptions', 'Credits', 'Decisions', 'Upload', 'Invoices', 'Reports'] as const
 type Tab = (typeof TABS)[number]
 
 export default function App() {
@@ -31,6 +33,8 @@ export default function App() {
       <main>
         {tab === 'Dashboard' && <Dashboard session={session} goTo={() => setTab('Exceptions')} />}
         {tab === 'Exceptions' && <Exceptions session={session} />}
+        {tab === 'Credits' && <Credits session={session} />}
+        {tab === 'Decisions' && <Decisions session={session} />}
         {tab === 'Upload' && <Upload session={session} />}
         {tab === 'Invoices' && <Invoices />}
         {tab === 'Reports' && <Reports session={session} />}
