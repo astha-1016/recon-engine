@@ -35,7 +35,7 @@ class DecisionFlowTest {
         return new MockMultipartFile("file", name, "text/csv", content.getBytes());
     }
 
-    private JsonNode get(String path, String token) throws Exception {
+    private JsonNode getJson(String path, String token) throws Exception {
         return mapper.readTree(mvc.perform(get(path).header("Authorization", token)).andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString());
     }
@@ -47,7 +47,7 @@ class DecisionFlowTest {
     }
 
     private JsonNode creditOf(String txnId, String token) throws Exception {
-        for (JsonNode c : get("/api/credits", token)) if (c.get("txnId").asText().equals(txnId)) return c;
+        for (JsonNode c : getJson("/api/credits", token)) if (c.get("txnId").asText().equals(txnId)) return c;
         return null;
     }
 
@@ -79,14 +79,14 @@ class DecisionFlowTest {
                 .content("{\"invoiceId\":\"INV-2026-09002\",\"amount\":\"5.00\"}")).andExpect(status().isOk());
         settle(token);
         assertEquals(500, creditOf("TX-D1", token).get("amount").asLong());
-        assertEquals(1, get("/api/credits/applications", token).size());
+        assertEquals(1, getJson("/api/credits/applications", token).size());
 
         // more than is left must be refused
         mvc.perform(post("/api/credits/TX-D1/apply").header("Authorization", token).contentType("application/json")
                 .content("{\"invoiceId\":\"INV-2026-09002\",\"amount\":\"5.01\"}")).andExpect(status().isBadRequest());
 
         // removing the application gives the credit back
-        long id = get("/api/credits/applications", token).get(0).get("id").asLong();
+        long id = getJson("/api/credits/applications", token).get(0).get("id").asLong();
         mvc.perform(delete("/api/credits/applications/" + id).header("Authorization", token)).andExpect(status().isOk());
         settle(token);
         assertEquals(1000, creditOf("TX-D1", token).get("amount").asLong());
@@ -99,11 +99,11 @@ class DecisionFlowTest {
         mvc.perform(post("/api/exceptions/TX-D1/assign").header("Authorization", token).contentType("application/json")
                 .content("{\"parts\":[{\"invoiceId\":\"INV-2026-09001\",\"amount\":\"1000.00\"}]}")).andExpect(status().isOk());
         boolean listed = false;
-        for (JsonNode d : get("/api/decisions", token)) listed |= d.get("txnId").asText().equals("TX-D1");
+        for (JsonNode d : getJson("/api/decisions", token)) listed |= d.get("txnId").asText().equals("TX-D1");
         assertTrue(listed, "the decision should be listed");
 
         mvc.perform(post("/api/decisions/TX-D1/undo").header("Authorization", token)).andExpect(status().isOk());
-        for (JsonNode d : get("/api/decisions", token)) assertNotEquals("TX-D1", d.get("txnId").asText());
+        for (JsonNode d : getJson("/api/decisions", token)) assertNotEquals("TX-D1", d.get("txnId").asText());
         // undoing twice is a clear error, not a silent no-op
         mvc.perform(post("/api/decisions/TX-D1/undo").header("Authorization", token)).andExpect(status().isNotFound());
         settle(token);
