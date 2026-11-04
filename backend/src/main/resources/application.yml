@@ -28,6 +28,7 @@ app:
   cors-origins: ${CORS_ORIGINS:http://localhost:5173}
   seed-password: ${SEED_PASSWORD:change-me-now}
   require-strong-secrets: ${REQUIRE_STRONG_SECRETS:false}
+  backup-dir: ${BACKUP_DIR:backups}   # the admin reset writes a snapshot here first; compose mounts it to ./backups
 
 server:
   error:

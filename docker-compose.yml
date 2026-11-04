@@ -36,12 +36,15 @@ services:
       ML_URL: http://ml:8000
       JWT_SECRET: ${JWT_SECRET:-dev-only-secret-dev-only-secret-0123456789}
       SEED_PASSWORD: ${SEED_PASSWORD:-change-me-now}
-      # Set REQUIRE_STRONG_SECRETS=true (in .env) and the backend refuses to start on the placeholder secrets.
-      REQUIRE_STRONG_SECRETS: ${REQUIRE_STRONG_SECRETS:-false}
+      # Secure by default: without a .env the backend refuses to start on the placeholder secrets.
+      # For a throwaway local demo only, run:  REQUIRE_STRONG_SECRETS=false docker compose up --build
+      REQUIRE_STRONG_SECRETS: ${REQUIRE_STRONG_SECRETS:-true}
+      BACKUP_DIR: /app/backups
       EVAL_FILE: /app/docs/evaluation.json
       CORS_ORIGINS: http://localhost:8081
     volumes:
       - ./docs:/app/docs:ro
+      - ./backups:/app/backups               # automatic pre-reset snapshots land here (git-ignored)
     depends_on:
       db: { condition: service_healthy }
       ml: { condition: service_healthy }

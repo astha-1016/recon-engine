@@ -44,6 +44,8 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
     } catch {
       /* not JSON */
     }
+    if (/^\s*<(!doctype|html)/i.test(msg) || res.status === 502 || res.status === 503 || res.status === 504)
+      msg = 'The server is not reachable right now. If it was just started, wait a minute and try again; otherwise check the backend logs.'
     throw new ApiError(res.status, msg || res.statusText)
   }
   return (text ? JSON.parse(text) : null) as T

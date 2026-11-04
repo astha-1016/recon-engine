@@ -70,7 +70,7 @@ public class RecordService {
     public void deleteInvoice(String id, String actor) {
         if (!invoices.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown invoice");
         lockedIfDecided(manual.existsByInvoiceId(id) || creditApps.existsByInvoiceId(id), "Invoice " + id);
-        allocations.deleteAll(allocations.findByInvoiceId(id));
+        allocations.deleteAllForInvoice(id);   // bulk: a background run may be rebuilding these rows right now
         invoices.deleteById(id);
         audit("INVOICE", id, "DELETE", "invoice removed", actor);
         rerunAfterCommit();
@@ -103,9 +103,11 @@ public class RecordService {
         if (!txns.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown transaction");
         lockedIfDecided(manual.existsByTxnId(id) || creditApps.existsByTxnId(id), "Transaction " + id);
         // derived rows go now so no screen shows a result for a payment that no longer exists; the re-run rebuilds the rest
-        allocations.deleteAll(allocations.findByTxnId(id));
-        credits.findFirstByTxnId(id).ifPresent(credits::delete);
-        if (outcomes.existsById(id)) outcomes.deleteById(id);
+        // (bulk deletes: a background run may be rebuilding these tables at this very moment, and a load-then-delete would
+        // fail with an optimistic-locking error if the run removed the row in between)
+        allocations.deleteAllForTxn(id);
+        credits.deleteAllForTxn(id);
+        outcomes.deleteForTxn(id);
         txns.deleteById(id);
         audit("TXN", id, "DELETE", "transaction removed", actor);
         rerunAfterCommit();

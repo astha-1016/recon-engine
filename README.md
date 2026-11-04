@@ -7,17 +7,20 @@ Matches incoming bank payments to open invoices automatically, sends only the re
 ## Run it
 
 ```bash
+cp .env.example .env             # then edit it: set JWT_SECRET and SEED_PASSWORD (the backend will not start on placeholders)
 docker compose up -d --build     # first start trains the initial model (about 1-2 minutes)
-# open http://localhost:8081   users: admin / accountant / viewer   password: SEED_PASSWORD (default change-me-now)
+# open http://localhost:8081   users: admin / accountant / viewer   password: the SEED_PASSWORD you set
 ```
+
+Just trying it on your own machine? `REQUIRE_STRONG_SECRETS=false docker compose up -d --build` runs on the placeholder secrets (password `change-me-now`) and only logs a warning. Never do that on anything reachable by other people.
 
 Then in the UI: **Upload** `data-generator/sample/customers.csv`, `invoices.csv`, `bank_transactions.csv` → **Dashboard → Run reconciliation** → **Exceptions** to review.
 
-Before sharing the app anywhere, copy `.env.example` to `.env`, set real values, and keep `REQUIRE_STRONG_SECRETS=true`: the backend then refuses to start on placeholder secrets.
+`REQUIRE_STRONG_SECRETS` defaults to `true`: the backend refuses to start on placeholder secrets. Sign-in is throttled (5 wrong passwords lock that username for 15 minutes), and a role change, password change or deletion ends that user's sessions immediately.
 
 ## Using it with your own data
 
-Everything is stored in PostgreSQL and survives restarts. To go from the demo to real use: **Settings → Remove demo data**, add your staff under **Settings → Users**, then load your data with **Upload** or add single rows with **Invoices → New invoice** and **Payments → Record payment**. Wrong rows can be edited (Admin/Accountant) or deleted (Admin). Backups, restore and schema migrations are in [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+Everything is stored in PostgreSQL and survives restarts. To go from the demo to real use: **Settings → Remove demo data** (needs your password; a backup file is written to `backups/` first), add your staff under **Settings → Users**, then load your data with **Upload** or add single rows with **Invoices → New invoice** and **Payments → Record payment**. Wrong rows can be edited (Admin/Accountant) or deleted (Admin). Backups, restore and schema migrations are in [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## What is in the box
 

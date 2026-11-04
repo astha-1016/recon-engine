@@ -146,6 +146,33 @@ public class DecisionService {
         recon.runAsync();
     }
 
+    /**
+     * Used by the admin reset. The labels were learned from payments that no longer exist, and new data may reuse the same
+     * transaction ids, so every live feedback row is marked revoked (kept for the audit trail, never used for training) and
+     * withdrawn from the ML service's pending training rows. Returns how many transactions the ML service could not be told about.
+     */
+    public int retireAllFeedback() {
+        Set<String> ids = new LinkedHashSet<>();
+        List<FeedbackE> live = new ArrayList<>();
+        for (FeedbackE f : feedback.findAll()) {
+            if (f.revoked) continue;
+            f.revoked = true;
+            live.add(f);
+            if (f.txnId != null) ids.add(f.txnId);
+        }
+        feedback.saveAll(live);
+        int failed = 0;
+        for (String id : ids) {
+            try {
+                ml.removeFeedback(id);
+            } catch (Exception e) {
+                failed++;
+                log.warn("Could not remove feedback for {} from the ML service: {}", id, e.getMessage());
+            }
+        }
+        return failed;
+    }
+
     /** Reverse of learnAlias: lower the alias's confirmation count and delete it when nobody vouches for it any more. */
     private void forgetAlias(String txnId, List<ManualE> rows) {
         TxnE t = txns.findById(txnId).orElse(null);

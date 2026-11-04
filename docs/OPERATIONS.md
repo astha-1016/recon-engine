@@ -4,7 +4,7 @@
 
 1. Copy `.env.example` to `.env`; set a long random `JWT_SECRET` and a real `SEED_PASSWORD`; keep `REQUIRE_STRONG_SECRETS=true`.
 2. `docker compose up -d --build`, sign in as `admin`.
-3. **Settings → Remove demo data** if you tried the sample files first (type `RESET`). Users, the audit log and the trained model are kept.
+3. **Settings → Remove demo data** if you tried the sample files first (type `RESET` and enter your password). A snapshot of the data is written to `backups/` first, and training labels from the demo decisions are retired. Users, the audit log and the trained model are kept.
 4. **Settings → Users**: add the real staff, give each a role, then delete the three seeded accounts (or at least change their passwords).
 5. Load your data: **Upload** (customers, invoices, bank statement) or add single rows under **Invoices → New invoice** and **Payments → Record payment**.
 6. **Dashboard → Run reconciliation**, then work the **Exceptions** queue.
@@ -50,6 +50,8 @@ The schema is owned by Flyway migrations in `backend/src/main/resources/db/migra
 
 ## 5. Known limits
 
-- Deleting a user does not end a sign-in that already exists; it expires after 8 hours.
+- Sign-ins last 8 hours, but they are re-checked against the database on every request: deleting a user, changing their role, or setting/changing their password ends their existing sign-ins at once (the person signs in again). Changing your own password keeps you signed in on this browser only.
+- Sign-in is throttled per username: 5 wrong passwords lock that name for 15 minutes (in memory, so a restart clears it). Someone who knows a username can therefore keep it locked; if that happens, restart the backend.
+- The pre-reset snapshot (`backups/pre-reset-<time>.json.gz`) is a last-resort copy of the business tables as JSON. There is no restore button for it; `scripts/backup.sh` (a real `pg_dump`) is still the backup to rely on. The trained model cannot be un-trained: if demo decisions were already used to train it, re-train from base data after the reset.
 - Deleting an invoice or payment is permanent (the audit log keeps who did it, not the row). Back up first if unsure.
 - Matching accuracy figures in the README are measured on synthetic data. On real statements, start in shadow mode and compare with what your accountants do before trusting auto-matches.

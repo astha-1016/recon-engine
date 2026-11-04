@@ -62,10 +62,13 @@ public class UserController {
     public UserView changeRole(@PathVariable Long id, @RequestBody RoleChange in, Authentication auth) {
         UserE u = find(id);
         checkRole(in.role());
+        if (u.username.equals(auth.getName()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "You cannot change your own role. Ask another admin.");
         if ("ADMIN".equals(u.role) && !"ADMIN".equals(in.role()) && admins() <= 1)
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There must always be at least one admin");
         String before = u.role;
         u.role = in.role();
+        u.tokenVersion++;   // their current sign-ins stop working now, not in 8 hours
         users.save(u);
         log("ROLE", u.username, before + " -> " + u.role, auth.getName());
         return new UserView(u.id, u.username, u.role);
@@ -75,10 +78,13 @@ public class UserController {
     @PutMapping("/{id}/password")
     public Map<String, String> resetPassword(@PathVariable Long id, @RequestBody PasswordChange in, Authentication auth) {
         UserE u = find(id);
+        if (u.username.equals(auth.getName()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Use \"Change my password\" for your own account");
         checkPassword(in.password());
         u.passwordHash = encoder.encode(in.password());
+        u.tokenVersion++;   // ends every existing session of that account, including an attacker's
         users.save(u);
-        log("PASSWORD_RESET", u.username, "password reset by admin", auth.getName());
+        log("PASSWORD_RESET", u.username, "password reset by admin; existing sign-ins ended", auth.getName());
         return Map.of("status", "password changed");
     }
 
