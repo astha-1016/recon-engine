@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { api, getSession, setSession, type Session, type UserView } from '../api'
 
 const ROLES: UserView['role'][] = ['ADMIN', 'ACCOUNTANT', 'VIEWER']
-const MIN_PASSWORD = 10
+const MIN_PASSWORD = 5
 
 /** Same rule as the server, so the person hears about a bad password before the request is sent. */
 function passwordProblem(next: string, confirm: string): string | null {
@@ -114,7 +114,7 @@ function ChangePassword() {
       <h3 style={{ marginTop: 0 }}>Change my password</h3>
       <div className="row">
         <input type="password" autoComplete="current-password" placeholder="Current password" value={current} onChange={(e) => setCurrent(e.target.value)} />
-        <input type="password" autoComplete="new-password" placeholder="New password (10+ characters)" value={next} onChange={(e) => setNext(e.target.value)} />
+        <input type="password" autoComplete="new-password" placeholder={`New password (${MIN_PASSWORD}+ characters)`} value={next} onChange={(e) => setNext(e.target.value)} />
         <input type="password" autoComplete="new-password" placeholder="New password again" value={confirm} onChange={(e) => setConfirm(e.target.value)}
                onKeyDown={(e) => e.key === 'Enter' && current && next && confirm && submit()} />
         <button className="btn" onClick={submit} disabled={!current || !next || !confirm || !!problem}>Change password</button>
@@ -187,7 +187,7 @@ function Users({ session }: { session: Session }) {
       </table>
       <div className="row" style={{ marginTop: 12 }}>
         <input placeholder="New username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <input type="password" placeholder="Password (10+ characters)" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" placeholder={`New password (${MIN_PASSWORD}+ characters)`} value={password} onChange={(e) => setPassword(e.target.value)} />
         <select value={role} onChange={(e) => setRole(e.target.value as UserView['role'])}>
           {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>

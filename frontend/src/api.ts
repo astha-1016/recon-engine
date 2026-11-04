@@ -46,7 +46,10 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
     }
     if (/^\s*<(!doctype|html)/i.test(msg) || res.status === 502 || res.status === 503 || res.status === 504)
       msg = 'The server is not reachable right now. If it was just started, wait a minute and try again; otherwise check the backend logs.'
-    throw new ApiError(res.status, msg || res.statusText)
+    const fallback = res.status === 401 ? 'Wrong username or password.'
+      : res.status === 429 ? 'Too many failed attempts. Try again in a few minutes.'
+      : `Request failed (${res.status}).`
+    throw new ApiError(res.status, msg || fallback)
   }
   return (text ? JSON.parse(text) : null) as T
 }
