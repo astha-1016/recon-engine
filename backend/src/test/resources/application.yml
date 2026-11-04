@@ -17,3 +17,4 @@ app:
   evaluation-file: docs/evaluation.json
   cors-origins: http://localhost:5173
   seed-password: test-password
+  require-strong-secrets: false
