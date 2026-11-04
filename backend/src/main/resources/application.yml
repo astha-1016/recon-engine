@@ -6,7 +6,13 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      # Flyway owns the schema. "update" stays as a safety net for now; once the app has started cleanly on your
+      # database, run with DDL_AUTO=validate so a schema mismatch fails at startup instead of at runtime.
+      ddl-auto: ${DDL_AUTO:update}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true   # a database created before Flyway existed is treated as already at V1
+    baseline-version: 1
   servlet:
     multipart:
       max-file-size: 25MB
@@ -22,6 +28,10 @@ app:
   cors-origins: ${CORS_ORIGINS:http://localhost:5173}
   seed-password: ${SEED_PASSWORD:change-me-now}
   require-strong-secrets: ${REQUIRE_STRONG_SECRETS:false}
+
+server:
+  error:
+    include-message: always   # so the forms can show why a request was refused ("Invoice X already exists", ...)
 
 management:
   endpoints:

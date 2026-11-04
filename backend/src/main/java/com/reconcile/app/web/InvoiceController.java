@@ -3,8 +3,11 @@ package com.reconcile.app.web;
 import com.reconcile.app.config.AppProperties;
 import com.reconcile.app.domain.Entities.*;
 import com.reconcile.app.domain.Repos.*;
+import com.reconcile.app.service.RecordService;
 import com.reconcile.engine.Money;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,9 +26,35 @@ public class InvoiceController {
     private final AllocationRepo allocations;
     private final AdjustmentRepo adjustments;
     private final AppProperties props;
+    private final RecordService records;
 
-    public InvoiceController(InvoiceRepo invoices, AllocationRepo allocations, AdjustmentRepo adjustments, AppProperties props) {
-        this.invoices = invoices; this.allocations = allocations; this.adjustments = adjustments; this.props = props;
+    public InvoiceController(InvoiceRepo invoices, AllocationRepo allocations, AdjustmentRepo adjustments, AppProperties props,
+                             RecordService records) {
+        this.invoices = invoices; this.allocations = allocations; this.adjustments = adjustments; this.props = props; this.records = records;
+    }
+
+    /** Add one invoice by hand (same validation as a file upload). */
+    @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','ACCOUNTANT')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Map<String, String> create(@RequestBody RecordService.InvoiceIn in, Authentication auth) {
+        records.createInvoice(in, auth.getName());
+        return Map.of("status", "created");
+    }
+
+    /** Correct an invoice. Refused while a manual decision or credit application uses it. */
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','ACCOUNTANT')")
+    public Map<String, String> update(@PathVariable String id, @RequestBody RecordService.InvoiceIn in, Authentication auth) {
+        records.updateInvoice(id, in, auth.getName());
+        return Map.of("status", "updated");
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, String> delete(@PathVariable String id, Authentication auth) {
+        records.deleteInvoice(id, auth.getName());
+        return Map.of("status", "deleted");
     }
 
     @GetMapping

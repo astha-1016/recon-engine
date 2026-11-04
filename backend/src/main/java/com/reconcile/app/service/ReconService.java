@@ -88,6 +88,24 @@ public class ReconService {
         }
     }
 
+    /**
+     * Admin reset: removes all business data (customers, invoices, bank transactions, results, decisions, learned aliases).
+     * Users, the audit log and trained models are kept. Waits for any run in flight.
+     */
+    public void wipeBusinessData() {
+        lock.lock();
+        try {
+            tx.executeWithoutResult(status -> {
+                allocations.deleteAllInBatch(); adjustments.deleteAllInBatch(); credits.deleteAllInBatch(); outcomes.deleteAllInBatch();
+                creditApps.deleteAllInBatch(); manual.deleteAllInBatch(); aliases.deleteAllInBatch();
+                invoices.deleteAllInBatch(); txns.deleteAllInBatch(); customers.deleteAllInBatch();
+            });
+            last = null;
+        } finally {
+            lock.unlock();
+        }
+    }
+
     private RunSummary doRun(long t0) {
         List<Customer> cs = new ArrayList<>();
         for (CustomerE c : customers.findAll()) cs.add(new Customer(c.id, c.name, c.phone == null ? "" : c.phone, c.accountLast4 == null ? "" : c.accountLast4));

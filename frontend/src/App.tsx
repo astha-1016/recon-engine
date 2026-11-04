@@ -8,8 +8,10 @@ import Invoices from './pages/Invoices'
 import Reports from './pages/Reports'
 import Credits from './pages/Credits'
 import Decisions from './pages/Decisions'
+import Payments from './pages/Payments'
+import Settings from './pages/Settings'
 
-const TABS = ['Dashboard', 'Exceptions', 'Credits', 'Decisions', 'Upload', 'Invoices', 'Reports'] as const
+const TABS = ['Dashboard', 'Exceptions', 'Credits', 'Decisions', 'Upload', 'Invoices', 'Payments', 'Reports', 'Settings'] as const
 type Tab = (typeof TABS)[number]
 
 export default function App() {
@@ -36,8 +38,10 @@ export default function App() {
         {tab === 'Credits' && <Credits session={session} />}
         {tab === 'Decisions' && <Decisions session={session} />}
         {tab === 'Upload' && <Upload session={session} />}
-        {tab === 'Invoices' && <Invoices />}
+        {tab === 'Invoices' && <Invoices session={session} />}
+        {tab === 'Payments' && <Payments session={session} />}
         {tab === 'Reports' && <Reports session={session} />}
+        {tab === 'Settings' && <Settings session={session} />}
       </main>
     </>
   )
