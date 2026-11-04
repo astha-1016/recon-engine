@@ -19,7 +19,7 @@ import java.util.*;
 @PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     public static final Set<String> ROLES = Set.of("ADMIN", "ACCOUNTANT", "VIEWER");
-    public static final int MIN_PASSWORD = 5;
+    public static final int MIN_PASSWORD = 10;
 
     public record UserView(Long id, String username, String role) {}
     public record NewUser(String username, String password, String role) {}
